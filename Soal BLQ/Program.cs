@@ -15,8 +15,9 @@ namespace Program
             string answer = "t";
             Console.WriteLine("1. Soal 01");
             Console.WriteLine("2. Soal 02");
-            Console.WriteLine("2. Soal 03");
-            Console.WriteLine("2. Soal 04");
+            Console.WriteLine("3. Soal 03");
+            Console.WriteLine("4. Soal 04");
+            Console.WriteLine("5. Soal 05");
 
             while (answer.ToLower() == "t")
             {
@@ -36,6 +37,9 @@ namespace Program
                         break;
                     case 4:
                         new Soal04();
+                        break;
+                    case 5:
+                        new Soal05();
                         break;
                     default:
                         Console.WriteLine("Soal tidak ditemukan");
