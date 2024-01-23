@@ -22,6 +22,9 @@ namespace Program
             Console.WriteLine("7. Soal 07");
             Console.WriteLine("8. Soal 08");
             Console.WriteLine("9. Soal 09");
+            Console.WriteLine("10. Soal 10");
+            Console.WriteLine("11. Soal 11");
+            Console.WriteLine("12. Soal 12");
 
             while (answer.ToLower() == "t")
             {
@@ -56,6 +59,15 @@ namespace Program
                         break;
                     case 9:
                         new Soal09();
+                        break;
+                    case 10:
+                        new Soal10();
+                        break;
+                    case 11:
+                        new Soal11();
+                        break;
+                    case 12:
+                        new Soal12();
                         break;
                     default:
                         Console.WriteLine("Soal tidak ditemukan");
