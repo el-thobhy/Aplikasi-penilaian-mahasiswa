@@ -10,7 +10,7 @@ namespace Soal_BLQ
     {
         public Soal08()
         {
-            Console.WriteLine("=== Soal 06. mencari nilai maksimal dan minimal dari penjumlahan 4 nilai deret ===");
+            Console.WriteLine("=== Soal 08. mencari nilai maksimal dan minimal dari penjumlahan 4 nilai deret ===");
             Console.Write("Masukkan deret bilangan bulat (contoh: 1 2 4 7 8 6 9): ");
 
             int[] deret = Array.ConvertAll(Console.ReadLine().Split(" "), int.Parse);

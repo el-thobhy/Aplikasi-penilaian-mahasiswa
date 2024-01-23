@@ -10,7 +10,7 @@ namespace Soal_BLQ
     {
         public Soal07()
         {
-            Console.WriteLine("=== Soal 06. mencari mead, median, dan modus ===");
+            Console.WriteLine("=== Soal 07. mencari mead, median, dan modus ===");
             Console.Write("Masukkan deret bilangan bulat (contoh: 8 7 0 2 7 1 7 6 3 0 7 1 3 4 6 1 6 4 3): ");
 
             int[] deret = Array.ConvertAll(Console.ReadLine().Split(" "), int.Parse);
