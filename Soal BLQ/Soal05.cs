@@ -17,17 +17,17 @@ namespace Soal_BLQ
 
             int n = int.Parse(Console.ReadLine()); //5
             Console.Write("Masukkan angka pertama: ");
-            int s1 = int.Parse(Console.ReadLine()); //1
+            int seq1 = int.Parse(Console.ReadLine()); //1
             Console.Write("Masukkan angka kedua: ");
-            int s2 = int.Parse(Console.ReadLine()); //1
+            int seq2 = int.Parse(Console.ReadLine()); //1
 
 
             for(int i = 0; i < n; i++)
             {
-                Console.Write(s1+" ");
-                int nextSeq = s1+s2;
-                s1 = s2;
-                s2 = nextSeq;
+                Console.Write(seq1+" ");
+                int nextSeq = seq1+seq2;
+                seq1 = seq2;
+                seq2 = nextSeq;
             }
             Console.WriteLine();
         }
