@@ -27,6 +27,6 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
         public virtual Jurusan Jurusan { get; set; }
 
         [ForeignKey("Kode_Type_Dosen")]
-        public virtual TypeDosen MyProperty { get; set; }
+        public virtual TypeDosen TypeDosen { get; set; }
     }
 }
