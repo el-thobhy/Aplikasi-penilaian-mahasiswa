@@ -26,6 +26,7 @@ namespace ViewModel
 
         [Required, MaxLength(5)]
         public string Kode_Jurusan { get; set; }
+        public bool Is_delete { get; set; }
     }
 
     public class GetMahasiswaViewModel: MahasiswaViewModel
