@@ -19,5 +19,6 @@ namespace ViewModel
 
         [Required, MaxLength(100)]
         public string Status_Ujian { get; set; }
+        public bool Is_delete { get; set; }
     }
 }

@@ -16,5 +16,6 @@ namespace ViewModel
 
         [Required, MaxLength(20)]
         public string Deskripsi { get; set; }
+        public bool Is_delete { get; set; }
     }
 }

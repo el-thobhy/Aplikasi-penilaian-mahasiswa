@@ -12,7 +12,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
         public DbSet<Jurusan> Jurusans { get; set; }
         public DbSet<Agama> Agamas { get; set; }
         public DbSet<Mahasiswa> Mahasiswas { get; set; }
-        public DbSet<Ujian> Ujans { get; set; }
+        public DbSet<Ujian> Ujians { get; set; }
         public DbSet<TypeDosen> TypeDosens { get; set; }
         public DbSet<Dosen> Dosens { get; set; }
         public DbSet<Nilai> Nilais { get; set; }

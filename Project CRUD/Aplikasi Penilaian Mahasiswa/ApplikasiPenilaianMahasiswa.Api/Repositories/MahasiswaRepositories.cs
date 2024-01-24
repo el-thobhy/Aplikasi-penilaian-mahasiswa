@@ -246,7 +246,6 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
 
                 if (entity != null)
                 {
-                    entity.Id = model.Id;
                     entity.Nama_Mahasiswa = model.Nama_Mahasiswa;
                     entity.Kode_Mahasiswa = model.Kode_Mahasiswa;
                     entity.Alamat = model.Alamat;

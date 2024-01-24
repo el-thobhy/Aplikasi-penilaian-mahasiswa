@@ -3,22 +3,22 @@ using ViewModel;
 
 namespace ApplikasiPenilaianMahasiswa.Api.Repositories
 {
-    public class JurusanRepositories : IRepositories<JurusanViewModel>
+    public class UjianRepositories : IRepositories<UjianViewModel>
     {
         private MahasiswaDbContext _dbContext;
         private ResponseResult _result = new ResponseResult();
 
-        public JurusanRepositories(MahasiswaDbContext dbContext)
+        public UjianRepositories(MahasiswaDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public JurusanViewModel ChangeStatus(int id, bool status)
+        public UjianViewModel ChangeStatus(int id, bool status)
         {
-            JurusanViewModel result = new JurusanViewModel();
+            UjianViewModel result = new UjianViewModel();
             try
             {
-                Jurusan entity = _dbContext.Jurusans
+                Ujian entity = _dbContext.Ujians
                     .Where(o => o.Id == id)
                     .FirstOrDefault();
                 if (entity != null)
@@ -28,12 +28,12 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     entity.Deleted_on = DateTime.Now;
 
                     _dbContext.SaveChanges();
-                    result = new JurusanViewModel
+                    result = new UjianViewModel
                     {
                         Id = entity.Id,
-                        Nama_Jurusan = entity.Nama_Jurusan,
-                        Status_Jurusan = entity.Status_Jurusan,
-                        Kode_Jurusan = entity.Kode_Jurusan,
+                        Nama_Ujian = entity.Nama_Ujian,
+                        Status_Ujian = entity.Status_Ujian,
+                        Kode_Ujian = entity.Kode_Ujian,
                         Is_delete = entity.Is_delete
                     };
                 }
@@ -46,21 +46,21 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return result;
         }
 
-        public JurusanViewModel Create(JurusanViewModel model)
+        public UjianViewModel Create(UjianViewModel model)
         {
             try
             {
-                Jurusan entity = new Jurusan();
+                Ujian entity = new Ujian();
                 entity.Id = model.Id;
-                entity.Nama_Jurusan = model.Nama_Jurusan;
-                entity.Status_Jurusan = model.Status_Jurusan;
-                entity.Kode_Jurusan = model.Kode_Jurusan;
+                entity.Nama_Ujian = model.Nama_Ujian;
+                entity.Status_Ujian = model.Status_Ujian;
+                entity.Kode_Ujian = model.Kode_Ujian;
                 entity.Is_delete = model.Is_delete;
 
                 entity.Created_by = 1;
                 entity.Created_on = DateTime.Now;
 
-                _dbContext.Jurusans.Add(entity);
+                _dbContext.Ujians.Add(entity);
                 _dbContext.SaveChanges(true);
 
                 model.Id = entity.Id;
@@ -72,19 +72,19 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return model;
         }
 
-        public List<JurusanViewModel> GetAll()
+        public List<UjianViewModel> GetAll()
         {
-            List<JurusanViewModel> result = new List<JurusanViewModel>();
+            List<UjianViewModel> result = new List<UjianViewModel>();
             try
             {
-                result = (from o in _dbContext.Jurusans
+                result = (from o in _dbContext.Ujians
                           where o.Is_delete == false
-                          select new JurusanViewModel
+                          select new UjianViewModel
                           {
                               Id = o.Id,
-                              Kode_Jurusan = o.Kode_Jurusan,
-                              Status_Jurusan = o.Status_Jurusan,
-                              Nama_Jurusan = o.Nama_Jurusan,
+                              Kode_Ujian = o.Kode_Ujian,
+                              Nama_Ujian = o.Nama_Ujian,
+                              Status_Ujian = o.Status_Ujian,
                               Is_delete = o.Is_delete
                           }).ToList();
             }
@@ -95,24 +95,24 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return result;
         }
 
-        public JurusanViewModel GetById(int id)
+        public UjianViewModel GetById(int id)
         {
-            JurusanViewModel result = new JurusanViewModel();
+            UjianViewModel result = new UjianViewModel();
             try
             {
-                result = (from o in _dbContext.Jurusans
+                result = (from o in _dbContext.Ujians
                           where o.Id == id
-                          select new JurusanViewModel
+                          select new UjianViewModel
                           {
                               Id = o.Id,
-                              Kode_Jurusan = o.Kode_Jurusan,
-                              Status_Jurusan = o.Status_Jurusan,
-                              Nama_Jurusan = o.Nama_Jurusan,
+                              Kode_Ujian = o.Kode_Ujian,
+                              Nama_Ujian = o.Nama_Ujian,
+                              Status_Ujian = o.Status_Ujian,
                               Is_delete = o.Is_delete
                           }).FirstOrDefault();
                 if (result == null)
                 {
-                    return new JurusanViewModel();
+                    return new UjianViewModel();
                 }
             }
             catch (Exception)
@@ -122,18 +122,18 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return result;
         }
 
-        public List<JurusanViewModel> GetByParentId(int parentId)
+        public List<UjianViewModel> GetByParentId(int parentId)
         {
             throw new NotImplementedException();
         }
 
         public ResponseResult Pagination(int pageNum, int rows, string search, string orderBy, Sorting sort)
         {
-            List<JurusanViewModel> result = new List<JurusanViewModel>();
+            List<UjianViewModel> result = new List<UjianViewModel>();
             try
             {
-                var query = _dbContext.Jurusans
-                    .Where(o => o.Nama_Jurusan.Contains(search) && o.Is_delete == false);
+                var query = _dbContext.Ujians
+                    .Where(o => o.Nama_Ujian.Contains(search) && o.Is_delete == false);
 
                 int count = query.Count();
 
@@ -142,7 +142,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     switch (orderBy)
                     {
                         case "Deskripsi":
-                            query = (sort == Sorting.Ascending) ? query.OrderBy(o => o.Nama_Jurusan) : query.OrderByDescending(o => o.Nama_Jurusan);
+                            query = (sort == Sorting.Ascending) ? query.OrderBy(o => o.Nama_Ujian) : query.OrderByDescending(o => o.Nama_Ujian);
                             break;
                         default:
                             query = (sort == Sorting.Ascending) ? query.OrderBy(o => o.Id) : query.OrderByDescending(o => o.Id);
@@ -152,12 +152,12 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     _result.Data = query.Skip((pageNum - 1) * rows)
                         .Take(rows)
                         .Where(o => o.Is_delete == false)
-                        .Select(o => new JurusanViewModel
+                        .Select(o => new UjianViewModel
                         {
                             Id = o.Id,
-                            Kode_Jurusan = o.Kode_Jurusan,
-                            Status_Jurusan = o.Status_Jurusan,
-                            Nama_Jurusan = o.Nama_Jurusan,
+                            Kode_Ujian = o.Kode_Ujian,
+                            Nama_Ujian = o.Nama_Ujian,
+                            Status_Ujian = o.Status_Ujian,
                             Is_delete = o.Is_delete
                         }).ToList();
 
@@ -181,19 +181,19 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return _result;
         }
 
-        public JurusanViewModel Update(JurusanViewModel model)
+        public UjianViewModel Update(UjianViewModel model)
         {
             try
             {
-                Jurusan entity = _dbContext.Jurusans
+                Ujian entity = _dbContext.Ujians
                     .Where(o => o.Id == model.Id)
                     .FirstOrDefault();
 
                 if (entity != null)
                 {
-                    entity.Nama_Jurusan = model.Nama_Jurusan;
-                    entity.Status_Jurusan = model.Status_Jurusan;
-                    entity.Kode_Jurusan = model.Kode_Jurusan;
+                    entity.Nama_Ujian = model.Nama_Ujian;
+                    entity.Status_Ujian = model.Status_Ujian;
+                    entity.Kode_Ujian = model.Kode_Ujian;
                     entity.Is_delete = model.Is_delete;
 
                     entity.Modified_by = 1;

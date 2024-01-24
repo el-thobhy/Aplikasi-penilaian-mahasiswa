@@ -3,22 +3,22 @@ using ViewModel;
 
 namespace ApplikasiPenilaianMahasiswa.Api.Repositories
 {
-    public class JurusanRepositories : IRepositories<JurusanViewModel>
+    public class TypeDosenRepositories : IRepositories<TypeDosenViewModel>
     {
         private MahasiswaDbContext _dbContext;
         private ResponseResult _result = new ResponseResult();
 
-        public JurusanRepositories(MahasiswaDbContext dbContext)
+        public TypeDosenRepositories(MahasiswaDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public JurusanViewModel ChangeStatus(int id, bool status)
+        public TypeDosenViewModel ChangeStatus(int id, bool status)
         {
-            JurusanViewModel result = new JurusanViewModel();
+            TypeDosenViewModel result = new TypeDosenViewModel();
             try
             {
-                Jurusan entity = _dbContext.Jurusans
+                TypeDosen entity = _dbContext.TypeDosens
                     .Where(o => o.Id == id)
                     .FirstOrDefault();
                 if (entity != null)
@@ -28,12 +28,11 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     entity.Deleted_on = DateTime.Now;
 
                     _dbContext.SaveChanges();
-                    result = new JurusanViewModel
+                    result = new TypeDosenViewModel
                     {
                         Id = entity.Id,
-                        Nama_Jurusan = entity.Nama_Jurusan,
-                        Status_Jurusan = entity.Status_Jurusan,
-                        Kode_Jurusan = entity.Kode_Jurusan,
+                        Deskripsi = entity.Deskripsi,
+                        Kode_Type_Dosen = entity.Kode_Type_Dosen,
                         Is_delete = entity.Is_delete
                     };
                 }
@@ -46,21 +45,20 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return result;
         }
 
-        public JurusanViewModel Create(JurusanViewModel model)
+        public TypeDosenViewModel Create(TypeDosenViewModel model)
         {
             try
             {
-                Jurusan entity = new Jurusan();
+                TypeDosen entity = new TypeDosen();
                 entity.Id = model.Id;
-                entity.Nama_Jurusan = model.Nama_Jurusan;
-                entity.Status_Jurusan = model.Status_Jurusan;
-                entity.Kode_Jurusan = model.Kode_Jurusan;
+                entity.Deskripsi = model.Deskripsi;
+                entity.Kode_Type_Dosen = model.Kode_Type_Dosen;
                 entity.Is_delete = model.Is_delete;
 
                 entity.Created_by = 1;
                 entity.Created_on = DateTime.Now;
 
-                _dbContext.Jurusans.Add(entity);
+                _dbContext.TypeDosens.Add(entity);
                 _dbContext.SaveChanges(true);
 
                 model.Id = entity.Id;
@@ -72,19 +70,18 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return model;
         }
 
-        public List<JurusanViewModel> GetAll()
+        public List<TypeDosenViewModel> GetAll()
         {
-            List<JurusanViewModel> result = new List<JurusanViewModel>();
+            List<TypeDosenViewModel> result = new List<TypeDosenViewModel>();
             try
             {
-                result = (from o in _dbContext.Jurusans
+                result = (from o in _dbContext.TypeDosens
                           where o.Is_delete == false
-                          select new JurusanViewModel
+                          select new TypeDosenViewModel
                           {
                               Id = o.Id,
-                              Kode_Jurusan = o.Kode_Jurusan,
-                              Status_Jurusan = o.Status_Jurusan,
-                              Nama_Jurusan = o.Nama_Jurusan,
+                              Kode_Type_Dosen = o.Kode_Type_Dosen,
+                              Deskripsi = o.Deskripsi,
                               Is_delete = o.Is_delete
                           }).ToList();
             }
@@ -95,24 +92,23 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return result;
         }
 
-        public JurusanViewModel GetById(int id)
+        public TypeDosenViewModel GetById(int id)
         {
-            JurusanViewModel result = new JurusanViewModel();
+            TypeDosenViewModel result = new TypeDosenViewModel();
             try
             {
-                result = (from o in _dbContext.Jurusans
+                result = (from o in _dbContext.TypeDosens
                           where o.Id == id
-                          select new JurusanViewModel
+                          select new TypeDosenViewModel
                           {
                               Id = o.Id,
-                              Kode_Jurusan = o.Kode_Jurusan,
-                              Status_Jurusan = o.Status_Jurusan,
-                              Nama_Jurusan = o.Nama_Jurusan,
+                              Deskripsi = o.Deskripsi,
+                              Kode_Type_Dosen = o.Kode_Type_Dosen,
                               Is_delete = o.Is_delete
                           }).FirstOrDefault();
                 if (result == null)
                 {
-                    return new JurusanViewModel();
+                    return new TypeDosenViewModel();
                 }
             }
             catch (Exception)
@@ -122,18 +118,18 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return result;
         }
 
-        public List<JurusanViewModel> GetByParentId(int parentId)
+        public List<TypeDosenViewModel> GetByParentId(int parentId)
         {
             throw new NotImplementedException();
         }
 
         public ResponseResult Pagination(int pageNum, int rows, string search, string orderBy, Sorting sort)
         {
-            List<JurusanViewModel> result = new List<JurusanViewModel>();
+            List<TypeDosenViewModel> result = new List<TypeDosenViewModel>();
             try
             {
-                var query = _dbContext.Jurusans
-                    .Where(o => o.Nama_Jurusan.Contains(search) && o.Is_delete == false);
+                var query = _dbContext.TypeDosens
+                    .Where(o => o.Deskripsi.Contains(search) && o.Is_delete == false);
 
                 int count = query.Count();
 
@@ -142,7 +138,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     switch (orderBy)
                     {
                         case "Deskripsi":
-                            query = (sort == Sorting.Ascending) ? query.OrderBy(o => o.Nama_Jurusan) : query.OrderByDescending(o => o.Nama_Jurusan);
+                            query = (sort == Sorting.Ascending) ? query.OrderBy(o => o.Deskripsi) : query.OrderByDescending(o => o.Deskripsi);
                             break;
                         default:
                             query = (sort == Sorting.Ascending) ? query.OrderBy(o => o.Id) : query.OrderByDescending(o => o.Id);
@@ -152,12 +148,11 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     _result.Data = query.Skip((pageNum - 1) * rows)
                         .Take(rows)
                         .Where(o => o.Is_delete == false)
-                        .Select(o => new JurusanViewModel
+                        .Select(o => new TypeDosenViewModel
                         {
                             Id = o.Id,
-                            Kode_Jurusan = o.Kode_Jurusan,
-                            Status_Jurusan = o.Status_Jurusan,
-                            Nama_Jurusan = o.Nama_Jurusan,
+                            Kode_Type_Dosen = o.Kode_Type_Dosen,
+                            Deskripsi = o.Deskripsi,
                             Is_delete = o.Is_delete
                         }).ToList();
 
@@ -181,19 +176,18 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return _result;
         }
 
-        public JurusanViewModel Update(JurusanViewModel model)
+        public TypeDosenViewModel Update(TypeDosenViewModel model)
         {
             try
             {
-                Jurusan entity = _dbContext.Jurusans
+                TypeDosen entity = _dbContext.TypeDosens
                     .Where(o => o.Id == model.Id)
                     .FirstOrDefault();
 
                 if (entity != null)
                 {
-                    entity.Nama_Jurusan = model.Nama_Jurusan;
-                    entity.Status_Jurusan = model.Status_Jurusan;
-                    entity.Kode_Jurusan = model.Kode_Jurusan;
+                    entity.Deskripsi = model.Deskripsi;
+                    entity.Kode_Type_Dosen = model.Kode_Type_Dosen;
                     entity.Is_delete = model.Is_delete;
 
                     entity.Modified_by = 1;

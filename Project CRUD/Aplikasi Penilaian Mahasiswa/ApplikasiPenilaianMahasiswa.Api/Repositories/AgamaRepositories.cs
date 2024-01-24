@@ -188,6 +188,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 {
                     entity.Deskripsi = model.Deskripsi;
                     entity.Kode_Agama = model.Kode_Agama;
+                    entity.Is_delete = model.Is_delete;
 
                     entity.Modified_by = 1;
                     entity.Modified_on = DateTime.Now;

@@ -20,6 +20,7 @@ namespace ViewModel
 
         [Required]
         public decimal NilaiMahasiswa { get; set; }
+        public bool Is_delete { get; set; }
     }
 
     public class GetNilaiViewModel : NilaiViewModel

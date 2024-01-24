@@ -235,7 +235,6 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
 
                 if (entity != null)
                 {
-                    entity.Id = model.Id;
                     entity.Nama_Dosen = model.Nama_Dosen;
                     entity.Kode_Type_Dosen = model.Kode_Type_Dosen;
                     entity.Kode_Jurusan = model.Kode_Jurusan;
