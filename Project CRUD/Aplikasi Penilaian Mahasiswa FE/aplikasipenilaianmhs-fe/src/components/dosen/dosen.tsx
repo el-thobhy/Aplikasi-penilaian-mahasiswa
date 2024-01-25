@@ -200,9 +200,8 @@ export default class Dosen extends React.Component<IProps, IState> {
       return content;
     };
     return (
-      <div>
+      <div className="overflow-auto h-screen">
         <div className="text-left text-3xl pt-5">Dosen</div>
-        <span>{JSON.stringify(pagination)}</span>
         <div className="flex" aria-label="Button">
           <button
             className="my-8 justify-start h-8 px-4 text-green-100 transition-colors duration-150 bg-green-700 rounded focus:shadow-outline hover:bg-green-800"
