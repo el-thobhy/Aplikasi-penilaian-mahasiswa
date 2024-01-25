@@ -177,7 +177,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                 },
                 new Agama
                 {
-                    Id = 4,
+                    Id = 3,
                     Kode_Agama = "A003",
                     Deskripsi = "Katolik",
                     Created_by = 1,

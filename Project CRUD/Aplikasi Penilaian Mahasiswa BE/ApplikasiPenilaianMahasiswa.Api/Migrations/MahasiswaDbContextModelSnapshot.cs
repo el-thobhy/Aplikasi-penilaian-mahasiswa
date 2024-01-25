@@ -65,7 +65,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasKey("Kode_Agama");
 
-                    b.ToTable("m_agama");
+                    b.ToTable("m_agama", (string)null);
 
                     b.HasData(
                         new
@@ -172,7 +172,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasIndex("Kode_Type_Dosen");
 
-                    b.ToTable("m_dosen");
+                    b.ToTable("m_dosen", (string)null);
 
                     b.HasData(
                         new
@@ -280,7 +280,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasKey("Kode_Jurusan");
 
-                    b.ToTable("m_jurusan");
+                    b.ToTable("m_jurusan", (string)null);
 
                     b.HasData(
                         new
@@ -397,7 +397,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasIndex("Kode_Jurusan");
 
-                    b.ToTable("m_mahasiswa");
+                    b.ToTable("m_mahasiswa", (string)null);
 
                     b.HasData(
                         new
@@ -513,7 +513,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasIndex("Kode_Ujian");
 
-                    b.ToTable("m_nilai");
+                    b.ToTable("m_nilai", (string)null);
 
                     b.HasData(
                         new
@@ -611,7 +611,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasKey("Kode_Type_Dosen");
 
-                    b.ToTable("m_type_dosen");
+                    b.ToTable("m_type_dosen", (string)null);
 
                     b.HasData(
                         new
@@ -691,7 +691,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasKey("Kode_Ujian");
 
-                    b.ToTable("m_ujian");
+                    b.ToTable("m_ujian", (string)null);
 
                     b.HasData(
                         new
