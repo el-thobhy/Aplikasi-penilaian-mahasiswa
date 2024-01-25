@@ -7,10 +7,10 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
     [Table("m_type_dosen")]
     public class TypeDosen: BaseProperties
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required, MaxLength(5), Key]
+        [Required, MaxLength(50)]
         public string Kode_Type_Dosen { get; set; }
 
         [Required, MaxLength(20)]

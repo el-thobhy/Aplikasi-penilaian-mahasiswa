@@ -12,17 +12,15 @@ namespace ViewModel
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(5)]
+        [MaxLength(50)]
         public string Kode_Dosen { get; set; }
 
         [Required, MaxLength(100)]
         public string Nama_Dosen { get; set; }
 
-        [Required, MaxLength(5)]
-        public string Kode_Jurusan { get; set; }
+        public int Id_Jurusan { get; set; }
 
-        [Required, MaxLength(5)]
-        public string Kode_Type_Dosen { get; set; }
+        public int Id_Type_Dosen { get; set; }
         public bool Is_delete { get; set; }
     }
 

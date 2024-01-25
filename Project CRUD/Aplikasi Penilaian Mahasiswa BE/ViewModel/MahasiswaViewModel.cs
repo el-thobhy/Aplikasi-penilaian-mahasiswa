@@ -12,7 +12,7 @@ namespace ViewModel
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(5)]
+        [MaxLength(50)]
         public string Kode_Mahasiswa { get; set; }
 
         [Required, MaxLength(100)]
@@ -21,11 +21,9 @@ namespace ViewModel
         [Required, MaxLength(200)]
         public string Alamat { get; set; }
 
-        [Required, MaxLength(5)]
-        public string Kode_Agama { get; set; }
+        public int Id_Agama { get; set; }
 
-        [Required, MaxLength(5)]
-        public string Kode_Jurusan { get; set; }
+        public int Id_Jurusan { get; set; }
         public bool Is_delete { get; set; }
     }
 

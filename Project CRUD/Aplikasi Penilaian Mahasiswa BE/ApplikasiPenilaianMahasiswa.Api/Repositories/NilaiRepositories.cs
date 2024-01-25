@@ -31,8 +31,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     result = new NilaiViewModel
                     {
                         Id = entity.Id,
-                        Kode_Mahasiswa = entity.Kode_Mahasiswa,
-                        Kode_Ujian = entity.Kode_Ujian,
+                        Id_Mahasiswa = entity.Id_Mahasiswa,
+                        Id_Ujian = entity.Id_Ujian,
                         NilaiMahasiswa = entity.NilaiMahasiswa,
                         Is_delete = entity.Is_delete
                     };
@@ -52,8 +52,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             {
                 Nilai entity = new Nilai();
                 entity.Id = model.Id;
-                entity.Kode_Mahasiswa = model.Kode_Mahasiswa;
-                entity.Kode_Ujian = model.Kode_Ujian;
+                entity.Id_Mahasiswa = model.Id_Mahasiswa;
+                entity.Id_Ujian = model.Id_Ujian;
                 entity.NilaiMahasiswa = model.NilaiMahasiswa;
                 entity.Is_delete = model.Is_delete;
 
@@ -82,14 +82,14 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                           select new GetNilaiViewModel
                           {
                               Id = o.Id,
-                              Kode_Mahasiswa = o.Kode_Mahasiswa,
-                              Kode_Ujian = o.Kode_Ujian,
+                              Id_Mahasiswa = o.Id_Mahasiswa,
+                              Id_Ujian = o.Id_Ujian,
                               NilaiMahasiswa = o.NilaiMahasiswa,
                               Mahasiswa = new GetMahasiswaViewModel
                               {
                                   Id = o.Mahasiswa.Id,
                                   Kode_Mahasiswa = o.Mahasiswa.Kode_Mahasiswa,
-                                  Kode_Jurusan = o.Mahasiswa.Kode_Jurusan,
+                                  Id_Jurusan = o.Mahasiswa.Id_Jurusan,
                                   Nama_Mahasiswa = o.Mahasiswa.Nama_Mahasiswa,
                                   Jurusan = new JurusanViewModel
                                   {
@@ -100,7 +100,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                                       Is_delete = o.Mahasiswa.Jurusan.Is_delete
                                   },
                                   Alamat = o.Mahasiswa.Alamat,
-                                  Kode_Agama = o.Mahasiswa.Kode_Agama,
+                                  Id_Agama = o.Mahasiswa.Id_Agama,
                                   Agama = new AgamaViewModel
                                   {
                                       Id = o.Mahasiswa.Agama.Id,
@@ -137,14 +137,14 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                           select new GetNilaiViewModel
                           {
                               Id = o.Id,
-                              Kode_Mahasiswa = o.Kode_Mahasiswa,
-                              Kode_Ujian = o.Kode_Ujian,
+                              Id_Mahasiswa = o.Id_Mahasiswa,
+                              Id_Ujian = o.Id_Ujian,
                               NilaiMahasiswa = o.NilaiMahasiswa,
                               Mahasiswa = new GetMahasiswaViewModel
                               {
                                   Id = o.Mahasiswa.Id,
                                   Kode_Mahasiswa = o.Mahasiswa.Kode_Mahasiswa,
-                                  Kode_Jurusan = o.Mahasiswa.Kode_Jurusan,
+                                  Id_Jurusan = o.Mahasiswa.Id_Jurusan,
                                   Nama_Mahasiswa = o.Mahasiswa.Nama_Mahasiswa,
                                   Jurusan = new JurusanViewModel
                                   {
@@ -155,7 +155,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                                       Is_delete = o.Mahasiswa.Jurusan.Is_delete
                                   },
                                   Alamat = o.Mahasiswa.Alamat,
-                                  Kode_Agama = o.Mahasiswa.Kode_Agama,
+                                  Id_Agama = o.Mahasiswa.Id_Agama,
                                   Agama = new AgamaViewModel
                                   {
                                       Id = o.Mahasiswa.Agama.Id,
@@ -219,14 +219,14 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                         .Select(o => new GetNilaiViewModel
                         {
                             Id = o.Id,
-                            Kode_Mahasiswa = o.Kode_Mahasiswa,
-                            Kode_Ujian = o.Kode_Ujian,
+                            Id_Mahasiswa = o.Id_Mahasiswa,
+                            Id_Ujian = o.Id_Ujian,
                             NilaiMahasiswa = o.NilaiMahasiswa,
                             Mahasiswa = new GetMahasiswaViewModel
                             {
                                 Id = o.Mahasiswa.Id,
                                 Kode_Mahasiswa = o.Mahasiswa.Kode_Mahasiswa,
-                                Kode_Jurusan = o.Mahasiswa.Kode_Jurusan,
+                                Id_Jurusan = o.Mahasiswa.Id_Jurusan,
                                 Nama_Mahasiswa = o.Mahasiswa.Nama_Mahasiswa,
                                 Jurusan = new JurusanViewModel
                                 {
@@ -237,7 +237,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                                     Is_delete = o.Mahasiswa.Jurusan.Is_delete
                                 },
                                 Alamat = o.Mahasiswa.Alamat,
-                                Kode_Agama = o.Mahasiswa.Kode_Agama,
+                                Id_Agama = o.Mahasiswa.Id_Agama,
                                 Agama = new AgamaViewModel
                                 {
                                     Id = o.Mahasiswa.Agama.Id,
@@ -287,8 +287,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
 
                 if (entity != null)
                 {
-                    entity.Kode_Mahasiswa = model.Kode_Mahasiswa;
-                    entity.Kode_Ujian = model.Kode_Ujian;
+                    entity.Id_Mahasiswa = model.Id_Mahasiswa;
+                    entity.Id_Ujian = model.Id_Ujian;
                     entity.NilaiMahasiswa = model.NilaiMahasiswa;
                     entity.Is_delete = model.Is_delete;
 

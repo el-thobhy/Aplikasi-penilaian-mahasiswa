@@ -50,20 +50,25 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
         {
             try
             {
-                Ujian entity = new Ujian();
-                entity.Id = model.Id;
-                entity.Nama_Ujian = model.Nama_Ujian;
-                entity.Status_Ujian = model.Status_Ujian;
-                entity.Kode_Ujian = model.Kode_Ujian;
-                entity.Is_delete = model.Is_delete;
+                string newKode = NewKode();
+                if (!string.IsNullOrEmpty(newKode))
+                {
+                    Ujian entity = new Ujian();
+                    entity.Id = model.Id;
+                    entity.Nama_Ujian = model.Nama_Ujian;
+                    entity.Status_Ujian = model.Status_Ujian;
+                    entity.Kode_Ujian = newKode;
+                    entity.Is_delete = model.Is_delete;
 
-                entity.Created_by = 1;
-                entity.Created_on = DateTime.Now;
+                    entity.Created_by = 1;
+                    entity.Created_on = DateTime.Now;
 
-                _dbContext.Ujians.Add(entity);
-                _dbContext.SaveChanges(true);
+                    _dbContext.Ujians.Add(entity);
+                    _dbContext.SaveChanges(true);
 
-                model.Id = entity.Id;
+                    model.Id = entity.Id;
+                    model.Kode_Ujian = entity.Kode_Ujian;
+                }
             }
             catch (Exception)
             {
@@ -213,6 +218,37 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 _result.Message = e.Message;
             }
             return model;
+        }
+        private string NewKode()
+        {
+            //    yyMM incr
+            //SLS-2311-0123
+            string yearMonth = DateTime.Now.ToString("yy") + DateTime.Now.Month.ToString("D2"); //2311
+            string newRef = "UJN-" + yearMonth + "-"; //SLS-2311-
+            try
+            {
+                var maxRef = _dbContext.Ujians
+                    .Where(o => o.Kode_Ujian.Contains(newRef))
+                    .OrderByDescending(o => o.Kode_Ujian)
+                    .FirstOrDefault();
+
+                if (maxRef != null)
+                {
+                    //SLS-2311-0002
+                    string[] oldRef = maxRef.Kode_Ujian.Split('-'); // ['SLS','2311','0002']
+                    int newInc = int.Parse(oldRef[2]) + 1; // 0003
+                    newRef += newInc.ToString("D4"); //SLS-2311-0003
+                }
+                else
+                {
+                    newRef += "0001"; //SLS-2311-0001
+                }
+            }
+            catch (Exception)
+            {
+                newRef = string.Empty;
+            }
+            return newRef;
         }
     }
 }

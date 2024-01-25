@@ -10,19 +10,17 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required, MaxLength(5)]
-        public string Kode_Mahasiswa { get; set; }
+        public int Id_Mahasiswa { get; set; }
 
-        [Required, MaxLength(5)]
-        public string Kode_Ujian { get; set; }
+        public int Id_Ujian { get; set; }
 
         [Required]
         public decimal NilaiMahasiswa { get; set; }
 
 
-        [ForeignKey("Kode_Mahasiswa")]
+        [ForeignKey("Id_Mahasiswa")]
         public virtual Mahasiswa Mahasiswa { get; set; }
-        [ForeignKey("Kode_Ujian")]
+        [ForeignKey("Id_Ujian")]
         public virtual Ujian Ujian { get; set; }
     }
 }

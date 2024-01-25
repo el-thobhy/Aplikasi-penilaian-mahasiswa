@@ -10,8 +10,8 @@ export class ModelMahasiswa {
   kode_Mahasiswa: string = "";
   nama_Mahasiswa: string = "";
   alamat: string = "";
-  kode_Agama: string = "";
-  kode_Jurusan: string = "";
+  id_Agama: number = 0;
+  id_Jurusan: number = 0;
   is_delete: boolean = false;
   agama: ModelAgama;
   jurusan: ModelJurusan;

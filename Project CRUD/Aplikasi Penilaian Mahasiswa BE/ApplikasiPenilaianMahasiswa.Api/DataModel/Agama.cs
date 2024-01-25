@@ -7,10 +7,10 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
     [Table("m_agama")]
     public class Agama: BaseProperties
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required, Key, MaxLength(5)]
+        [Required, MaxLength(50)]
         public string Kode_Agama { get; set; }
 
         [Required, MaxLength(20)]

@@ -63,20 +63,6 @@ export default class Form extends React.Component<IProps, IState> {
         <form>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Kode Dosen
-            </label>
-            <input
-              readOnly={command == ECommand.changeStatus}
-              type="text"
-              id="initial"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required
-              value={dosen.kode_Dosen}
-              onChange={changeHandler("kode_Dosen")}
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Nama Dosen
             </label>
             <input
@@ -96,12 +82,14 @@ export default class Form extends React.Component<IProps, IState> {
             <select
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={dosen.kode_Jurusan}
-              onChange={changeHandler("kode_Jurusan")}
+              value={dosen.id_Jurusan}
+              onChange={changeHandler("id_Jurusan")}
             >
-              {/* <option selected value="0">Choose a category</option> */}
+              <option selected value="0">
+                Pilih Jurusan
+              </option>
               {jurusans?.map((o: ModelJurusan) => {
-                return <option value={o.kode_Jurusan}>{o.nama_Jurusan}</option>;
+                return <option value={o.id}>{o.nama_Jurusan}</option>;
               })}
             </select>
           </div>
@@ -112,12 +100,14 @@ export default class Form extends React.Component<IProps, IState> {
             <select
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={dosen.kode_Type_Dosen}
-              onChange={changeHandler("kode_Type_Dosen")}
+              value={dosen.id_Type_Dosen}
+              onChange={changeHandler("id_Type_Dosen")}
             >
-              {/* <option selected value="0">Choose a category</option> */}
+              <option selected value="0">
+                Pilih Tipe Dosen
+              </option>
               {typeDosens?.map((o: ModelTypeDosen) => {
-                return <option value={o.kode_Type_Dosen}>{o.deskripsi}</option>;
+                return <option value={o.id}>{o.deskripsi}</option>;
               })}
             </select>
           </div>

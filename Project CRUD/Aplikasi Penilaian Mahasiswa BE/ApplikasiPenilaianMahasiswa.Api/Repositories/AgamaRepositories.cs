@@ -49,19 +49,25 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
         {
             try
             {
-                Agama entity = new Agama();
-                entity.Id = model.Id;
-                entity.Deskripsi = model.Deskripsi;
-                entity.Kode_Agama = model.Kode_Agama;
-                entity.Is_delete = model.Is_delete;
+                string newKode = NewKode();
+                if (!string.IsNullOrEmpty(newKode))
+                {
+                    Agama entity = new Agama();
+                    entity.Id = model.Id;
+                    entity.Deskripsi = model.Deskripsi;
+                    entity.Kode_Agama = newKode;
+                    entity.Is_delete = model.Is_delete;
 
-                entity.Created_by = 1;
-                entity.Created_on = DateTime.Now;
+                    entity.Created_by = 1;
+                    entity.Created_on = DateTime.Now;
 
-                _dbContext.Agamas.Add(entity);
-                _dbContext.SaveChanges(true);
+                    _dbContext.Agamas.Add(entity);
+                    _dbContext.SaveChanges(true);
 
-                model.Id = entity.Id;
+                    model.Id = entity.Id;
+                    model.Kode_Agama = entity.Kode_Agama;
+                }
+                
             }
             catch (Exception)
             {
@@ -189,7 +195,6 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     entity.Deskripsi = model.Deskripsi;
                     entity.Kode_Agama = model.Kode_Agama;
                     entity.Is_delete = model.Is_delete;
-
                     entity.Modified_by = 1;
                     entity.Modified_on = DateTime.Now;
 
@@ -207,6 +212,37 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 _result.Message = e.Message;
             }
             return model;
+        }
+        private string NewKode()
+        {
+            //    yyMM incr
+            //SLS-2311-0123
+            string yearMonth = DateTime.Now.ToString("yy") + DateTime.Now.Month.ToString("D2"); //2311
+            string newRef = "AGM-" + yearMonth + "-"; //SLS-2311-
+            try
+            {
+                var maxRef = _dbContext.Agamas
+                    .Where(o => o.Kode_Agama.Contains(newRef))
+                    .OrderByDescending(o => o.Kode_Agama)
+                    .FirstOrDefault();
+
+                if (maxRef != null)
+                {
+                    //SLS-2311-0002
+                    string[] oldRef = maxRef.Kode_Agama.Split('-'); // ['SLS','2311','0002']
+                    int newInc = int.Parse(oldRef[2]) + 1; // 0003
+                    newRef += newInc.ToString("D4"); //SLS-2311-0003
+                }
+                else
+                {
+                    newRef += "0001"; //SLS-2311-0001
+                }
+            }
+            catch (Exception)
+            {
+                newRef = string.Empty;
+            }
+            return newRef;
         }
     }
 }

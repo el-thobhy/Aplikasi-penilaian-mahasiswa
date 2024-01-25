@@ -66,14 +66,14 @@ export default class Form extends React.Component<IProps, IState> {
             <select
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={nilai.kode_Mahasiswa}
-              onChange={changeHandler("kode_Mahasiswa")}
+              value={nilai.id_Mahasiswa}
+              onChange={changeHandler("id_Mahasiswa")}
             >
-              {/* <option selected value="0">Choose a category</option> */}
+              <option selected value="0">
+                Pilih Nama
+              </option>
               {mahasiswa?.map((o: ModelMahasiswa) => {
-                return (
-                  <option value={o.kode_Mahasiswa}>{o.nama_Mahasiswa}</option>
-                );
+                return <option value={o.id}>{o.nama_Mahasiswa}</option>;
               })}
             </select>
           </div>
@@ -84,12 +84,14 @@ export default class Form extends React.Component<IProps, IState> {
             <select
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={nilai.kode_Ujian}
-              onChange={changeHandler("kode_Ujian")}
+              value={nilai.id_Ujian}
+              onChange={changeHandler("id_Ujian")}
             >
-              {/* <option selected value="0">Choose a category</option> */}
+              <option selected value="0">
+                Pilih Ujian
+              </option>
               {ujian?.map((o: ModelUjian) => {
-                return <option value={o.kode_Ujian}>{o.nama_Ujian}</option>;
+                return <option value={o.id}>{o.nama_Ujian}</option>;
               })}
             </select>
           </div>

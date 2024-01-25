@@ -49,19 +49,24 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
         {
             try
             {
-                TypeDosen entity = new TypeDosen();
-                entity.Id = model.Id;
-                entity.Deskripsi = model.Deskripsi;
-                entity.Kode_Type_Dosen = model.Kode_Type_Dosen;
-                entity.Is_delete = model.Is_delete;
+                string newKode = NewKode();
+                if (!string.IsNullOrEmpty(newKode))
+                {
+                    TypeDosen entity = new TypeDosen();
+                    entity.Id = model.Id;
+                    entity.Deskripsi = model.Deskripsi;
+                    entity.Kode_Type_Dosen = newKode;
+                    entity.Is_delete = model.Is_delete;
 
-                entity.Created_by = 1;
-                entity.Created_on = DateTime.Now;
+                    entity.Created_by = 1;
+                    entity.Created_on = DateTime.Now;
 
-                _dbContext.TypeDosens.Add(entity);
-                _dbContext.SaveChanges(true);
+                    _dbContext.TypeDosens.Add(entity);
+                    _dbContext.SaveChanges(true);
 
-                model.Id = entity.Id;
+                    model.Id = entity.Id;
+                    model.Kode_Type_Dosen = entity.Kode_Type_Dosen;
+                }
             }
             catch (Exception)
             {
@@ -207,6 +212,37 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 _result.Message = e.Message;
             }
             return model;
+        }
+        private string NewKode()
+        {
+            //    yyMM incr
+            //SLS-2311-0123
+            string yearMonth = DateTime.Now.ToString("yy") + DateTime.Now.Month.ToString("D2"); //2311
+            string newRef = "TYP-" + yearMonth + "-"; //SLS-2311-
+            try
+            {
+                var maxRef = _dbContext.TypeDosens
+                    .Where(o => o.Kode_Type_Dosen.Contains(newRef))
+                    .OrderByDescending(o => o.Kode_Type_Dosen)
+                    .FirstOrDefault();
+
+                if (maxRef != null)
+                {
+                    //SLS-2311-0002
+                    string[] oldRef = maxRef.Kode_Type_Dosen.Split('-'); // ['SLS','2311','0002']
+                    int newInc = int.Parse(oldRef[2]) + 1; // 0003
+                    newRef += newInc.ToString("D4"); //SLS-2311-0003
+                }
+                else
+                {
+                    newRef += "0001"; //SLS-2311-0001
+                }
+            }
+            catch (Exception)
+            {
+                newRef = string.Empty;
+            }
+            return newRef;
         }
     }
 }

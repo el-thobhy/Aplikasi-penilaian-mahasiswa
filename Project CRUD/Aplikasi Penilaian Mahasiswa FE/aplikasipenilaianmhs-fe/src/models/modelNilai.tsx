@@ -7,8 +7,8 @@ export class ModelNilai {
     this.ujian = new ModelUjian();
   }
   id: number = 0;
-  kode_Mahasiswa: string = "";
-  kode_Ujian: string = "";
+  id_Mahasiswa: number = 0;
+  id_Ujian: number = 0;
   nilaiMahasiswa: number = 0;
   is_delete: boolean = false;
   mahasiswa: ModelMahasiswa;

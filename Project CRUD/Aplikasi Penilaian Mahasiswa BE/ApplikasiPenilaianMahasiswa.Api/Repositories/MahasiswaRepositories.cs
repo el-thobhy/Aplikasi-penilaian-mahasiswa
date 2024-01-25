@@ -33,8 +33,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                         Id = entity.Id,
                         Nama_Mahasiswa = entity.Nama_Mahasiswa,
                         Alamat = entity.Alamat,
-                        Kode_Agama = entity.Kode_Agama,
-                        Kode_Jurusan = entity.Kode_Jurusan,
+                        Id_Agama = entity.Id_Agama,
+                        Id_Jurusan = entity.Id_Jurusan,
                         Kode_Mahasiswa = entity.Kode_Mahasiswa,
                         Is_delete = entity.Is_delete
                     };
@@ -52,22 +52,27 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
         {
             try
             {
-                Mahasiswa entity = new Mahasiswa();
-                entity.Id = model.Id;
-                entity.Nama_Mahasiswa = model.Nama_Mahasiswa;
-                entity.Kode_Mahasiswa = model.Kode_Mahasiswa;
-                entity.Alamat = model.Alamat;
-                entity.Kode_Agama = model.Kode_Agama;
-                entity.Kode_Jurusan = model.Kode_Jurusan;
-                entity.Is_delete = model.Is_delete;
+                string newKode = NewKode();
+                if (!string.IsNullOrEmpty(newKode))
+                {
+                    Mahasiswa entity = new Mahasiswa();
+                    entity.Id = model.Id;
+                    entity.Nama_Mahasiswa = model.Nama_Mahasiswa;
+                    entity.Kode_Mahasiswa = newKode;
+                    entity.Alamat = model.Alamat;
+                    entity.Id_Agama = model.Id_Agama;
+                    entity.Id_Jurusan = model.Id_Jurusan;
+                    entity.Is_delete = model.Is_delete;
 
-                entity.Created_by = 1;
-                entity.Created_on = DateTime.Now;
+                    entity.Created_by = 1;
+                    entity.Created_on = DateTime.Now;
 
-                _dbContext.Mahasiswas.Add(entity);
-                _dbContext.SaveChanges(true);
+                    _dbContext.Mahasiswas.Add(entity);
+                    _dbContext.SaveChanges(true);
 
-                model.Id = entity.Id;
+                    model.Id = entity.Id;
+                    model.Kode_Mahasiswa = entity.Kode_Mahasiswa;
+                }
             }
             catch (Exception)
             {
@@ -87,7 +92,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                           {
                               Id = o.Id,
                               Kode_Mahasiswa = o.Kode_Mahasiswa,
-                              Kode_Jurusan = o.Kode_Jurusan,
+                              Id_Jurusan = o.Id_Jurusan,
                               Nama_Mahasiswa = o.Nama_Mahasiswa,
                               Jurusan = new JurusanViewModel
                               {
@@ -98,7 +103,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                                   Is_delete = o.Jurusan.Is_delete
                               },
                               Alamat = o.Alamat,
-                              Kode_Agama = o.Kode_Agama,
+                              Id_Agama = o.Id_Agama,
                               Agama = new AgamaViewModel
                               {
                                   Id = o.Agama.Id,
@@ -127,7 +132,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                           {
                               Id = o.Id,
                               Kode_Mahasiswa = o.Kode_Mahasiswa,
-                              Kode_Jurusan = o.Kode_Jurusan,
+                              Id_Jurusan = o.Id_Jurusan,
                               Nama_Mahasiswa = o.Nama_Mahasiswa,
                               Jurusan = new JurusanViewModel
                               {
@@ -138,7 +143,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                                   Is_delete = o.Jurusan.Is_delete
                               },
                               Alamat = o.Alamat,
-                              Kode_Agama = o.Kode_Agama,
+                              Id_Agama = o.Id_Agama,
                               Agama = new AgamaViewModel
                               {
                                   Id = o.Agama.Id,
@@ -194,7 +199,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                         {
                             Id = o.Id,
                             Kode_Mahasiswa = o.Kode_Mahasiswa,
-                            Kode_Jurusan = o.Kode_Jurusan,
+                            Id_Jurusan = o.Id_Jurusan,
                             Nama_Mahasiswa = o.Nama_Mahasiswa,
                             Jurusan = new JurusanViewModel
                             {
@@ -205,7 +210,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                                 Is_delete = o.Jurusan.Is_delete
                             },
                             Alamat = o.Alamat,
-                            Kode_Agama = o.Kode_Agama,
+                            Id_Agama = o.Id_Agama,
                             Agama = new AgamaViewModel
                             {
                                 Id = o.Agama.Id,
@@ -249,8 +254,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     entity.Nama_Mahasiswa = model.Nama_Mahasiswa;
                     entity.Kode_Mahasiswa = model.Kode_Mahasiswa;
                     entity.Alamat = model.Alamat;
-                    entity.Kode_Agama = model.Kode_Agama;
-                    entity.Kode_Jurusan = model.Kode_Jurusan;
+                    entity.Id_Agama = model.Id_Agama;
+                    entity.Id_Jurusan = model.Id_Jurusan;
                     entity.Is_delete = model.Is_delete;
 
                     entity.Modified_by = 1;
@@ -270,6 +275,37 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 _result.Message = e.Message;
             }
             return model;
+        }
+        private string NewKode()
+        {
+            //    yyMM incr
+            //SLS-2311-0123
+            string yearMonth = DateTime.Now.ToString("yy") + DateTime.Now.Month.ToString("D2"); //2311
+            string newRef = "MHS-" + yearMonth + "-"; //SLS-2311-
+            try
+            {
+                var maxRef = _dbContext.Mahasiswas
+                    .Where(o => o.Kode_Mahasiswa.Contains(newRef))
+                    .OrderByDescending(o => o.Kode_Mahasiswa)
+                    .FirstOrDefault();
+
+                if (maxRef != null)
+                {
+                    //SLS-2311-0002
+                    string[] oldRef = maxRef.Kode_Mahasiswa.Split('-'); // ['SLS','2311','0002']
+                    int newInc = int.Parse(oldRef[2]) + 1; // 0003
+                    newRef += newInc.ToString("D4"); //SLS-2311-0003
+                }
+                else
+                {
+                    newRef += "0001"; //SLS-2311-0001
+                }
+            }
+            catch (Exception)
+            {
+                newRef = string.Empty;
+            }
+            return newRef;
         }
 
         List<MahasiswaViewModel> IRepositories<MahasiswaViewModel>.GetAll()

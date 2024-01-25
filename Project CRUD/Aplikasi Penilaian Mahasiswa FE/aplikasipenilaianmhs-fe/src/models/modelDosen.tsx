@@ -9,8 +9,8 @@ export class ModelDosen {
   id: number = 0;
   kode_Dosen: string = "";
   nama_Dosen: string = "";
-  kode_Jurusan: string = "";
-  kode_Type_Dosen: string = "";
+  id_Jurusan: number = 0;
+  id_Type_Dosen: number = 0;
   is_delete: boolean = false;
   jurusan: ModelJurusan;
   typeDosen: ModelTypeDosen;

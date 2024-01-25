@@ -280,8 +280,8 @@ export default class Dosen extends React.Component<IProps, IState> {
                 >
                   <td className="px-6 py-4">{cat.kode_Dosen}</td>
                   <td className="px-6 py-4">{cat.nama_Dosen}</td>
-                  <td className="px-6 py-4">{cat.kode_Jurusan}</td>
-                  <td className="px-6 py-4">{cat.kode_Type_Dosen}</td>
+                  <td className="px-6 py-4">{cat.id_Jurusan}</td>
+                  <td className="px-6 py-4">{cat.id_Type_Dosen}</td>
                   <td className="px-6 py-4">{cat.jurusan.nama_Jurusan}</td>
                   <td className="px-6 py-4">{cat.typeDosen.deskripsi}</td>
                   <td className="px-4 py-4">

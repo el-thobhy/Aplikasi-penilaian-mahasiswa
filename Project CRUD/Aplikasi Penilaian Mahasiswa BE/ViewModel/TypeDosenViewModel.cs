@@ -11,7 +11,7 @@ namespace ViewModel
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(5)]
+        [MaxLength(50)]
         public string Kode_Type_Dosen { get; set; }
 
         [Required, MaxLength(20)]

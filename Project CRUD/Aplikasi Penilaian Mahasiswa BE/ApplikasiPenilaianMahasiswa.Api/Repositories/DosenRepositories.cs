@@ -32,8 +32,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     {
                         Id = entity.Id,
                         Nama_Dosen = entity.Nama_Dosen,
-                        Kode_Type_Dosen = entity.Kode_Type_Dosen,
-                        Kode_Jurusan = entity.Kode_Jurusan,
+                        Id_Type_Dosen = entity.Id_Type_Dosen,
+                        Id_Jurusan = entity.Id_Jurusan,
                         Kode_Dosen = entity.Kode_Dosen,
                         Is_delete = entity.Is_delete
                     };
@@ -51,21 +51,26 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
         {
             try
             {
-                Dosen entity = new Dosen();
-                entity.Id = model.Id;
-                entity.Nama_Dosen = model.Nama_Dosen;
-                entity.Kode_Type_Dosen = model.Kode_Type_Dosen;
-                entity.Kode_Jurusan = model.Kode_Jurusan;
-                entity.Kode_Dosen = model.Kode_Dosen;
-                entity.Is_delete = model.Is_delete;
+                string newKode = NewKode();
+                if(!string.IsNullOrEmpty(newKode))
+                {
+                    Dosen entity = new Dosen();
+                    entity.Id = model.Id;
+                    entity.Nama_Dosen = model.Nama_Dosen;
+                    entity.Id_Type_Dosen = model.Id_Type_Dosen;
+                    entity.Id_Jurusan = model.Id_Jurusan;
+                    entity.Kode_Dosen = newKode;
+                    entity.Is_delete = model.Is_delete;
 
-                entity.Created_by = 1;
-                entity.Created_on = DateTime.Now;
+                    entity.Created_by = 1;
+                    entity.Created_on = DateTime.Now;
 
-                _dbContext.Dosens.Add(entity);
-                _dbContext.SaveChanges(true);
+                    _dbContext.Dosens.Add(entity);
+                    _dbContext.SaveChanges(true);
 
-                model.Id = entity.Id;
+                    model.Id = entity.Id;
+                    model.Kode_Dosen = entity.Kode_Dosen;
+                }
             }
             catch (Exception)
             {
@@ -85,8 +90,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                           {
                               Id = o.Id,
                               Kode_Dosen = o.Kode_Dosen,
-                              Kode_Jurusan = o.Kode_Jurusan,
-                              Kode_Type_Dosen = o.Kode_Type_Dosen,
+                              Id_Jurusan = o.Id_Jurusan,
+                              Id_Type_Dosen = o.Id_Type_Dosen,
                               Nama_Dosen = o.Nama_Dosen,
                               Jurusan = new JurusanViewModel
                               {
@@ -122,8 +127,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                           {
                               Id = o.Id,
                               Nama_Dosen = o.Nama_Dosen,
-                              Kode_Type_Dosen = o.Kode_Type_Dosen,
-                              Kode_Jurusan = o.Kode_Jurusan,
+                              Id_Type_Dosen = o.Id_Type_Dosen,
+                              Id_Jurusan = o.Id_Jurusan,
                               Kode_Dosen = o.Kode_Dosen,
                               Jurusan = new JurusanViewModel
                               {
@@ -186,8 +191,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                         {
                             Id = o.Id,
                             Nama_Dosen = o.Nama_Dosen,
-                            Kode_Type_Dosen = o.Kode_Type_Dosen,
-                            Kode_Jurusan = o.Kode_Jurusan,
+                            Id_Type_Dosen = o.Id_Type_Dosen,
+                            Id_Jurusan = o.Id_Jurusan,
                             Kode_Dosen = o.Kode_Dosen,
                             Is_delete = o.Is_delete,
                             Jurusan = new JurusanViewModel
@@ -236,8 +241,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 if (entity != null)
                 {
                     entity.Nama_Dosen = model.Nama_Dosen;
-                    entity.Kode_Type_Dosen = model.Kode_Type_Dosen;
-                    entity.Kode_Jurusan = model.Kode_Jurusan;
+                    entity.Id_Type_Dosen = model.Id_Type_Dosen;
+                    entity.Id_Jurusan = model.Id_Jurusan;
                     entity.Kode_Dosen = model.Kode_Dosen;
                     entity.Is_delete = model.Is_delete;
 
@@ -258,6 +263,37 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 _result.Message = e.Message;
             }
             return model;
+        }
+        private string NewKode()
+        {
+            //    yyMM incr
+            //SLS-2311-0123
+            string yearMonth = DateTime.Now.ToString("yy") + DateTime.Now.Month.ToString("D2"); //2311
+            string newRef = "DSN-" + yearMonth + "-"; //SLS-2311-
+            try
+            {
+                var maxRef = _dbContext.Dosens
+                    .Where(o => o.Kode_Dosen.Contains(newRef))
+                    .OrderByDescending(o => o.Kode_Dosen)
+                    .FirstOrDefault();
+
+                if (maxRef != null)
+                {
+                    //SLS-2311-0002
+                    string[] oldRef = maxRef.Kode_Dosen.Split('-'); // ['SLS','2311','0002']
+                    int newInc = int.Parse(oldRef[2]) + 1; // 0003
+                    newRef += newInc.ToString("D4"); //SLS-2311-0003
+                }
+                else
+                {
+                    newRef += "0001"; //SLS-2311-0001
+                }
+            }
+            catch (Exception)
+            {
+                newRef = string.Empty;
+            }
+            return newRef;
         }
 
         List<DosenViewModel> IRepositories<DosenViewModel>.GetAll()

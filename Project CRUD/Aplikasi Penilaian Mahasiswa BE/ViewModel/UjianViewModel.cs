@@ -11,7 +11,7 @@ namespace ViewModel
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(5)]
+        [MaxLength(50)]
         public string Kode_Ujian { get; set; }
 
         [Required, MaxLength(50)]

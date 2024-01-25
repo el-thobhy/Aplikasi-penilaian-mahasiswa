@@ -7,9 +7,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
     [Table("m_jurusan")]
     public class Jurusan: BaseProperties
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Key, MaxLength(5), Required]
+        [Required, MaxLength(50)]
         public string Kode_Jurusan { get; set; }
         [Required, MaxLength(50)]
         public string Nama_Jurusan { get; set; }
