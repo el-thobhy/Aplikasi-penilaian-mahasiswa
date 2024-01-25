@@ -29,6 +29,26 @@ export const TypeDosenService = {
       });
     return result;
   },
+
+  getAllTypeDosen: () => {
+    const result = axios
+      .get(config.apiUrl + "/TypeDosen/GetAll")
+      .then((respons) => {
+        // console.log(respons);
+        return {
+          success: respons.status == 200,
+          result: respons.data,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          result: error,
+        };
+      });
+    return result;
+  },
+
   getById: (id: number) => {
     const result = axios
       .get(config.apiUrl + "/TypeDosen/" + id)
