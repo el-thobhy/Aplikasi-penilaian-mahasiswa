@@ -13,6 +13,7 @@ interface IState {
   major: ModelJurusan;
   pagination: ModelPagination;
   showModalDelete: boolean;
+  errorAlerts: any;
   showModal: boolean;
   command: ECommand;
 }
@@ -24,6 +25,7 @@ export default class Jurusan extends React.Component<IProps, IState> {
       jurusan: [],
       major: new ModelJurusan(),
       showModal: false,
+      errorAlerts: { name: false },
       showModalDelete: false,
       command: ECommand.create,
       pagination: new ModelPagination(),
@@ -125,6 +127,7 @@ export default class Jurusan extends React.Component<IProps, IState> {
   setShowModal = (val: boolean) => {
     this.setState({
       showModal: val,
+      errorAlerts: { name: false },
     });
   };
 
@@ -135,11 +138,37 @@ export default class Jurusan extends React.Component<IProps, IState> {
         [name]: event.target.value,
       },
     });
+    this.setState({
+      errorAlerts: {
+        ...this.state.errorAlerts,
+        [name]: !event.target.value,
+      },
+    });
   };
 
-  submitHandler = async () => {
+  submitHandler = async (event: any) => {
     const { command, major } = this.state;
     if (command == ECommand.create) {
+      event.preventDefault();
+      this.setState({
+        errorAlerts: {
+          nama_Jurusan: {
+            nama: this.state.major.nama_Jurusan.trim().length > 0,
+            message_nama: "Nama tidak boleh kosong",
+          },
+          status_Jurusan: {
+            status: this.state.major.status_Jurusan.trim().length > 0,
+            message_status: "Status tidak boleh kosong",
+          },
+        },
+      });
+      if (
+        this.state.major.nama_Jurusan.trim().length === 0 ||
+        this.state.major.status_Jurusan.trim().length === 0
+      ) {
+        return;
+      }
+
       await JurusanService.post(this.state.major)
         .then((result) => {
           if (result.success) {
@@ -191,8 +220,15 @@ export default class Jurusan extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { jurusan, pagination, showModal, command, major, showModalDelete } =
-      this.state;
+    const {
+      jurusan,
+      pagination,
+      showModal,
+      command,
+      major,
+      showModalDelete,
+      errorAlerts,
+    } = this.state;
     const loopPages = () => {
       let content: any = [];
       for (let page = 1; page <= pagination.pages; page++) {
@@ -349,6 +385,7 @@ export default class Jurusan extends React.Component<IProps, IState> {
                   <Form
                     jurusan={major}
                     command={command}
+                    errorAlerts={errorAlerts}
                     changeHandler={this.changeHandler}
                   />
                 </div>
@@ -365,7 +402,9 @@ export default class Jurusan extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Submit
                   </button>
@@ -407,7 +446,9 @@ export default class Jurusan extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Ya
                   </button>

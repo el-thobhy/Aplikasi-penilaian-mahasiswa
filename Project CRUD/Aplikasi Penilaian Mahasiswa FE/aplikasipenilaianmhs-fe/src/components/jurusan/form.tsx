@@ -6,6 +6,7 @@ interface IProps {
   jurusan: ModelJurusan;
   command: ECommand;
   changeHandler: any;
+  errorAlerts: any;
 }
 
 interface IState {}
@@ -16,7 +17,7 @@ export default class Form extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { jurusan, command, changeHandler } = this.props;
+    const { jurusan, command, changeHandler, errorAlerts } = this.props;
     return (
       <>
         <form>
@@ -33,6 +34,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={jurusan.nama_Jurusan}
               onChange={changeHandler("nama_Jurusan")}
             />
+            {!errorAlerts.nama_Jurusan?.nama ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.nama_Jurusan?.message_nama}
+              </strong>
+            ) : null}
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -47,6 +57,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={jurusan.status_Jurusan}
               onChange={changeHandler("status_Jurusan")}
             />
+            {!errorAlerts.status_Jurusan?.status ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.status_Jurusan?.message_status}
+              </strong>
+            ) : null}
           </div>
         </form>
       </>

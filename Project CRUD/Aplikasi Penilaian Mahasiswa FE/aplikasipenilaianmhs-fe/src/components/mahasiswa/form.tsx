@@ -11,6 +11,7 @@ interface IProps {
   mahasiswa: ModelMahasiswa;
   command: ECommand;
   changeHandler: any;
+  errorAlerts: any;
 }
 
 interface IState {
@@ -54,7 +55,7 @@ export default class Form extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { mahasiswa, command, changeHandler } = this.props;
+    const { mahasiswa, command, changeHandler, errorAlerts } = this.props;
     const { agamas, jurusans } = this.state;
     return (
       <>
@@ -72,6 +73,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={mahasiswa.nama_Mahasiswa}
               onChange={changeHandler("nama_Mahasiswa")}
             />
+            {!errorAlerts.nama_Mahasiswa?.nama ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.nama_Mahasiswa?.message_nama}
+              </strong>
+            ) : null}
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -86,6 +96,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={mahasiswa.alamat}
               onChange={changeHandler("alamat")}
             />
+            {!errorAlerts.alamat?.alamat ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.alamat?.message_alamat}
+              </strong>
+            ) : null}
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -104,6 +123,15 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.deskripsi}</option>;
               })}
             </select>
+            {!errorAlerts.id_Agama?.agama ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.id_Agama?.message_agama}
+              </strong>
+            ) : null}
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -122,6 +150,15 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.nama_Jurusan}</option>;
               })}
             </select>
+            {!errorAlerts.id_Jurusan?.jurusan ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.id_Jurusan?.message_jurusan}
+              </strong>
+            ) : null}
           </div>
         </form>
       </>

@@ -12,6 +12,7 @@ interface IState {
   lecturer: ModelDosen;
   pagination: ModelPagination;
   showModal: boolean;
+  errorAlerts: any;
   showModalDelete: boolean;
   command: ECommand;
 }
@@ -24,6 +25,7 @@ export default class Dosen extends React.Component<IProps, IState> {
       lecturer: new ModelDosen(),
       showModal: false,
       showModalDelete: false,
+      errorAlerts: { name: false },
       command: ECommand.create,
       pagination: new ModelPagination(),
     };
@@ -124,6 +126,7 @@ export default class Dosen extends React.Component<IProps, IState> {
   setShowModal = (val: boolean) => {
     this.setState({
       showModal: val,
+      errorAlerts: { name: false },
     });
   };
 
@@ -134,11 +137,42 @@ export default class Dosen extends React.Component<IProps, IState> {
         [name]: event.target.value,
       },
     });
+    this.setState({
+      errorAlerts: {
+        ...this.state.errorAlerts,
+        [name]: !event.target.value,
+      },
+    });
   };
 
-  submitHandler = async () => {
+  submitHandler = async (event: any) => {
     const { command, lecturer } = this.state;
     if (command == ECommand.create) {
+      event.preventDefault();
+      this.setState({
+        errorAlerts: {
+          nama_Dosen: {
+            nama: this.state.lecturer.nama_Dosen.trim().length > 0,
+            message_nama: "Nama tidak boleh kosong",
+          },
+          id_Jurusan: {
+            jurusan: this.state.lecturer.id_Jurusan > 0,
+            message_jurusan: "Jurusan tidak boleh kosong",
+          },
+          id_Type_Dosen: {
+            type: this.state.lecturer.id_Type_Dosen > 0,
+            message_type: "Type Dosen tidak boleh kosong",
+          },
+        },
+      });
+      if (
+        this.state.lecturer.nama_Dosen.trim().length === 0 ||
+        this.state.lecturer.id_Jurusan === 0 ||
+        this.state.lecturer.id_Type_Dosen === 0
+      ) {
+        return;
+      }
+
       await DosenService.post(this.state.lecturer)
         .then((result) => {
           if (result.success) {
@@ -190,8 +224,15 @@ export default class Dosen extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { dosen, pagination, showModal, lecturer, command, showModalDelete } =
-      this.state;
+    const {
+      dosen,
+      pagination,
+      showModal,
+      lecturer,
+      command,
+      showModalDelete,
+      errorAlerts,
+    } = this.state;
     const loopPages = () => {
       let content: any = [];
       for (let page = 1; page <= pagination.pages; page++) {
@@ -364,6 +405,7 @@ export default class Dosen extends React.Component<IProps, IState> {
                 <div className="relative p-6 flex-auto">
                   <Form
                     dosen={lecturer}
+                    errorAlerts={errorAlerts}
                     command={command}
                     changeHandler={this.changeHandler}
                   />
@@ -381,7 +423,9 @@ export default class Dosen extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Submit
                   </button>
@@ -423,7 +467,9 @@ export default class Dosen extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Ya
                   </button>

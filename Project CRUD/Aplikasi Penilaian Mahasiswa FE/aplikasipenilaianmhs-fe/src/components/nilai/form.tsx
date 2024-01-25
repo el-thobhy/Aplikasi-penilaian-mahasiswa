@@ -10,6 +10,7 @@ interface IProps {
   nilai: ModelNilai;
   command: ECommand;
   changeHandler: any;
+  errorAlerts: any;
 }
 
 interface IState {
@@ -54,7 +55,7 @@ export default class Form extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { nilai, command, changeHandler } = this.props;
+    const { nilai, command, changeHandler, errorAlerts } = this.props;
     const { mahasiswa, ujian } = this.state;
     return (
       <>
@@ -76,6 +77,15 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.nama_Mahasiswa}</option>;
               })}
             </select>
+            {!errorAlerts.id_Mahasiswa?.nama ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.id_Mahasiswa?.message_nama}
+              </strong>
+            ) : null}
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -94,6 +104,15 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.nama_Ujian}</option>;
               })}
             </select>
+            {!errorAlerts.id_Ujian?.ujian ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.id_Ujian?.message_ujian}
+              </strong>
+            ) : null}
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -108,6 +127,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={nilai.nilaiMahasiswa}
               onChange={changeHandler("nilaiMahasiswa")}
             />
+            {!errorAlerts.nilaiMahasiswa?.nilai ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.nilaiMahasiswa?.message_nilai}
+              </strong>
+            ) : null}
           </div>
         </form>
       </>

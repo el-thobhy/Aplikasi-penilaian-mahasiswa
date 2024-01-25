@@ -13,6 +13,7 @@ interface IProps {
   dosen: ModelDosen;
   command: ECommand;
   changeHandler: any;
+  errorAlerts: any;
 }
 
 interface IState {
@@ -56,7 +57,7 @@ export default class Form extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { dosen, command, changeHandler } = this.props;
+    const { dosen, command, changeHandler, errorAlerts } = this.props;
     const { typeDosens, jurusans } = this.state;
     return (
       <>
@@ -74,6 +75,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={dosen.nama_Dosen}
               onChange={changeHandler("nama_Dosen")}
             />
+            {!errorAlerts.nama_Dosen?.nama ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.nama_Dosen?.message_nama}
+              </strong>
+            ) : null}
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -92,6 +102,15 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.nama_Jurusan}</option>;
               })}
             </select>
+            {!errorAlerts.id_Jurusan?.jurusan ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.id_Jurusan?.message_jurusan}
+              </strong>
+            ) : null}
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -110,6 +129,15 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.deskripsi}</option>;
               })}
             </select>
+            {!errorAlerts.id_Type_Dosen?.type ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.id_Type_Dosen?.message_type}
+              </strong>
+            ) : null}
           </div>
         </form>
       </>

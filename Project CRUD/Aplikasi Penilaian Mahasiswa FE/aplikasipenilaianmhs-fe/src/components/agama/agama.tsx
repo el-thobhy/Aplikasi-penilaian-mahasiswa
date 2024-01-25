@@ -12,6 +12,7 @@ interface IState {
   religion: ModelAgama;
   pagination: ModelPagination;
   showModal: boolean;
+  errorAlerts: any;
   showModalDelete: boolean;
   command: ECommand;
 }
@@ -24,6 +25,7 @@ export default class Agama extends React.Component<IProps, IState> {
       religion: new ModelAgama(),
       showModal: false,
       showModalDelete: false,
+      errorAlerts: { name: false },
       command: ECommand.create,
       pagination: new ModelPagination(),
     };
@@ -126,6 +128,7 @@ export default class Agama extends React.Component<IProps, IState> {
   setShowModal = (val: boolean) => {
     this.setState({
       showModal: val,
+      errorAlerts: { name: false },
     });
   };
 
@@ -136,11 +139,30 @@ export default class Agama extends React.Component<IProps, IState> {
         [name]: event.target.value,
       },
     });
+    this.setState({
+      errorAlerts: {
+        ...this.state.errorAlerts,
+        [name]: !event.target.value,
+      },
+    });
   };
 
-  submitHandler = async () => {
+  submitHandler = async (event: any) => {
     const { command, religion } = this.state;
     if (command == ECommand.create) {
+      event.preventDefault();
+      this.setState({
+        errorAlerts: {
+          deskripsi: {
+            religion: this.state.religion.deskripsi.trim().length > 0,
+            message_religion: "Deskripsi tidak boleh kosong",
+          },
+        },
+      });
+      if (this.state.religion.deskripsi.trim().length === 0) {
+        return;
+      }
+
       await AgamaService.post(this.state.religion)
         .then((result) => {
           if (result.success) {
@@ -192,8 +214,15 @@ export default class Agama extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { agama, pagination, showModal, command, religion, showModalDelete } =
-      this.state;
+    const {
+      agama,
+      pagination,
+      showModal,
+      command,
+      religion,
+      showModalDelete,
+      errorAlerts,
+    } = this.state;
     const loopPages = () => {
       let content: any = [];
       for (let page = 1; page <= pagination.pages; page++) {
@@ -347,6 +376,7 @@ export default class Agama extends React.Component<IProps, IState> {
                 <div className="relative p-6 flex-auto">
                   <Form
                     agama={religion}
+                    errorAlerts={errorAlerts}
                     command={command}
                     changeHandler={this.changeHandler}
                   />
@@ -364,7 +394,9 @@ export default class Agama extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Submit
                   </button>
@@ -406,7 +438,9 @@ export default class Agama extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Ya
                   </button>

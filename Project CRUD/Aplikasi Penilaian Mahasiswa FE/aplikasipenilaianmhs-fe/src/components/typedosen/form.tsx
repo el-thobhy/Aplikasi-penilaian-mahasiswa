@@ -6,6 +6,7 @@ interface IProps {
   typeDosen: ModelTypeDosen;
   command: ECommand;
   changeHandler: any;
+  errorAlerts: any;
 }
 
 interface IState {}
@@ -16,7 +17,7 @@ export default class Form extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { typeDosen, command, changeHandler } = this.props;
+    const { typeDosen, command, changeHandler, errorAlerts } = this.props;
     return (
       <>
         <form>
@@ -33,6 +34,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={typeDosen.deskripsi}
               onChange={changeHandler("deskripsi")}
             />
+            {!errorAlerts.deskripsi?.deskripsi ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.deskripsi?.message_deskripsi}
+              </strong>
+            ) : null}
           </div>
         </form>
       </>

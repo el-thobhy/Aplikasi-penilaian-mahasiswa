@@ -14,6 +14,7 @@ interface IState {
   pagination: ModelPagination;
   showModalDelete: boolean;
   showModal: boolean;
+  errorAlerts: any;
   command: ECommand;
 }
 
@@ -25,6 +26,7 @@ export default class TypeDosen extends React.Component<IProps, IState> {
       typeLecturer: new ModelTypeDosen(),
       showModal: false,
       showModalDelete: false,
+      errorAlerts: { name: false },
       command: ECommand.create,
       pagination: new ModelPagination(),
     };
@@ -125,6 +127,7 @@ export default class TypeDosen extends React.Component<IProps, IState> {
   setShowModal = (val: boolean) => {
     this.setState({
       showModal: val,
+      errorAlerts: { name: false },
     });
   };
 
@@ -135,11 +138,30 @@ export default class TypeDosen extends React.Component<IProps, IState> {
         [name]: event.target.value,
       },
     });
+    this.setState({
+      errorAlerts: {
+        ...this.state.errorAlerts,
+        [name]: !event.target.value,
+      },
+    });
   };
 
-  submitHandler = async () => {
+  submitHandler = async (event: any) => {
     const { command, typeLecturer } = this.state;
     if (command == ECommand.create) {
+      event.preventDefault();
+      this.setState({
+        errorAlerts: {
+          deskripsi: {
+            deskripsi: this.state.typeLecturer.deskripsi.trim().length > 0,
+            message_deskripsi: "Deskripsi tidak boleh kosong",
+          },
+        },
+      });
+      if (this.state.typeLecturer.deskripsi.trim().length === 0) {
+        return;
+      }
+
       await TypeDosenService.post(this.state.typeLecturer)
         .then((result) => {
           if (result.success) {
@@ -198,6 +220,7 @@ export default class TypeDosen extends React.Component<IProps, IState> {
       typeLecturer,
       command,
       showModalDelete,
+      errorAlerts,
     } = this.state;
     const loopPages = () => {
       let content: any = [];
@@ -353,6 +376,7 @@ export default class TypeDosen extends React.Component<IProps, IState> {
                   <Form
                     typeDosen={typeLecturer}
                     command={command}
+                    errorAlerts={errorAlerts}
                     changeHandler={this.changeHandler}
                   />
                 </div>
@@ -369,7 +393,9 @@ export default class TypeDosen extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Submit
                   </button>
@@ -411,7 +437,9 @@ export default class TypeDosen extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Ya
                   </button>

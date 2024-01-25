@@ -6,6 +6,7 @@ interface IProps {
   ujian: ModelUjian;
   command: ECommand;
   changeHandler: any;
+  errorAlerts: any;
 }
 
 interface IState {}
@@ -16,7 +17,7 @@ export default class Form extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { ujian, command, changeHandler } = this.props;
+    const { ujian, command, changeHandler, errorAlerts } = this.props;
     return (
       <>
         <form>
@@ -33,6 +34,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={ujian.nama_Ujian}
               onChange={changeHandler("nama_Ujian")}
             />
+            {!errorAlerts.nama_Ujian?.nama ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.nama_Ujian?.message_nama}
+              </strong>
+            ) : null}
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -47,6 +57,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={ujian.status_Ujian}
               onChange={changeHandler("status_Ujian")}
             />
+            {!errorAlerts.status_Ujian?.status ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.status_Ujian?.message_status}
+              </strong>
+            ) : null}
           </div>
         </form>
       </>

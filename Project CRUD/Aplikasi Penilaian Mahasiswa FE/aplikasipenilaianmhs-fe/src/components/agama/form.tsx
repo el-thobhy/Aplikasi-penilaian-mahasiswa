@@ -6,6 +6,7 @@ interface IProps {
   agama: ModelAgama;
   command: ECommand;
   changeHandler: any;
+  errorAlerts: any;
 }
 
 interface IState {}
@@ -16,7 +17,7 @@ export default class Form extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { agama, command, changeHandler } = this.props;
+    const { agama, command, changeHandler, errorAlerts } = this.props;
     return (
       <>
         <form>
@@ -33,6 +34,15 @@ export default class Form extends React.Component<IProps, IState> {
               value={agama.deskripsi}
               onChange={changeHandler("deskripsi")}
             />
+            {!errorAlerts.deskripsi?.religion ? (
+              <strong
+                className="text-red-600 text-xs font-normal"
+                id="title-error"
+                role="alert"
+              >
+                {errorAlerts.deskripsi?.message_religion}
+              </strong>
+            ) : null}
           </div>
         </form>
       </>

@@ -14,6 +14,7 @@ interface IState {
   showModal: boolean;
   showModalDelete: boolean;
   command: ECommand;
+  errorAlerts: any;
 }
 
 export default class Nilai extends React.Component<IProps, IState> {
@@ -22,6 +23,7 @@ export default class Nilai extends React.Component<IProps, IState> {
     this.state = {
       nilai: [],
       score: new ModelNilai(),
+      errorAlerts: { name: false },
       showModal: false,
       command: ECommand.create,
       showModalDelete: false,
@@ -124,6 +126,7 @@ export default class Nilai extends React.Component<IProps, IState> {
   setShowModal = (val: boolean) => {
     this.setState({
       showModal: val,
+      errorAlerts: { name: false },
     });
   };
 
@@ -134,11 +137,42 @@ export default class Nilai extends React.Component<IProps, IState> {
         [name]: event.target.value,
       },
     });
+    this.setState({
+      errorAlerts: {
+        ...this.state.errorAlerts,
+        [name]: !event.target.value,
+      },
+    });
   };
 
-  submitHandler = async () => {
+  submitHandler = async (event: any) => {
     const { command, score } = this.state;
     if (command == ECommand.create) {
+      event.preventDefault();
+      this.setState({
+        errorAlerts: {
+          id_Mahasiswa: {
+            nama: this.state.score.id_Mahasiswa > 0,
+            message_nama: "Nama tidak boleh kosong",
+          },
+          id_Ujian: {
+            ujian: this.state.score.id_Ujian > 0,
+            message_ujian: "Ujian tidak boleh kosong",
+          },
+          nilaiMahasiswa: {
+            nilai: this.state.score.nilaiMahasiswa > 0,
+            message_nilai: "Nilai tidak boleh kosong",
+          },
+        },
+      });
+      if (
+        this.state.score.id_Mahasiswa === 0 ||
+        this.state.score.id_Ujian === 0 ||
+        this.state.score.id_Ujian
+      ) {
+        return;
+      }
+
       await NilaiService.post(this.state.score)
         .then((result) => {
           if (result.success) {
@@ -190,8 +224,15 @@ export default class Nilai extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { nilai, pagination, showModal, score, command, showModalDelete } =
-      this.state;
+    const {
+      nilai,
+      pagination,
+      showModal,
+      score,
+      command,
+      showModalDelete,
+      errorAlerts,
+    } = this.state;
     const loopPages = () => {
       let content: any = [];
       for (let page = 1; page <= pagination.pages; page++) {
@@ -355,6 +396,7 @@ export default class Nilai extends React.Component<IProps, IState> {
                   <Form
                     nilai={score}
                     command={command}
+                    errorAlerts={errorAlerts}
                     changeHandler={this.changeHandler}
                   />
                 </div>
@@ -371,7 +413,9 @@ export default class Nilai extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Submit
                   </button>
@@ -413,7 +457,9 @@ export default class Nilai extends React.Component<IProps, IState> {
                   </button>
                   <button
                     className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                    onClick={() => this.submitHandler()}
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.submitHandler(event)
+                    }
                   >
                     Ya
                   </button>
