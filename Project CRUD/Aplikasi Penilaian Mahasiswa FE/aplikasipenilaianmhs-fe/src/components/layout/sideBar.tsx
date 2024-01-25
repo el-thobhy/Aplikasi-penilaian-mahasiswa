@@ -7,6 +7,7 @@ import { Agama } from "../agama";
 import { Dosen } from "../dosen";
 import { Nilai } from "../nilai";
 import { TypeDosen } from "../typedosen";
+import { Ujian } from "../ujian";
 
 export default class SideBar extends React.Component {
   render() {
@@ -93,6 +94,16 @@ export default class SideBar extends React.Component {
                     </span>
                   </a>
                 </li>
+                <li className="rounded-sm">
+                  <a
+                    href="#"
+                    className="flex items-center p-2 space-x-3 rounded-md"
+                  >
+                    <span className="text-gray-100">
+                      <Link to="/ujian">Ujian</Link>
+                    </span>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -106,6 +117,7 @@ export default class SideBar extends React.Component {
             <Route path="/dosen" Component={Dosen} />
             <Route path="/nilai" Component={Nilai} />
             <Route path="/typedosen" Component={TypeDosen} />
+            <Route path="/ujian" Component={Ujian} />
           </Routes>
         </div>
       </div>
