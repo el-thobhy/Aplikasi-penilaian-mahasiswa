@@ -12,6 +12,7 @@ interface IState {
   jurusan: ModelJurusan[];
   major: ModelJurusan;
   pagination: ModelPagination;
+  showModalDelete: boolean;
   showModal: boolean;
   command: ECommand;
 }
@@ -23,6 +24,7 @@ export default class Jurusan extends React.Component<IProps, IState> {
       jurusan: [],
       major: new ModelJurusan(),
       showModal: false,
+      showModalDelete: false,
       command: ECommand.create,
       pagination: new ModelPagination(),
     };
@@ -56,6 +58,29 @@ export default class Jurusan extends React.Component<IProps, IState> {
     // this.setShowModal(true);
   };
 
+  deleteCommand = async (id: number) => {
+    await JurusanService.getById(id)
+      .then((result) => {
+        if (result.success) {
+          this.setState({
+            showModalDelete: true,
+            major: result.result,
+            command: ECommand.changeStatus,
+          });
+        } else {
+          alert("Error result " + result.result);
+        }
+      })
+      .catch((error) => {
+        alert("Error error" + error);
+      });
+  };
+
+  setShowModalDelete = (val: boolean) => {
+    this.setState({
+      showModalDelete: val,
+    });
+  };
   changeSearch = (name: any) => (event: any) => {
     this.setState({
       pagination: {
@@ -147,11 +172,11 @@ export default class Jurusan extends React.Component<IProps, IState> {
           alert("Error error" + error);
         });
     } else if (command == ECommand.changeStatus) {
-      await JurusanService.changeStatus(major.id, major.is_delete)
+      await JurusanService.changeStatus(major.id, true)
         .then((result) => {
           if (result.success) {
             this.setState({
-              showModal: false,
+              showModalDelete: false,
               major: new ModelJurusan(),
             });
             this.loadJurusan();
@@ -166,7 +191,8 @@ export default class Jurusan extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { jurusan, pagination, showModal, command, major } = this.state;
+    const { jurusan, pagination, showModal, command, major, showModalDelete } =
+      this.state;
     const loopPages = () => {
       let content: any = [];
       for (let page = 1; page <= pagination.pages; page++) {
@@ -259,10 +285,10 @@ export default class Jurusan extends React.Component<IProps, IState> {
                         Edit
                       </button>
                       <button
-                        className="h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
-                        // onClick={() => this.changeStatusCommand(cat.id)}
+                        className="h-8 px-4 text-blue-100 transition-colors duration-150 bg-red-700 rounded-r-lg focus:shadow-outline hover:bg-red-800"
+                        onClick={() => this.deleteCommand(cat.id)}
                       >
-                        Status
+                        Hapus
                       </button>
                     </div>
                   </td>
@@ -343,6 +369,48 @@ export default class Jurusan extends React.Component<IProps, IState> {
                     onClick={() => this.submitHandler()}
                   >
                     Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+        {showModalDelete ? (
+          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl ">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none dark:bg-gray-900">
+                <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
+                  <h3 className="text-3xl text-gray-900 dark:text-white">
+                    Hapus
+                  </h3>
+                  <button
+                    className="bg-transparent border-0 text-black float-right"
+                    onClick={() => this.setShowModalDelete(false)}
+                  >
+                    <span className="text-black opacity-7 h-6 w-6 text-xl block bg-gray-400 py-0 rounded-full">
+                      x
+                    </span>
+                  </button>
+                </div>
+                <span className="text-white m-7">
+                  Anda Ingin menghapus {major.nama_Jurusan}
+                </span>
+                <div
+                  className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
+                  role="group"
+                  aria-label="Button group"
+                >
+                  <button
+                    className="my-8 justify-start h-8 px-4 text-green-100 transition-colors duration-150 bg-green-700 rounded-l-lg focus:shadow-outline hover:bg-green-800"
+                    onClick={() => this.setShowModalDelete(false)}
+                  >
+                    Tidak
+                  </button>
+                  <button
+                    className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
+                    onClick={() => this.submitHandler()}
+                  >
+                    Ya
                   </button>
                 </div>
               </div>

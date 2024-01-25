@@ -107,7 +107,7 @@ export const AgamaService = {
   },
   changeStatus: (id: number, status: boolean) => {
     const result = axios
-      .put(config.apiUrl + `/Agama/delete/${id}/${status}`)
+      .put(config.apiUrl + `/Agama/delete/${id}?status=${status}`)
       .then((respons) => {
         console.log(respons);
         return {

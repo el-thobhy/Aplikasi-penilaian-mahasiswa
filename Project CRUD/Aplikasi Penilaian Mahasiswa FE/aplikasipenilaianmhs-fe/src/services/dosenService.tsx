@@ -89,7 +89,7 @@ export const DosenService = {
   },
   changeStatus: (id: number, status: boolean) => {
     const result = axios
-      .put(config.apiUrl + `/Dosen/delete/${id}/${status}`)
+      .put(config.apiUrl + `/Dosen/delete/${id}?status=${status}`)
       .then((respons) => {
         console.log(respons);
         return {

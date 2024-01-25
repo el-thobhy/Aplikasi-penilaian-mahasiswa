@@ -106,7 +106,7 @@ export const UjianService = {
   },
   changeStatus: (id: number, status: boolean) => {
     const result = axios
-      .put(config.apiUrl + `/Ujian/delete/${id}/${status}`)
+      .put(config.apiUrl + `/Ujian/delete/${id}?status=${status}`)
       .then((respons) => {
         console.log(respons);
         return {

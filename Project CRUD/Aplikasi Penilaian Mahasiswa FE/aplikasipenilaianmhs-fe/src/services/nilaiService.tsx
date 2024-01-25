@@ -89,7 +89,7 @@ export const NilaiService = {
   },
   changeStatus: (id: number, status: boolean) => {
     const result = axios
-      .put(config.apiUrl + `/Nilai/delete/${id}/${status}`)
+      .put(config.apiUrl + `/Nilai/delete/${id}?status=${status}`)
       .then((respons) => {
         console.log(respons);
         return {

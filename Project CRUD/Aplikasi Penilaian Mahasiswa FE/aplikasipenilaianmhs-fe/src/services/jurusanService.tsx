@@ -105,7 +105,7 @@ export const JurusanService = {
   },
   changeStatus: (id: number, status: boolean) => {
     const result = axios
-      .put(config.apiUrl + `/Jurusan/delete/${id}/${status}`)
+      .put(config.apiUrl + `/Jurusan/delete/${id}?status=${status}`)
       .then((respons) => {
         console.log(respons);
         return {

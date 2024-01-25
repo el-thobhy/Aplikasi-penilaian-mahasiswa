@@ -108,7 +108,7 @@ export const MahasiswaService = {
   },
   changeStatus: (id: number, status: boolean) => {
     const result = axios
-      .put(config.apiUrl + `/Mahasiswa/delete/${id}/${status}`)
+      .put(config.apiUrl + `/Mahasiswa/delete/${id}?status=${status}`)
       .then((respons) => {
         console.log(respons);
         return {

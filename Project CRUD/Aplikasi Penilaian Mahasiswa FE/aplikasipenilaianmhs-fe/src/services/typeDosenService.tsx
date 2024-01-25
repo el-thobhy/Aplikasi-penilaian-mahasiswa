@@ -107,7 +107,7 @@ export const TypeDosenService = {
   },
   changeStatus: (id: number, status: boolean) => {
     const result = axios
-      .put(config.apiUrl + `/TypeDosen/delete/${id}/${status}`)
+      .put(config.apiUrl + `/TypeDosen/delete/${id}?status=${status}`)
       .then((respons) => {
         console.log(respons);
         return {
