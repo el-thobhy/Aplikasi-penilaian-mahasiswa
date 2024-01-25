@@ -68,7 +68,7 @@ export const NilaiService = {
     return result;
   },
   update: (id: number, Nilai: ModelNilai) => {
-    const { ...newNilai } = Nilai;
+    const { mahasiswa, ujian, ...newNilai } = Nilai;
     const result = axios
       .put(config.apiUrl + "/Nilai/" + id, newNilai)
       .then((respons) => {

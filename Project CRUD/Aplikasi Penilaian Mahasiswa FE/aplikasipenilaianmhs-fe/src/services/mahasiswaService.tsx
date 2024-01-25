@@ -47,6 +47,25 @@ export const MahasiswaService = {
       });
     return result;
   },
+
+  getAllMahasiswa: () => {
+    const result = axios
+      .get(config.apiUrl + "/Mahasiswa/GetAll")
+      .then((respons) => {
+        // console.log(respons);
+        return {
+          success: respons.status == 200,
+          result: respons.data,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          result: error,
+        };
+      });
+    return result;
+  },
   post: (Mahasiswa: ModelMahasiswa) => {
     const { jurusan, agama, id, is_delete, ...newMahasiswa } = Mahasiswa;
     const result = axios

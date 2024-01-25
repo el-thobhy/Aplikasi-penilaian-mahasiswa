@@ -47,6 +47,25 @@ export const UjianService = {
       });
     return result;
   },
+
+  getAllUjian: () => {
+    const result = axios
+      .get(config.apiUrl + "/Ujian/GetAll")
+      .then((respons) => {
+        // console.log(respons);
+        return {
+          success: respons.status == 200,
+          result: respons.data,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          result: error,
+        };
+      });
+    return result;
+  },
   post: (Ujian: ModelUjian) => {
     const result = axios
       .post(config.apiUrl + "/Ujian", Ujian)
