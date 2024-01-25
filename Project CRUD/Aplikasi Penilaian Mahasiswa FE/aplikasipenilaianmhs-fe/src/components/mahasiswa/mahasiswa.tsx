@@ -4,10 +4,12 @@ import { ECommand } from "../../enums/eCommand";
 import { ModelPagination } from "../../models/modelPagination";
 import { config } from "../../configurations/config";
 import { MahasiswaService } from "../../services/mahasiswaService";
+import Form from "./form";
 
 interface IProps {}
 interface IState {
   mahasiswa: ModelMahasiswa[];
+  student: ModelMahasiswa;
   pagination: ModelPagination;
   showModal: boolean;
   command: ECommand;
@@ -18,6 +20,7 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       mahasiswa: [],
+      student: new ModelMahasiswa(),
       showModal: false,
       command: ECommand.create,
       pagination: new ModelPagination(),
@@ -75,8 +78,94 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
     });
   };
 
+  updateCommand = async (id: number) => {
+    await MahasiswaService.getById(id)
+      .then((result) => {
+        if (result.success) {
+          this.setState({
+            showModal: true,
+            student: result.result,
+            command: ECommand.edit,
+          });
+        } else {
+          alert("Error result " + result.result);
+        }
+      })
+      .catch((error) => {
+        alert("Error error" + error);
+      });
+  };
+
+  setShowModal = (val: boolean) => {
+    this.setState({
+      showModal: val,
+    });
+  };
+
+  changeHandler = (name: any) => (event: any) => {
+    this.setState({
+      student: {
+        ...this.state.student,
+        [name]: event.target.value,
+      },
+    });
+  };
+
+  submitHandler = async () => {
+    const { command, student } = this.state;
+    if (command == ECommand.create) {
+      await MahasiswaService.post(this.state.student)
+        .then((result) => {
+          if (result.success) {
+            this.setState({
+              showModal: false,
+              student: new ModelMahasiswa(),
+            });
+            this.loadMahasiswa();
+          } else {
+            alert("Error result " + result.result);
+          }
+        })
+        .catch((error) => {
+          alert("Error error" + error);
+        });
+    } else if (command == ECommand.edit) {
+      await MahasiswaService.update(student.id, student)
+        .then((result) => {
+          if (result.success) {
+            this.setState({
+              showModal: false,
+              student: new ModelMahasiswa(),
+            });
+            this.loadMahasiswa();
+          } else {
+            alert("Error result " + result.result);
+          }
+        })
+        .catch((error) => {
+          alert("Error error" + error);
+        });
+    } else if (command == ECommand.changeStatus) {
+      await MahasiswaService.changeStatus(student.id, student.is_delete)
+        .then((result) => {
+          if (result.success) {
+            this.setState({
+              showModal: false,
+              student: new ModelMahasiswa(),
+            });
+            this.loadMahasiswa();
+          } else {
+            alert("Error result " + result.result);
+          }
+        })
+        .catch((error) => {
+          alert("Error error" + error);
+        });
+    }
+  };
+
   render() {
-    const { mahasiswa, pagination } = this.state;
+    const { mahasiswa, pagination, student, showModal, command } = this.state;
     const loopPages = () => {
       let content: any = [];
       for (let page = 1; page <= pagination.pages; page++) {
@@ -174,7 +263,7 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
                     >
                       <button
                         className="h-8 px-4 text-green-100 transition-colors duration-150 bg-green-700 rounded-l-lg focus:shadow-outline hover:bg-green-800"
-                        // onClick={() => this.updateCommand(cat.id)}
+                        onClick={() => this.updateCommand(cat.id)}
                       >
                         Edit
                       </button>
@@ -225,6 +314,52 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
             </tr>
           </tfoot>
         </table>
+        {showModal ? (
+          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl ">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none dark:bg-gray-900">
+                <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
+                  <h3 className="text-3xl text-gray-900 dark:text-white">
+                    {command.valueOf()}
+                  </h3>
+                  <button
+                    className="bg-transparent border-0 text-black float-right"
+                    onClick={() => this.setShowModal(false)}
+                  >
+                    <span className="text-black opacity-7 h-6 w-6 text-xl block bg-gray-400 py-0 rounded-full">
+                      x
+                    </span>
+                  </button>
+                </div>
+                <div className="relative p-6 flex-auto">
+                  <Form
+                    mahasiswa={student}
+                    command={command}
+                    changeHandler={this.changeHandler}
+                  />
+                </div>
+                <div
+                  className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
+                  role="group"
+                  aria-label="Button group"
+                >
+                  <button
+                    className="my-8 justify-start h-8 px-4 text-green-100 transition-colors duration-150 bg-green-700 rounded-l-lg focus:shadow-outline hover:bg-green-800"
+                    onClick={() => this.setShowModal(false)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="my-8 justify-start h-8 px-4 text-blue-100 transition-colors duration-150 bg-blue-700 rounded-r-lg focus:shadow-outline hover:bg-blue-800"
+                    onClick={() => this.submitHandler()}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }

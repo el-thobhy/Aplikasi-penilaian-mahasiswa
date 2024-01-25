@@ -29,6 +29,24 @@ export const JurusanService = {
       });
     return result;
   },
+  getAllJurusan: () => {
+    const result = axios
+      .get(config.apiUrl + "/Jurusan/GetAll")
+      .then((respons) => {
+        // console.log(respons);
+        return {
+          success: respons.status == 200,
+          result: respons.data,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          result: error,
+        };
+      });
+    return result;
+  },
   getById: (id: number) => {
     const result = axios
       .get(config.apiUrl + "/Jurusan/" + id)

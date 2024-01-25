@@ -13,7 +13,7 @@ export const AgamaService = {
           `/Agama/Search?pageNum=${pg.pageNum}&rows=${pg.rows}${searchStr}&orderBy=${pg.orderBy}&sort=${pg.sort}`
       )
       .then((respons) => {
-        console.log(respons);
+        // console.log(respons);
         return {
           success: respons.data.success,
           result: respons.data.data,
@@ -47,6 +47,26 @@ export const AgamaService = {
       });
     return result;
   },
+
+  getAllAgama: () => {
+    const result = axios
+      .get(config.apiUrl + "/Agama/GetAll")
+      .then((respons) => {
+        console.log(respons);
+        return {
+          success: respons.status == 200,
+          result: respons.data,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          result: error,
+        };
+      });
+    return result;
+  },
+
   post: (Agama: ModelAgama) => {
     const result = axios
       .post(config.apiUrl + "/Agama", Agama)
