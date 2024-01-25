@@ -216,7 +216,7 @@ export default class Nilai extends React.Component<IProps, IState> {
               <th scope="col" className="px-6 py-3 w-14 h-14">
                 Search:
               </th>
-              <th scope="col" className="px-6 py-3 w-14 h-14">
+              <th colSpan={2} scope="col" className="px-6 py-3 w-14 h-14">
                 <input
                   type="text"
                   id="search"
@@ -244,7 +244,6 @@ export default class Nilai extends React.Component<IProps, IState> {
                   <option value="1">Desc</option>
                 </select>
               </th>
-              <th></th>
             </tr>
             <tr className="border-b dark:bg-gray-900 dark:border-gray-700">
               <th scope="col" className="px-6 py-3 w-14 h-14">
