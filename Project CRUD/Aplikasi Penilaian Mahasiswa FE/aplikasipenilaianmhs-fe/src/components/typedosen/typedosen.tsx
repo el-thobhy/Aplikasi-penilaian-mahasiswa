@@ -50,7 +50,7 @@ export default class TypeDosen extends React.Component<IProps, IState> {
   createCommand = () => {
     this.setState({
       showModal: true,
-      typeDosen: [],
+      typeLecturer: new ModelTypeDosen(),
       command: ECommand.create,
     });
     // this.setShowModal(true);

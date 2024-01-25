@@ -50,7 +50,7 @@ export default class Jurusan extends React.Component<IProps, IState> {
   createCommand = () => {
     this.setState({
       showModal: true,
-      jurusan: [],
+      major: new ModelJurusan(),
       command: ECommand.create,
     });
     // this.setShowModal(true);

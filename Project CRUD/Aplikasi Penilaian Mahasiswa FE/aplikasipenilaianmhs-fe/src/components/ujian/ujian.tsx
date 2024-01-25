@@ -50,7 +50,7 @@ export default class Ujian extends React.Component<IProps, IState> {
   createCommand = () => {
     this.setState({
       showModal: true,
-      ujian: [],
+      exam: new ModelUjian(),
       command: ECommand.create,
     });
     // this.setShowModal(true);

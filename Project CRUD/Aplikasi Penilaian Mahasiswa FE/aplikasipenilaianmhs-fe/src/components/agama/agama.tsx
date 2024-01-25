@@ -49,7 +49,7 @@ export default class Agama extends React.Component<IProps, IState> {
   createCommand = () => {
     this.setState({
       showModal: true,
-      agama: [],
+      religion: new ModelAgama(),
       command: ECommand.create,
     });
     // this.setShowModal(true);

@@ -49,7 +49,7 @@ export default class Dosen extends React.Component<IProps, IState> {
   createCommand = () => {
     this.setState({
       showModal: true,
-      dosen: [],
+      lecturer: new ModelDosen(),
       command: ECommand.create,
     });
     // this.setShowModal(true);

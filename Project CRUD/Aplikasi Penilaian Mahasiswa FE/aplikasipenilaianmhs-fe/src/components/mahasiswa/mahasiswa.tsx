@@ -49,7 +49,7 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
   createCommand = () => {
     this.setState({
       showModal: true,
-      mahasiswa: [],
+      student: new ModelMahasiswa(),
       command: ECommand.create,
     });
     // this.setShowModal(true);

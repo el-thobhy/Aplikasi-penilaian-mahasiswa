@@ -49,7 +49,7 @@ export default class Nilai extends React.Component<IProps, IState> {
   createCommand = () => {
     this.setState({
       showModal: true,
-      nilai: [],
+      score: new ModelNilai(),
       command: ECommand.create,
     });
     // this.setShowModal(true);
