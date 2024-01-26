@@ -5,6 +5,7 @@ import { ModelDosen } from "../../models/modelDosen";
 import { ModelPagination } from "../../models/modelPagination";
 import { DosenService } from "../../services/dosenService";
 import Form from "./form";
+import { ValidationResult } from "../../validations/validationResult";
 
 interface IProps {}
 interface IState {
@@ -152,16 +153,16 @@ export default class Dosen extends React.Component<IProps, IState> {
       this.setState({
         errorAlerts: {
           nama_Dosen: {
-            nama: this.state.lecturer.nama_Dosen.trim().length > 0,
-            message_nama: "Nama tidak boleh kosong",
+            valid: this.state.lecturer.nama_Dosen.trim().length > 0,
+            message: "Nama tidak boleh kosong",
           },
           id_Jurusan: {
-            jurusan: this.state.lecturer.id_Jurusan > 0,
-            message_jurusan: "Jurusan tidak boleh kosong",
+            valid: this.state.lecturer.id_Jurusan > 0,
+            message: "Jurusan tidak boleh kosong",
           },
           id_Type_Dosen: {
-            type: this.state.lecturer.id_Type_Dosen > 0,
-            message_type: "Type Dosen tidak boleh kosong",
+            valid: this.state.lecturer.id_Type_Dosen > 0,
+            message: "Type Dosen tidak boleh kosong",
           },
         },
       });
@@ -182,7 +183,9 @@ export default class Dosen extends React.Component<IProps, IState> {
             });
             this.loadDosen();
           } else {
-            alert("Error result " + result.result);
+            this.setState({
+              errorAlerts: ValidationResult.Validate(result.result),
+            });
           }
         })
         .catch((error) => {

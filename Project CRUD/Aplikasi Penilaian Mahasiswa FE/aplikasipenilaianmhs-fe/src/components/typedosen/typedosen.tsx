@@ -6,6 +6,7 @@ import { ModelTypeDosen } from "../../models/modelTypeDosen";
 import { ECommand } from "../../enums/eCommand";
 import { config } from "../../configurations/config";
 import Form from "./form";
+import { ValidationResult } from "../../validations/validationResult";
 
 interface IProps {}
 interface IState {
@@ -153,8 +154,8 @@ export default class TypeDosen extends React.Component<IProps, IState> {
       this.setState({
         errorAlerts: {
           deskripsi: {
-            deskripsi: this.state.typeLecturer.deskripsi.trim().length > 0,
-            message_deskripsi: "Deskripsi tidak boleh kosong",
+            valid: this.state.typeLecturer.deskripsi.trim().length > 0,
+            message: "Deskripsi tidak boleh kosong",
           },
         },
       });
@@ -171,7 +172,9 @@ export default class TypeDosen extends React.Component<IProps, IState> {
             });
             this.loadTypeDosen();
           } else {
-            alert("Error result " + result.result);
+            this.setState({
+              errorAlerts: ValidationResult.Validate(result.result),
+            });
           }
         })
         .catch((error) => {

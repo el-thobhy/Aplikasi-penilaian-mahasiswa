@@ -6,6 +6,7 @@ import { ModelJurusan } from "../../models/modelJurusan";
 import { ECommand } from "../../enums/eCommand";
 import { config } from "../../configurations/config";
 import Form from "./form";
+import { ValidationResult } from "../../validations/validationResult";
 
 interface IProps {}
 interface IState {
@@ -153,12 +154,12 @@ export default class Jurusan extends React.Component<IProps, IState> {
       this.setState({
         errorAlerts: {
           nama_Jurusan: {
-            nama: this.state.major.nama_Jurusan.trim().length > 0,
-            message_nama: "Nama tidak boleh kosong",
+            valid: this.state.major.nama_Jurusan.trim().length > 0,
+            message: "Nama tidak boleh kosong",
           },
           status_Jurusan: {
-            status: this.state.major.status_Jurusan.trim().length > 0,
-            message_status: "Status tidak boleh kosong",
+            valid: this.state.major.status_Jurusan.trim().length > 0,
+            message: "Status tidak boleh kosong",
           },
         },
       });
@@ -178,7 +179,9 @@ export default class Jurusan extends React.Component<IProps, IState> {
             });
             this.loadJurusan();
           } else {
-            alert("Error result " + result.result);
+            this.setState({
+              errorAlerts: ValidationResult.Validate(result.result),
+            });
           }
         })
         .catch((error) => {

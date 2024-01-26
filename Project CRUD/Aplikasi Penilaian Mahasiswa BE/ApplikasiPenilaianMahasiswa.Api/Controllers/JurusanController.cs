@@ -1,5 +1,7 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
 using ApplikasiPenilaianMahasiswa.Api.Repositories;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel;
@@ -11,15 +13,30 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
     public class JurusanController : ControllerBase
     {
         private JurusanRepositories _repo;
-        public JurusanController(MahasiswaDbContext dbContext)
+        private IValidator<JurusanViewModel> _validator;
+        public JurusanController(MahasiswaDbContext dbContext, IValidator<JurusanViewModel> validator)
         {
             _repo = new JurusanRepositories(dbContext);
+            _validator = validator;
         }
 
         [HttpPost]
-        public async Task<JurusanViewModel> Post(JurusanViewModel model)
+        public async Task<IActionResult> Post(JurusanViewModel model)
         {
-            return _repo.Create(model);
+            try
+            {
+                ValidationResult result = await _validator.ValidateAsync(model);
+                if (!result.IsValid)
+                {
+                    return BadRequest(result.Errors);
+                }
+                return Ok(_repo.Create(model));
+            }
+            catch (Exception)
+            {
+                //throw;
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetAll")]

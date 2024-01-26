@@ -5,6 +5,7 @@ import { ModelAgama } from "../../models/modelAgama";
 import { ModelPagination } from "../../models/modelPagination";
 import { AgamaService } from "../../services/agamaService";
 import Form from "./form";
+import { ValidationResult } from "../../validations/validationResult";
 
 interface IProps {}
 interface IState {
@@ -154,8 +155,8 @@ export default class Agama extends React.Component<IProps, IState> {
       this.setState({
         errorAlerts: {
           deskripsi: {
-            religion: this.state.religion.deskripsi.trim().length > 0,
-            message_religion: "Deskripsi tidak boleh kosong",
+            valid: this.state.religion.deskripsi.trim().length > 0,
+            message: "Deskripsi tidak boleh kosong",
           },
         },
       });
@@ -172,7 +173,9 @@ export default class Agama extends React.Component<IProps, IState> {
             });
             this.loadAgama();
           } else {
-            alert("Error result " + result.result);
+            this.setState({
+              errorAlerts: ValidationResult.Validate(result.result),
+            });
           }
         })
         .catch((error) => {

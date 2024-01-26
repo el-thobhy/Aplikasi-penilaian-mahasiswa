@@ -74,6 +74,7 @@ export const AgamaService = {
         console.log(respons);
         return {
           success: respons.status == 200,
+          status: respons.status,
           result: respons.data,
         };
       })
@@ -81,7 +82,8 @@ export const AgamaService = {
         // console.log(error);
         return {
           success: false,
-          result: error,
+          status: error.response.status,
+          result: error.response.data,
         };
       });
     return result;

@@ -34,13 +34,13 @@ export default class Form extends React.Component<IProps, IState> {
               value={agama.deskripsi}
               onChange={changeHandler("deskripsi")}
             />
-            {!errorAlerts.deskripsi?.religion ? (
+            {!errorAlerts.deskripsi?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.deskripsi?.message_religion}
+                {errorAlerts.deskripsi?.message}
               </strong>
             ) : null}
           </div>

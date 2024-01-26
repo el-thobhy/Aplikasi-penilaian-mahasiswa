@@ -6,6 +6,7 @@ import { ModelUjian } from "../../models/modelUjian";
 import { ECommand } from "../../enums/eCommand";
 import { config } from "../../configurations/config";
 import Form from "./form";
+import { ValidationResult } from "../../validations/validationResult";
 
 interface IProps {}
 interface IState {
@@ -153,12 +154,12 @@ export default class Ujian extends React.Component<IProps, IState> {
       this.setState({
         errorAlerts: {
           nama_Ujian: {
-            nama: this.state.exam.nama_Ujian.trim().length > 0,
-            message_nama: "Nama tidak boleh kosong",
+            valid: this.state.exam.nama_Ujian.trim().length > 0,
+            message: "Nama tidak boleh kosong",
           },
           status_Ujian: {
-            status: this.state.exam.status_Ujian.trim().length > 0,
-            message_status: "Status tidak boleh kosong",
+            valid: this.state.exam.status_Ujian.trim().length > 0,
+            message: "Status tidak boleh kosong",
           },
         },
       });
@@ -178,7 +179,9 @@ export default class Ujian extends React.Component<IProps, IState> {
             });
             this.loadUjian();
           } else {
-            alert("Error result " + result.result);
+            this.setState({
+              errorAlerts: ValidationResult.Validate(result.result),
+            });
           }
         })
         .catch((error) => {

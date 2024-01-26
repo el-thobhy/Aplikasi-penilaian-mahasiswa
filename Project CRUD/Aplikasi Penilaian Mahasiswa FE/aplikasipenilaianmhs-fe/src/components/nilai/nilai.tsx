@@ -152,16 +152,16 @@ export default class Nilai extends React.Component<IProps, IState> {
       this.setState({
         errorAlerts: {
           id_Mahasiswa: {
-            nama: this.state.score.id_Mahasiswa > 0,
-            message_nama: "Nama tidak boleh kosong",
+            valid: this.state.score.id_Mahasiswa > 0,
+            message: "Nama tidak boleh kosong",
           },
           id_Ujian: {
-            ujian: this.state.score.id_Ujian > 0,
-            message_ujian: "Ujian tidak boleh kosong",
+            valid: this.state.score.id_Ujian > 0,
+            message: "Ujian tidak boleh kosong",
           },
           nilaiMahasiswa: {
-            nilai: this.state.score.nilaiMahasiswa > 0,
-            message_nilai: "Nilai tidak boleh kosong",
+            valid: this.state.score.nilaiMahasiswa > 0,
+            message: "Nilai tidak boleh kosong",
           },
         },
       });

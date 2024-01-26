@@ -151,20 +151,20 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
       this.setState({
         errorAlerts: {
           nama_Mahasiswa: {
-            nama: this.state.student.nama_Mahasiswa.trim().length > 0,
-            message_nama: "Nama tidak boleh kosong",
+            valid: this.state.student.nama_Mahasiswa.trim().length > 0,
+            message: "Nama tidak boleh kosong",
           },
           alamat: {
-            alamat: this.state.student.alamat.trim().length > 0,
-            message_alamat: "Alamat tidak boleh kosong",
+            valid: this.state.student.alamat.trim().length > 0,
+            message: "Alamat tidak boleh kosong",
           },
           id_Agama: {
-            agama: this.state.student.id_Agama > 0,
-            message_agama: "Agama tidak boleh kosong",
+            valid: this.state.student.id_Agama > 0,
+            message: "Agama tidak boleh kosong",
           },
           id_Jurusan: {
-            jurusan: this.state.student.id_Jurusan > 0,
-            message_jurusan: "Jurusan tidak boleh kosong",
+            valid: this.state.student.id_Jurusan > 0,
+            message: "Jurusan tidak boleh kosong",
           },
         },
       });

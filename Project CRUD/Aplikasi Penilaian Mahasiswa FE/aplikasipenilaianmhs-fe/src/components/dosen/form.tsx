@@ -75,13 +75,13 @@ export default class Form extends React.Component<IProps, IState> {
               value={dosen.nama_Dosen}
               onChange={changeHandler("nama_Dosen")}
             />
-            {!errorAlerts.nama_Dosen?.nama ? (
+            {!errorAlerts.nama_Dosen?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.nama_Dosen?.message_nama}
+                {errorAlerts.nama_Dosen?.message}
               </strong>
             ) : null}
           </div>
@@ -102,13 +102,13 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.nama_Jurusan}</option>;
               })}
             </select>
-            {!errorAlerts.id_Jurusan?.jurusan ? (
+            {!errorAlerts.id_Jurusan?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.id_Jurusan?.message_jurusan}
+                {errorAlerts.id_Jurusan?.message}
               </strong>
             ) : null}
           </div>
@@ -129,13 +129,13 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.deskripsi}</option>;
               })}
             </select>
-            {!errorAlerts.id_Type_Dosen?.type ? (
+            {!errorAlerts.id_Type_Dosen?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.id_Type_Dosen?.message_type}
+                {errorAlerts.id_Type_Dosen?.message}
               </strong>
             ) : null}
           </div>

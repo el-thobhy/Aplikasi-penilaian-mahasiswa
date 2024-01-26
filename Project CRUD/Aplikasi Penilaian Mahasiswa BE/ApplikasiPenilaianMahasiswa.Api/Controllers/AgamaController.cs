@@ -1,5 +1,7 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
 using ApplikasiPenilaianMahasiswa.Api.Repositories;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel;
@@ -11,15 +13,30 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
     public class AgamaController : ControllerBase
     {
         private AgamaRepositories _repo;
-        public AgamaController(MahasiswaDbContext dbContext)
+        private IValidator<AgamaViewModel> _validator;
+        public AgamaController(MahasiswaDbContext dbContext, IValidator<AgamaViewModel> validator)
         {
             _repo = new AgamaRepositories(dbContext);
+            _validator = validator;
         }
 
         [HttpPost]
-        public async Task<AgamaViewModel> Post(AgamaViewModel model)
+        public async Task<IActionResult> Post(AgamaViewModel model)
         {
-            return _repo.Create(model);
+            try
+            {
+                ValidationResult result = await _validator.ValidateAsync(model);
+                if (!result.IsValid)
+                {
+                    return BadRequest(result.Errors);
+                }
+                return Ok(_repo.Create(model));
+            }
+            catch (Exception)
+            {
+                //throw;
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetAll")]

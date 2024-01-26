@@ -73,13 +73,13 @@ export default class Form extends React.Component<IProps, IState> {
               value={mahasiswa.nama_Mahasiswa}
               onChange={changeHandler("nama_Mahasiswa")}
             />
-            {!errorAlerts.nama_Mahasiswa?.nama ? (
+            {!errorAlerts.nama_Mahasiswa?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.nama_Mahasiswa?.message_nama}
+                {errorAlerts.nama_Mahasiswa?.message}
               </strong>
             ) : null}
           </div>
@@ -96,13 +96,13 @@ export default class Form extends React.Component<IProps, IState> {
               value={mahasiswa.alamat}
               onChange={changeHandler("alamat")}
             />
-            {!errorAlerts.alamat?.alamat ? (
+            {!errorAlerts.alamat?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.alamat?.message_alamat}
+                {errorAlerts.alamat?.message}
               </strong>
             ) : null}
           </div>
@@ -123,13 +123,13 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.deskripsi}</option>;
               })}
             </select>
-            {!errorAlerts.id_Agama?.agama ? (
+            {!errorAlerts.id_Agama?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.id_Agama?.message_agama}
+                {errorAlerts.id_Agama?.message}
               </strong>
             ) : null}
           </div>
@@ -150,13 +150,13 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.nama_Jurusan}</option>;
               })}
             </select>
-            {!errorAlerts.id_Jurusan?.jurusan ? (
+            {!errorAlerts.id_Jurusan?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.id_Jurusan?.message_jurusan}
+                {errorAlerts.id_Jurusan?.message}
               </strong>
             ) : null}
           </div>

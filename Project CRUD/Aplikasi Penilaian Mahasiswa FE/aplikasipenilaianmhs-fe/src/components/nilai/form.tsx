@@ -77,13 +77,13 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.nama_Mahasiswa}</option>;
               })}
             </select>
-            {!errorAlerts.id_Mahasiswa?.nama ? (
+            {!errorAlerts.id_Mahasiswa?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.id_Mahasiswa?.message_nama}
+                {errorAlerts.id_Mahasiswa?.message}
               </strong>
             ) : null}
           </div>
@@ -104,13 +104,13 @@ export default class Form extends React.Component<IProps, IState> {
                 return <option value={o.id}>{o.nama_Ujian}</option>;
               })}
             </select>
-            {!errorAlerts.id_Ujian?.ujian ? (
+            {!errorAlerts.id_Ujian?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.id_Ujian?.message_ujian}
+                {errorAlerts.id_Ujian?.message}
               </strong>
             ) : null}
           </div>
@@ -127,13 +127,13 @@ export default class Form extends React.Component<IProps, IState> {
               value={nilai.nilaiMahasiswa}
               onChange={changeHandler("nilaiMahasiswa")}
             />
-            {!errorAlerts.nilaiMahasiswa?.nilai ? (
+            {!errorAlerts.nilaiMahasiswa?.valid ? (
               <strong
                 className="text-red-600 text-xs font-normal"
                 id="title-error"
                 role="alert"
               >
-                {errorAlerts.nilaiMahasiswa?.message_nilai}
+                {errorAlerts.nilaiMahasiswa?.message}
               </strong>
             ) : null}
           </div>

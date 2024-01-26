@@ -1,5 +1,7 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
 using ApplikasiPenilaianMahasiswa.Api.Repositories;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel;
@@ -11,15 +13,30 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
     public class DosenController : ControllerBase
     {
         private DosenRepositories _repo;
-        public DosenController(MahasiswaDbContext dbContext)
+        private IValidator<DosenViewModel> _validator;
+        public DosenController(MahasiswaDbContext dbContext, IValidator<DosenViewModel> validator)
         {
             _repo = new DosenRepositories(dbContext);
+            _validator = validator;
         }
 
         [HttpPost]
-        public async Task<DosenViewModel> Post(DosenViewModel model)
+        public async Task<IActionResult> Post(DosenViewModel model)
         {
-            return _repo.Create(model);
+            try
+            {
+                ValidationResult result = await _validator.ValidateAsync(model);
+                if (!result.IsValid)
+                {
+                    return BadRequest(result.Errors);
+                }
+                return Ok(_repo.Create(model));
+            }
+            catch (Exception)
+            {
+                //throw;
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetAll")]
