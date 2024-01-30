@@ -244,8 +244,8 @@ export default class Dosen extends React.Component<IProps, IState> {
       return content;
     };
     return (
-      <div className="overflow-auto h-screen">
-        <div className="text-left text-3xl pt-5">Dosen</div>
+      <div className="h-full mb-3 me-3">
+        <div className="text-left text-3xl pt-5 text-white">Dosen</div>
         <div className="flex" aria-label="Button">
           <button
             className="my-8 justify-start h-8 px-4 text-green-100 transition-colors duration-150 bg-green-700 rounded focus:shadow-outline hover:bg-green-800"
@@ -257,7 +257,7 @@ export default class Dosen extends React.Component<IProps, IState> {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="border-b dark:bg-gray-900 dark:border-gray-700">
-              <th scope="col" className="px-6 py-3 w-14 h-14">
+              <th scope="col" className="px-6 py-3 w-14 h-14 rounded-tl-3xl">
                 Search:
               </th>
               <th colSpan={2} scope="col" className="px-6 py-3 w-14 h-14">
@@ -289,7 +289,7 @@ export default class Dosen extends React.Component<IProps, IState> {
                 </select>
               </th>
               <th></th>
-              <th></th>
+              <th className=" rounded-tr-3xl"></th>
             </tr>
             <tr className="border-b dark:bg-gray-900 dark:border-gray-700">
               <th scope="col" className="px-6 py-3 w-14 h-14">
@@ -354,7 +354,7 @@ export default class Dosen extends React.Component<IProps, IState> {
           </tbody>
           <tfoot className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="border-b dark:bg-gray-900 dark:border-gray-700">
-              <th scope="col" className="px-6 py-3 w-14 h-14">
+              <th scope="col" className="px-6 py-3 w-14 h-14 rounded-bl-3xl">
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Rows per page:{" "}
                 </label>
@@ -384,7 +384,7 @@ export default class Dosen extends React.Component<IProps, IState> {
               </th>
               <th></th>
               <th></th>
-              <th></th>
+              <th className="rounded-br-3xl"></th>
             </tr>
           </tfoot>
         </table>
