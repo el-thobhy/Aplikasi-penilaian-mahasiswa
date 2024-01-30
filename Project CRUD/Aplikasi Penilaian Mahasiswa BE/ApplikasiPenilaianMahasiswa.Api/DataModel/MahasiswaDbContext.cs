@@ -16,7 +16,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
         public DbSet<TypeDosen> TypeDosens { get; set; }
         public DbSet<Dosen> Dosens { get; set; }
         public DbSet<Nilai> Nilais { get; set; }
-
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<RoleGroup> RoleGroups { get; set; }
+        public DbSet<AuthorizationGroup> AuthorizationGroups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -101,6 +103,21 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
             modelBuilder.Entity<Nilai>()
                 .Property(o => o.NilaiMahasiswa)
                 .HasColumnType("decimal(8,2)");
+
+
+
+            modelBuilder.Entity<Account>()
+                .HasIndex(o => o.UserName)
+                .IsUnique();
+            modelBuilder.Entity<Account>()
+                .Property(o => o.Email)
+                .HasDefaultValue("auriwanyasper@gmail.com");
+            modelBuilder.Entity<Account>()
+                .Property(o => o.Otp)
+                .HasColumnType("char(6)");
+            modelBuilder.Entity<RoleGroup>()
+              .HasIndex(o => o.GroupName)
+              .IsUnique();
 
         }
 
@@ -437,6 +454,55 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Created_by = 1,
                     Created_on = DateTime.Now
                 }
+                );
+
+            modelBuilder.Entity<RoleGroup>()
+                .HasData(
+                new RoleGroup { Id = 1, GroupName = "Admin", Created_by = 1, Created_on = DateTime.Now },
+                new RoleGroup { Id = 2, GroupName = "Dosen", Created_by = 1, Created_on = DateTime.Now },
+                new RoleGroup { Id = 3, GroupName = "Mahasiswa", Created_by = 1, Created_on = DateTime.Now }
+                );
+            modelBuilder.Entity<Account>()
+                .HasData(
+                new Account
+                {
+                    Id = 1,
+                    UserName = "admin",
+                    //admin1234
+                    Password = "ac9689e2272427085e35b9d3e3e8bed88cb3434828b43b86fc0596cad4c6e270",
+                    FirstName = "Super",
+                    LastName = "Admin",
+                    Email = "auriwanyasper@gmail.com",
+                    Is_delete = false,
+                    RoleGroupId = 1,
+                    Created_by = 1,
+                    Created_on = DateTime.Now
+                },
+                new Account
+                {
+                    Id = 2,
+                    UserName = "dosen",
+                    //dosen1234
+                    Password = "c431bffe6c2cf3b69ad2e9cbbe9806835dbced7c97b9d3f946387ee92eb17018",
+                    FirstName = "dosen",
+                    LastName = "tes",
+                    Email = "auriwanyasper@gmail.com",
+                    Is_delete = false,
+                    RoleGroupId = 2,
+                    Created_by = 1,
+                    Created_on = DateTime.Now
+                }
+                );
+
+            modelBuilder.Entity<AuthorizationGroup>()
+                .HasData(
+                new AuthorizationGroup {Id = 1, Role = "jurusan", RoleGroupId = 1, Created_by = 1, Created_on = DateTime.Now},
+                new AuthorizationGroup {Id = 2,Role = "mahasiswa",RoleGroupId = 1,Created_by = 1,Created_on = DateTime.Now},
+                new AuthorizationGroup {Id = 3,Role = "agama",RoleGroupId = 1,Created_by = 1,Created_on = DateTime.Now},
+                new AuthorizationGroup {Id = 4,Role = "dosen",RoleGroupId = 1,Created_by = 1,Created_on = DateTime.Now},
+                new AuthorizationGroup {Id = 5,Role = "nilai",RoleGroupId = 1,Created_by = 1,Created_on = DateTime.Now},
+                new AuthorizationGroup {Id = 6,Role = "typedosen",RoleGroupId = 1,Created_by = 1,Created_on = DateTime.Now},
+                new AuthorizationGroup {Id = 7,Role = "ujian",RoleGroupId = 1,Created_by = 1,Created_on = DateTime.Now}
                 );
         }
     }

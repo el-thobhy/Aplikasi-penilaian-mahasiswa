@@ -11,16 +11,51 @@ import { Ujian } from "../ujian";
 import { config } from "../../configurations/config";
 import {
   FaBook,
+  FaClosedCaptioning,
   FaGraduationCap,
   FaHome,
   FaUserGraduate,
 } from "react-icons/fa";
 import { BsFillMoonStarsFill } from "react-icons/bs";
-import { MdCategory, MdCreditScore } from "react-icons/md";
+import { MdCategory, MdClose, MdCreditScore } from "react-icons/md";
 import { GrTest } from "react-icons/gr";
+import { AccountModel } from "../../models/modelAccount";
+import { withRouter } from "./withRouter";
+import Authentiaction from "../auth/authentiaction";
+import { AiOutlineClose } from "react-icons/ai";
+import { AuthService } from "../../services/authService";
 
-export default class SideBar extends React.Component {
+interface IProps {
+  logged: boolean;
+  changeLoggedHandler: any;
+  user: AccountModel;
+  navigate: any;
+}
+interface IState {
+  showModalLogin: boolean;
+}
+
+class SideBar extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      showModalLogin: false,
+    };
+  }
+  setShowModal = (val: boolean) => {
+    this.setState({
+      showModalLogin: val,
+    });
+  };
+
+  logoutBtn = () => {
+    AuthService.logout();
+    this.props.navigate("/");
+    window.location.reload();
+  };
   render() {
+    const { showModalLogin } = this.state;
+    const { changeLoggedHandler, logged, user } = this.props;
     return (
       <div className="w-full h-screen flex bg-gray-700">
         <div className="flex flex-col h-auto p-3 m-3 rounded-3xl bg-gray-800 w-60 shadow-xl">
@@ -37,9 +72,18 @@ export default class SideBar extends React.Component {
                 // alt={`${account.fullName}'s profile`}
                 className="w-10 h-10 object-cover rounded-full border border-blue-700 p-1 mb-1"
               />
-              <h2 className="text-white items-center justify-center ps-3 pb-2">
-                Hi Guest
-              </h2>
+              {logged ? (
+                <h2 className="text-white items-center justify-center ps-3 pb-2">
+                  {user.firstName}
+                </h2>
+              ) : (
+                <button
+                  onClick={() => this.setShowModal(true)}
+                  className="bg-blue-800 rounded-3xl w-full m-2 p-1 text-white font-bold"
+                >
+                  Login
+                </button>
+              )}
             </div>
             {/* ) : null} */}
             <div className="flex-1">
@@ -136,8 +180,38 @@ export default class SideBar extends React.Component {
                 </li>
               </ul>
             </div>
+            {logged ? (
+              <button
+                onClick={this.logoutBtn}
+                className="bg-red-800 rounded-3xl w-full p-1 text-white font-bold"
+              >
+                Logout
+              </button>
+            ) : null}
           </div>
         </div>
+        {showModalLogin ? (
+          <div className="items-center fixed inset-0 z-50 outline-none focus:outline-none ">
+            <div className="w-full h-screen flex justify-center items-center">
+              <div>
+                <div className="h-full p-3 bg-white rounded-2xl shadow-lg ">
+                  <button onClick={() => this.setShowModal(false)}>
+                    <AiOutlineClose className="justify-center text-black text-3xl" />
+                  </button>
+                  <div className="flex items-center justify-center">
+                    <h2 className="text-xl font-bold text-black">SIAK-</h2>
+                    <h2 className="text-xl font-bold text-blue-600">MHS</h2>
+                  </div>
+                  <Authentiaction
+                    setShowModal={this.setShowModal}
+                    changeLoggedHandler={changeLoggedHandler}
+                    logged={logged}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
         <div className="w-full grid grid-cols-1 gap-3 overflow-auto h-screen text-center">
           <Routes>
             <Route path="/" Component={Home} />
@@ -154,3 +228,5 @@ export default class SideBar extends React.Component {
     );
   }
 }
+
+export default withRouter(SideBar);
