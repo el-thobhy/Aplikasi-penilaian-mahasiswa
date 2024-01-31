@@ -19,11 +19,22 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
         private IConfiguration _configuration;
         private AccountRepositories _repo;
         private IValidator<LoginViewModel> _validator;
-        public AccountController(MahasiswaDbContext dbContext, IConfiguration configuration, IValidator<LoginViewModel> validator)
+        private IValidator<string> _validatorEmail;
+        private IValidator<AccountViewModel> _validatorOtp;
+
+        public AccountController(
+            MahasiswaDbContext dbContext, 
+            IConfiguration configuration, 
+            IValidator<LoginViewModel> validator, 
+            IValidator<string> validatorEmail, 
+            IValidator<AccountViewModel> validatorOtp)
         {
             _repo = new AccountRepositories(dbContext, configuration);
             _configuration = configuration;
             _validator = validator;
+            _validatorEmail = validatorEmail;
+            _validatorOtp = validatorOtp;
+
         }
 
         [HttpPost("login")]
@@ -51,7 +62,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
                     }
 
                     var token = GetToken(claims);
-                    result.Token = new JwtSecurityTokenHandler().WriteToken(token);
+                    result.Otp = new JwtSecurityTokenHandler().WriteToken(token);
                     return Ok(result);
                 }
                 else
@@ -81,5 +92,52 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
 
             return token;
         }
+
+        [HttpPost("SendOtp")]
+        public async Task<IActionResult> Post(string email)
+        {
+            OtpViewModel result = _repo.SendOtp(email);
+            ValidationResult validate = await _validatorEmail.ValidateAsync(email);
+            if (!validate.IsValid)
+            {
+                return BadRequest(validate.Errors);
+            }
+            else
+            {
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+        [HttpPost("VerifikasiOtp")]
+        public async Task<IActionResult> Verifikasi(string Otp)
+        {
+            OtpViewModel result = _repo.VerifikasiOtp(Otp);
+            AccountViewModel account = new AccountViewModel();
+            account.Otp = Otp;
+            ValidationResult validate = await _validatorOtp.ValidateAsync(account);
+            if (!validate.IsValid)
+            {
+                return BadRequest(validate.Errors);
+            }
+            else
+            {
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound(result);
+                }
+            }
+        }
+
     }
 }

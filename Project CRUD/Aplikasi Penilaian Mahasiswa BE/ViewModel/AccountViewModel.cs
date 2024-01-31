@@ -24,7 +24,7 @@ namespace ViewModel
         public string LastName { get; set; }
         public string Email { get; set; }
         public bool Is_delete { get; set; }
-        public string Token { get; set; }
+        public string Otp { get; set; }
         public List<string> Roles { get; set; }
     }
 }

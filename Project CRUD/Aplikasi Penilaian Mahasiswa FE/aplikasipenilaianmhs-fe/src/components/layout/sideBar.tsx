@@ -198,10 +198,6 @@ class SideBar extends React.Component<IProps, IState> {
                   <button onClick={() => this.setShowModal(false)}>
                     <AiOutlineClose className="justify-center text-black text-3xl" />
                   </button>
-                  <div className="flex items-center justify-center">
-                    <h2 className="text-xl font-bold text-black">SIAK-</h2>
-                    <h2 className="text-xl font-bold text-blue-600">MHS</h2>
-                  </div>
                   <Authentiaction
                     setShowModal={this.setShowModal}
                     changeLoggedHandler={changeLoggedHandler}

@@ -57,4 +57,50 @@ export const AuthService = {
       roles: roles || [],
     };
   },
+  forgot: (email: string) => {
+    var result = axios
+      .post(
+        config.apiUrl + "/Account/SendOtp?email=" + email.replace("@", "%40")
+      )
+      .then((respons) => {
+        const account: AccountModel = respons.data;
+
+        console.log(account.roles);
+        console.log(JSON.stringify(account.roles));
+        return {
+          success: respons.status === 200,
+          status: respons.status,
+          result: respons.data,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          status: error.response.status,
+          result: error.response.data,
+          message: error.response.data,
+        };
+      });
+    return result;
+  },
+  verifikasiOtp: (otp: string) => {
+    var result = axios
+      .post(config.apiUrl + "/Account/VerifikasiOtp?Otp=" + otp)
+      .then((respons) => {
+        return {
+          success: respons.status === 200,
+          status: respons.status,
+          result: respons.data,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          status: error.response.status,
+          result: error.response.data,
+          message: error.response.data,
+        };
+      });
+    return result;
+  },
 };

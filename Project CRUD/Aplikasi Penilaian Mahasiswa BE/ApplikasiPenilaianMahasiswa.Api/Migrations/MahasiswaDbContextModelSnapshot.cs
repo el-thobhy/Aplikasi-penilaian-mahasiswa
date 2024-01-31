@@ -99,7 +99,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                     b.HasIndex("UserName")
                         .IsUnique();
 
-                    b.ToTable("m_accounts");
+                    b.ToTable("m_accounts", (string)null);
 
                     b.HasData(
                         new
@@ -176,7 +176,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("m_agama");
+                    b.ToTable("m_agama", (string)null);
 
                     b.HasData(
                         new
@@ -270,7 +270,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasIndex("RoleGroupId");
 
-                    b.ToTable("m_authorization_groups");
+                    b.ToTable("m_authorization_groups", (string)null);
 
                     b.HasData(
                         new
@@ -392,7 +392,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasIndex("Id_Type_Dosen");
 
-                    b.ToTable("m_dosen");
+                    b.ToTable("m_dosen", (string)null);
 
                     b.HasData(
                         new
@@ -501,7 +501,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("m_jurusan");
+                    b.ToTable("m_jurusan", (string)null);
 
                     b.HasData(
                         new
@@ -615,7 +615,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasIndex("Id_Jurusan");
 
-                    b.ToTable("m_mahasiswa");
+                    b.ToTable("m_mahasiswa", (string)null);
 
                     b.HasData(
                         new
@@ -727,7 +727,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasIndex("Id_Ujian");
 
-                    b.ToTable("m_nilai");
+                    b.ToTable("m_nilai", (string)null);
 
                     b.HasData(
                         new
@@ -824,7 +824,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                     b.HasIndex("GroupName")
                         .IsUnique();
 
-                    b.ToTable("m_role_group");
+                    b.ToTable("m_role_group", (string)null);
 
                     b.HasData(
                         new
@@ -897,7 +897,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("m_type_dosen");
+                    b.ToTable("m_type_dosen", (string)null);
 
                     b.HasData(
                         new
@@ -978,7 +978,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("m_ujian");
+                    b.ToTable("m_ujian", (string)null);
 
                     b.HasData(
                         new
