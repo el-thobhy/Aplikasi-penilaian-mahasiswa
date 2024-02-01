@@ -29,6 +29,8 @@ interface IState {
   seconds: number;
   timerInterval: any;
   kirimUlang: boolean;
+  newPassword: string;
+  ulangiPassword: string;
 }
 
 class Authentiaction extends React.Component<IProps, IState> {
@@ -47,6 +49,8 @@ class Authentiaction extends React.Component<IProps, IState> {
       seconds: 60 * 3,
       timerInterval: null,
       kirimUlang: false,
+      newPassword: "",
+      ulangiPassword: "",
     };
   }
 
@@ -98,6 +102,16 @@ class Authentiaction extends React.Component<IProps, IState> {
     this.setState({
       otp: event.target.value,
     });
+    if (name === "NewPassword") {
+      this.setState({
+        newPassword: event.target.value,
+      });
+    }
+    if (name === "UlangiPassword") {
+      this.setState({
+        ulangiPassword: event.target.value,
+      });
+    }
   };
 
   componentDidMount(): void {
@@ -220,6 +234,7 @@ class Authentiaction extends React.Component<IProps, IState> {
             showForgot: false,
             loading: false,
             masukkanOtp: false,
+            otp: "",
           });
           console.log(result.result.message);
         } else {
@@ -235,10 +250,36 @@ class Authentiaction extends React.Component<IProps, IState> {
       });
   };
 
-  formatTime = (minutes: number, seconds: number) => {
-    const formattedMinutes = String(minutes).padStart(2, "0");
-    const formattedSeconds = String(seconds).padStart(2, "0");
-    return `${formattedMinutes}:${formattedSeconds}`;
+  handleGantiPassword = (event: any) => {
+    event.preventDefault();
+    this.setState({
+      errorAlerts: {
+        NewPassword: {
+          valid:
+            this.state.newPassword.length > 0 ||
+            this.state.newPassword.length != 0,
+          message: "Password Baru Tidak Boleh Kosong",
+        },
+        UlangiPassword: {
+          valid:
+            this.state.ulangiPassword.length > 0 ||
+            this.state.ulangiPassword.length != 0,
+          message: "Ulangi Password Tidak Boleh Kosong",
+        },
+        MatchPassword: {
+          valid: this.state.ulangiPassword === this.state.newPassword,
+          message: "Ulangi Password Harus sama dengan password baru",
+        },
+        CheckLengthPassword: {
+          valid: this.state.newPassword.length >= 8,
+          message: "Password Harus 8 karakter atau lebih",
+        },
+      },
+    });
+
+    if (this.state.newPassword.length === 0) {
+      return;
+    }
   };
 
   render() {
@@ -253,6 +294,8 @@ class Authentiaction extends React.Component<IProps, IState> {
       otp,
       kirimUlang,
       seconds,
+      newPassword,
+      ulangiPassword,
     } = this.state;
 
     const minutes = Math.floor(seconds / 60);
@@ -405,23 +448,53 @@ class Authentiaction extends React.Component<IProps, IState> {
                   <div>
                     <input
                       className="p-3 bg-gray-300 rounded-xl border w-full"
-                      type="text"
+                      type="password"
                       name="password"
-                      // value={email}
+                      value={newPassword}
                       placeholder="New Password"
-                      onChange={this.changeHandler("Password")}
+                      onChange={this.changeHandler("NewPassword")}
                       maxLength={100}
                     />
                     <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
-                      {!errorAlerts.Password?.valid ? (
+                      {newPassword.length > 0 ? (
+                        !errorAlerts.CheckLengthPassword?.valid ? (
+                          <strong id="title-error" role="alert">
+                            {errorAlerts.CheckLengthPassword?.message}
+                          </strong>
+                        ) : null
+                      ) : !errorAlerts.NewPassword?.valid ? (
                         <strong id="title-error" role="alert">
-                          {errorAlerts.Password?.message}
+                          {errorAlerts.NewPassword?.message}
+                        </strong>
+                      ) : null}
+                    </p>
+                  </div>
+                  <div>
+                    <input
+                      className="p-3 bg-gray-300 rounded-xl border w-full"
+                      type="password"
+                      name="ulangi password"
+                      value={ulangiPassword}
+                      placeholder="Ulangi Password"
+                      onChange={this.changeHandler("UlangiPassword")}
+                      maxLength={100}
+                    />
+                    <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
+                      {ulangiPassword.length > 0 ? (
+                        !errorAlerts.MatchPassword?.valid ? (
+                          <strong id="title-error" role="alert">
+                            {errorAlerts.MatchPassword?.message}
+                          </strong>
+                        ) : null
+                      ) : !errorAlerts.UlangiPassword?.valid ? (
+                        <strong id="title-error" role="alert">
+                          {errorAlerts.UlangiPassword?.message}
                         </strong>
                       ) : null}
                     </p>
                   </div>
                   <button
-                    // onClick={this.handleForgot}
+                    onClick={this.handleGantiPassword}
                     className="bg-[#002D74] w-full rounded-xl text-white py-2 hover:scale-105 duration-300"
                   >
                     Ubah Password
