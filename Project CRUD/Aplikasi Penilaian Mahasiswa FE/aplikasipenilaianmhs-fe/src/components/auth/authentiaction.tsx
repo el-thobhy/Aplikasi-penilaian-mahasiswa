@@ -27,6 +27,8 @@ interface IState {
   masukkanOtp: boolean;
   otp: string;
   seconds: number;
+  timerInterval: any;
+  kirimUlang: boolean;
 }
 
 class Authentiaction extends React.Component<IProps, IState> {
@@ -43,9 +45,40 @@ class Authentiaction extends React.Component<IProps, IState> {
       loading: false,
       masukkanOtp: false,
       seconds: 60 * 3,
+      timerInterval: null,
+      kirimUlang: false,
     };
   }
 
+  handleResendOtp = () => {
+    // Reset the timer
+    this.resetTimer();
+
+    // Add logic to resend OTP here (similar to handleForgot method)
+  };
+
+  startTimer = () => {
+    clearInterval(this.state.timerInterval);
+    const timerInterval = setInterval(() => {
+      if (this.state.seconds > 0) {
+        this.setState({ seconds: this.state.seconds - 1, kirimUlang: false });
+      } else {
+        // Timer reached 0, handle what you need to do here
+        clearInterval(this.state.timerInterval);
+        this.setState({
+          kirimUlang: true,
+        });
+      }
+    }, 1000);
+
+    this.setState({ timerInterval });
+  };
+
+  resetTimer = () => {
+    clearInterval(this.state.timerInterval);
+    this.setState({ seconds: 180 }); // Reset timer to 3 minutes
+    this.startTimer(); // Start the timer again
+  };
   changeHandler = (name: string) => (event: any) => {
     this.setState({
       auth: {
@@ -70,7 +103,9 @@ class Authentiaction extends React.Component<IProps, IState> {
   componentDidMount(): void {
     AuthService.logout();
   }
-
+  componentWillUnmount(): void {
+    clearInterval(this.state.timerInterval); // Clear the timer interval when the component unmounts
+  }
   showModalForgot = (val: boolean) => {
     this.setState({
       showForgot: val,
@@ -147,6 +182,7 @@ class Authentiaction extends React.Component<IProps, IState> {
             otp: "",
           });
           console.log(result.result.message);
+          this.handleResendOtp();
         } else {
           this.setState({
             errorAlerts: ValidationResult.Validate(result.result),
@@ -215,7 +251,12 @@ class Authentiaction extends React.Component<IProps, IState> {
       masukkanOtp,
       loading,
       otp,
+      kirimUlang,
+      seconds,
     } = this.state;
+
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
     return (
       <div className=" justify-center items-center">
         {loading ? (
@@ -431,13 +472,20 @@ class Authentiaction extends React.Component<IProps, IState> {
                     Verifikasi
                   </button>
                   <div className="flex items-center justify-center">
-                    <h2
-                      onClick={this.handleForgot}
-                      className="cursor-pointer text-sm w-full flex mb-3 items-center justify-center font-light text-black"
-                    >
-                      Kirim Ulang :
-                    </h2>
-                    <h2 className=" text-sm w-full flex mb-3 items-center justify-center font-light text-black"></h2>
+                    {kirimUlang ? (
+                      <h2
+                        onClick={this.handleForgot}
+                        className="cursor-pointer text-sm w-full flex mb-3 items-center justify-center font-light text-black"
+                      >
+                        Kirim Ulang :
+                      </h2>
+                    ) : null}
+
+                    <h2 className=" text-sm w-full flex mb-3 items-center justify-center font-light text-black">{`${
+                      minutes < 10 ? "0" : ""
+                    }${minutes}:${
+                      remainingSeconds < 10 ? "0" : ""
+                    }${remainingSeconds}`}</h2>
                   </div>
                 </form>
               </div>
