@@ -103,4 +103,30 @@ export const AuthService = {
       });
     return result;
   },
+  ubahPassword: (email: string, newPassword: string) => {
+    var result = axios
+      .post(
+        config.apiUrl +
+          `/Account/UbahPassword?email=${email.replace(
+            "@",
+            "%40"
+          )}&password=${newPassword}`
+      )
+      .then((respons) => {
+        return {
+          success: respons.status === 200,
+          status: respons.status,
+          result: respons.data,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          status: error.response.status,
+          result: error.response.data,
+          message: error.response.data,
+        };
+      });
+    return result;
+  },
 };

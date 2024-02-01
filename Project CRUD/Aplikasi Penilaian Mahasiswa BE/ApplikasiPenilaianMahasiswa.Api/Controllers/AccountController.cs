@@ -138,6 +138,19 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
                 }
             }
         }
+        [HttpPost("UbahPassword")]
+        public async Task<IActionResult> UbahPassword(string email,  string password)
+        {
+            ChangePasswordViewModel result = _repo.UbahPassword(email, password);
+            if (result.Success)
+            {
+                return Ok(result.Messages);
+            }
+            else
+            {
+                return NotFound(result.Messages);
+            }
+        }
 
     }
 }

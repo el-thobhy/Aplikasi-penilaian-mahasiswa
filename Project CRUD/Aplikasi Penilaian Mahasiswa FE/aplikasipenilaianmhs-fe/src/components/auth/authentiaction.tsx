@@ -31,6 +31,7 @@ interface IState {
   kirimUlang: boolean;
   newPassword: string;
   ulangiPassword: string;
+  berhasilUbah: boolean;
 }
 
 class Authentiaction extends React.Component<IProps, IState> {
@@ -51,6 +52,7 @@ class Authentiaction extends React.Component<IProps, IState> {
       kirimUlang: false,
       newPassword: "",
       ulangiPassword: "",
+      berhasilUbah: false,
     };
   }
 
@@ -96,9 +98,11 @@ class Authentiaction extends React.Component<IProps, IState> {
         [name]: !event.target.value,
       },
     });
-    this.setState({
-      email: event.target.value,
-    });
+    if (name === "Email") {
+      this.setState({
+        email: event.target.value,
+      });
+    }
     this.setState({
       otp: event.target.value,
     });
@@ -194,6 +198,7 @@ class Authentiaction extends React.Component<IProps, IState> {
             loading: false,
             masukkanOtp: true,
             otp: "",
+            berhasilUbah: false,
           });
           console.log(result.result.message);
           this.handleResendOtp();
@@ -235,6 +240,7 @@ class Authentiaction extends React.Component<IProps, IState> {
             loading: false,
             masukkanOtp: false,
             otp: "",
+            berhasilUbah: false,
           });
           console.log(result.result.message);
         } else {
@@ -250,7 +256,7 @@ class Authentiaction extends React.Component<IProps, IState> {
       });
   };
 
-  handleGantiPassword = (event: any) => {
+  handleGantiPassword = async (event: any) => {
     event.preventDefault();
     this.setState({
       errorAlerts: {
@@ -277,9 +283,36 @@ class Authentiaction extends React.Component<IProps, IState> {
       },
     });
 
-    if (this.state.newPassword.length === 0) {
+    if (
+      this.state.newPassword.length === 0 ||
+      this.state.ulangiPassword.length === 0 ||
+      this.state.ulangiPassword !== this.state.newPassword ||
+      this.state.newPassword.length < 8
+    ) {
       return;
     }
+
+    await AuthService.ubahPassword(this.state.email, this.state.newPassword)
+      .then((result) => {
+        if (result.success) {
+          this.setState({
+            showChangePwd: false,
+            showForgot: false,
+            loading: false,
+            masukkanOtp: false,
+            berhasilUbah: true,
+          });
+          console.log(result.result.message);
+        } else {
+          console.log(result.result.message);
+          this.setState({
+            berhasilUbah: false,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
   };
 
   render() {
@@ -296,6 +329,7 @@ class Authentiaction extends React.Component<IProps, IState> {
       seconds,
       newPassword,
       ulangiPassword,
+      berhasilUbah,
     } = this.state;
 
     const minutes = Math.floor(seconds / 60);
@@ -309,6 +343,13 @@ class Authentiaction extends React.Component<IProps, IState> {
             </h2>
           </div>
         ) : null}
+
+        {berhasilUbah ? (
+          <h2 className=" text-base w-full flex mb-3 items-center justify-center font-light text-black">
+            Berhasil Ubah Password, Silakan Login kembali
+          </h2>
+        ) : null}
+
         {showForgot || showChangePwd || masukkanOtp ? null : (
           <div className="max-w-3xl p-5 items-center">
             <div className="flex items-center justify-center pb-3">

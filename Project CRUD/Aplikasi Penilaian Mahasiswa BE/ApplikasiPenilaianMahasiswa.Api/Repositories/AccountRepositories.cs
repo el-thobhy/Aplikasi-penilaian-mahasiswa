@@ -132,5 +132,28 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             }
             return result;
         }
+
+        public ChangePasswordViewModel UbahPassword(string email,string password)
+        {
+            ChangePasswordViewModel result = new ChangePasswordViewModel();
+            Account account = _dbContext.Accounts
+                .Where(o => o.Email == email)
+                .FirstOrDefault();
+            
+            if(account!=null)
+            {
+                account.Password = Encryption.HashSha256(password);
+                _dbContext.SaveChanges();
+
+                result.Success = true;
+                result.Messages = "Berhasil ubah password";
+            }
+            else
+            {
+                result.Success = false;
+                result.Messages = "Terjadi kesalahan, Gagal ubah password";
+            }
+            return result;
+        }
     }
 }
