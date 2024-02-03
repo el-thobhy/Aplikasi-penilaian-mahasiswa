@@ -12,7 +12,7 @@ export const AuthService = {
         localStorage.setItem("userName", account.userName);
         localStorage.setItem("firstName", account.firstName);
         localStorage.setItem("lastName", account.lastName);
-        localStorage.setItem("token", account.token);
+        localStorage.setItem("otp", account.otp);
         localStorage.setItem("roles", JSON.stringify(account.roles));
         console.log(account.roles);
         console.log(JSON.stringify(account.roles));
@@ -38,7 +38,7 @@ export const AuthService = {
     localStorage.clear();
   },
   getToken: () => {
-    return localStorage.getItem("token");
+    return localStorage.getItem("otp");
   },
   getAccount: () => {
     let rolStr: any = localStorage.getItem("roles");
@@ -53,7 +53,7 @@ export const AuthService = {
       lastName: localStorage.getItem("lastName") || "",
       active: true,
       email: "",
-      token: "",
+      otp: "",
       roles: roles || [],
     };
   },

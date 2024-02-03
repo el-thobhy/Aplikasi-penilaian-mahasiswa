@@ -24,6 +24,8 @@ import { withRouter } from "./withRouter";
 import Authentiaction from "../auth/authentiaction";
 import { AiOutlineClose } from "react-icons/ai";
 import { AuthService } from "../../services/authService";
+import { ProtectedRoute } from "./protectedRoute";
+import Modal from "./auth";
 
 interface IProps {
   logged: boolean;
@@ -64,7 +66,6 @@ class SideBar extends React.Component<IProps, IState> {
               <h2 className="text-xl font-bold text-white">SIAK-</h2>
               <h2 className="text-xl font-bold text-blue-600">MHS</h2>
             </div>
-            {/* {logged ? ( */}
             <div className="flex items-center justify-start border-b border-solid border-gray-600 pb-2 flex-shrink-0 ">
               <img
                 // src={account.image ? account.image : config.noImage}
@@ -85,105 +86,137 @@ class SideBar extends React.Component<IProps, IState> {
                 </button>
               )}
             </div>
-            {/* ) : null} */}
-            <div className="flex-1">
-              <ul className="pt-2 pb-4 space-y-4 text-sm">
-                <li className="rounded-sm">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 space-x-3 rounded-md"
-                  >
-                    <FaHome className="text-white" size={20} />
-                    <span className="text-gray-100">
-                      <Link to="/">Home</Link>
-                    </span>
-                  </a>
-                </li>
-                <li className="rounded-sm">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 space-x-3 rounded-md"
-                  >
-                    <FaBook className="text-white" size={20} />
-                    <span className="text-gray-100">
-                      <Link to="/jurusan">Jurusan</Link>
-                    </span>
-                  </a>
-                </li>
-                <li className="rounded-sm">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 space-x-3 rounded-md"
-                  >
-                    <FaGraduationCap className="text-white" size={20} />
-                    <span className="text-gray-100">
-                      <Link to="/mahasiswa">Mahasiswa</Link>
-                    </span>
-                  </a>
-                </li>
+            <div className="flex">
+              {logged ? (
+                <ul className="pt-2 pb-3 space-y-4 text-sm">
+                  <li className="rounded-sm">
+                    <a
+                      href="#"
+                      className="flex items-center p-2 space-x-3 rounded-md"
+                    >
+                      <FaHome className="text-white" size={20} />
+                      <span className="text-gray-100">
+                        <Link to="/">Home</Link>
+                      </span>
+                    </a>
+                  </li>
+                  {user.roles.indexOf("jurusan") > -1 ? (
+                    <>
+                      <li className="rounded-sm">
+                        <a
+                          href="#"
+                          className="flex items-center p-2 space-x-3 rounded-md"
+                        >
+                          <FaBook className="text-white" size={20} />
+                          <span className="text-gray-100">
+                            <Link to="/jurusan">Jurusan</Link>
+                          </span>
+                        </a>
+                      </li>
+                    </>
+                  ) : null}
+                  {user.roles.indexOf("mahasiswa") > -1 ? (
+                    <>
+                      <li className="rounded-sm">
+                        <a
+                          href="#"
+                          className="flex items-center p-2 space-x-3 rounded-md"
+                        >
+                          <FaGraduationCap className="text-white" size={20} />
+                          <span className="text-gray-100">
+                            <Link to="/mahasiswa">Mahasiswa</Link>
+                          </span>{" "}
+                        </a>
+                      </li>
+                    </>
+                  ) : null}
 
-                <li className="rounded-sm">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 space-x-3 rounded-md"
-                  >
-                    <BsFillMoonStarsFill className="text-white" size={20} />
-                    <span className="text-gray-100">
-                      <Link to="/agama">Agama</Link>
-                    </span>
-                  </a>
-                </li>
+                  {user.roles.indexOf("agama") > -1 ? (
+                    <>
+                      <li className="rounded-sm">
+                        <a
+                          href="#"
+                          className="flex items-center p-2 space-x-3 rounded-md"
+                        >
+                          <BsFillMoonStarsFill
+                            className="text-white"
+                            size={20}
+                          />
+                          <span className="text-gray-100">
+                            <Link to="/agama">Agama</Link>
+                          </span>
+                        </a>
+                      </li>
+                    </>
+                  ) : null}
 
-                <li className="rounded-sm">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 space-x-3 rounded-md"
-                  >
-                    <FaUserGraduate className="text-white" size={20} />
-                    <span className="text-gray-100">
-                      <Link to="/dosen">Dosen</Link>
-                    </span>
-                  </a>
-                </li>
-                <li className="rounded-sm">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 space-x-3 rounded-md"
-                  >
-                    <MdCreditScore className="text-white" size={20} />
-                    <span className="text-gray-100">
-                      <Link to="/nilai">Nilai</Link>
-                    </span>
-                  </a>
-                </li>
-                <li className="rounded-sm">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 space-x-3 rounded-md"
-                  >
-                    <MdCategory className="text-white" size={20} />
-                    <span className="text-gray-100">
-                      <Link to="/typedosen">Tipe Dosen</Link>
-                    </span>
-                  </a>
-                </li>
-                <li className="rounded-sm">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 space-x-3 rounded-md"
-                  >
-                    <GrTest className="text-white" size={20} />
-                    <span className="text-gray-100">
-                      <Link to="/ujian">Ujian</Link>
-                    </span>
-                  </a>
-                </li>
-              </ul>
+                  {user.roles.indexOf("dosen") > -1 ? (
+                    <>
+                      <li className="rounded-sm">
+                        <a
+                          href="#"
+                          className="flex items-center p-2 space-x-3 rounded-md"
+                        >
+                          <FaUserGraduate className="text-white" size={20} />
+                          <span className="text-gray-100">
+                            <Link to="/dosen">Dosen</Link>
+                          </span>
+                        </a>
+                      </li>
+                    </>
+                  ) : null}
+                  {user.roles.indexOf("nilai") > -1 ? (
+                    <>
+                      <li className="rounded-sm">
+                        <a
+                          href="#"
+                          className="flex items-center p-2 space-x-3 rounded-md"
+                        >
+                          <MdCreditScore className="text-white" size={20} />
+                          <span className="text-gray-100">
+                            <Link to="/nilai">Nilai</Link>
+                          </span>
+                        </a>
+                      </li>
+                    </>
+                  ) : null}
+                  {user.roles.indexOf("typedosen") > -1 ? (
+                    <>
+                      <li className="rounded-sm">
+                        <a
+                          href="#"
+                          className="flex items-center p-2 space-x-3 rounded-md"
+                        >
+                          <MdCategory className="text-white" size={20} />
+                          <span className="text-gray-100">
+                            <Link to="/typedosen">Tipe Dosen</Link>
+                          </span>
+                        </a>
+                      </li>
+                    </>
+                  ) : null}
+                  {user.roles.indexOf("ujian") > -1 ? (
+                    <>
+                      <li className="rounded-sm">
+                        <a
+                          href="#"
+                          className="flex items-center p-2 space-x-3 rounded-md"
+                        >
+                          <GrTest className="text-white" size={20} />
+                          <span className="text-gray-100">
+                            <Link to="/ujian">Ujian</Link>
+                          </span>
+                        </a>
+                      </li>
+                    </>
+                  ) : null}
+                </ul>
+              ) : null}
             </div>
             {logged ? (
               <button
                 onClick={this.logoutBtn}
-                className="bg-red-800 rounded-3xl w-full p-1 text-white font-bold"
+                className="bg-red-800 rounded-3xl w-full  p-1 text-white font-bold"
               >
                 Logout
               </button>
@@ -191,33 +224,36 @@ class SideBar extends React.Component<IProps, IState> {
           </div>
         </div>
         {showModalLogin ? (
-          <div className="items-center fixed inset-0 z-50 outline-none focus:outline-none ">
-            <div className="w-full h-screen flex justify-center items-center">
-              <div>
-                <div className="h-full p-3 bg-white rounded-2xl shadow-lg ">
-                  <button onClick={() => this.setShowModal(false)}>
-                    <AiOutlineClose className="justify-center text-black text-3xl" />
-                  </button>
-                  <Authentiaction
-                    setShowModal={this.setShowModal}
-                    changeLoggedHandler={changeLoggedHandler}
-                    logged={logged}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <Modal
+            setShowModal={this.setShowModal}
+            changeLoggedHandler={changeLoggedHandler}
+            logged={logged}
+          />
         ) : null}
         <div className="w-full grid grid-cols-1 gap-3 overflow-auto h-screen text-center">
           <Routes>
             <Route path="/" Component={Home} />
-            <Route path="/jurusan" Component={Jurusan} />
-            <Route path="/mahasiswa" Component={Mahasiswa} />
-            <Route path="/agama" Component={Agama} />
-            <Route path="/dosen" Component={Dosen} />
-            <Route path="/nilai" Component={Nilai} />
-            <Route path="/typedosen" Component={TypeDosen} />
-            <Route path="/ujian" Component={Ujian} />
+            <Route element={<ProtectedRoute role="jurusan" />}>
+              <Route path="/jurusan" element={<Jurusan />} />
+            </Route>
+            <Route element={<ProtectedRoute role="mahasiswa" />}>
+              <Route path="/mahasiswa" element={<Mahasiswa />} />
+            </Route>
+            <Route element={<ProtectedRoute role="agama" />}>
+              <Route path="/agama" element={<Agama />} />
+            </Route>
+            <Route element={<ProtectedRoute role="dosen" />}>
+              <Route path="/dosen" element={<Dosen />} />
+            </Route>
+            <Route element={<ProtectedRoute role="nilai" />}>
+              <Route path="/nilai" element={<Nilai />} />
+            </Route>
+            <Route element={<ProtectedRoute role="typedosen" />}>
+              <Route path="/typedosen" element={<TypeDosen />} />
+            </Route>
+            <Route element={<ProtectedRoute role="ujian" />}>
+              <Route path="/ujian" element={<Ujian />} />
+            </Route>
           </Routes>
         </div>
       </div>

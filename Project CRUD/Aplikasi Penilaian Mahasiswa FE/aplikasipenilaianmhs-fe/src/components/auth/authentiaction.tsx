@@ -302,9 +302,8 @@ class Authentiaction extends React.Component<IProps, IState> {
             masukkanOtp: false,
             berhasilUbah: true,
           });
-          console.log(result.result.message);
         } else {
-          console.log(result.result.message);
+          console.log(result.result);
           this.setState({
             berhasilUbah: false,
           });

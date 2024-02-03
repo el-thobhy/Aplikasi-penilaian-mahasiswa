@@ -4,6 +4,6 @@ export class AccountModel {
   firstName: string = "";
   lastName: string = "";
   email: string = "";
-  token: string = "";
+  otp: string = "";
   roles: string[] = [];
 }
