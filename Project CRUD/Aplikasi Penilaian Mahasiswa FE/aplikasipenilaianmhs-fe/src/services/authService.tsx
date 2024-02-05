@@ -107,7 +107,7 @@ export const AuthService = {
     var result = axios
       .post(
         config.apiUrl +
-          `/Account/UbahPassword?email=${email.replace(
+          `/Account/UbahPassword?username=${email.replace(
             "@",
             "%40"
           )}&password=${newPassword}`

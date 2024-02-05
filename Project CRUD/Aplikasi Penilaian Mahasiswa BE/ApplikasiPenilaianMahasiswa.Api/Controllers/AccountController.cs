@@ -23,10 +23,10 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
         private IValidator<AccountViewModel> _validatorOtp;
 
         public AccountController(
-            MahasiswaDbContext dbContext, 
-            IConfiguration configuration, 
-            IValidator<LoginViewModel> validator, 
-            IValidator<string> validatorEmail, 
+            MahasiswaDbContext dbContext,
+            IConfiguration configuration,
+            IValidator<LoginViewModel> validator,
+            IValidator<string> validatorEmail,
             IValidator<AccountViewModel> validatorOtp)
         {
             _repo = new AccountRepositories(dbContext, configuration);
@@ -56,7 +56,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
                         new Claim("FirstName", result.FirstName),
                         new Claim("LastName", result.LastName)
                     };
-                    foreach(var role in result.Roles)
+                    foreach (var role in result.Roles)
                     {
                         claims.Add(new Claim(ClaimTypes.Role, role));
                     }
@@ -139,12 +139,12 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
             }
         }
         [HttpPost("UbahPassword")]
-        public async Task<IActionResult> UbahPassword(string email,  string password)
+        public async Task<IActionResult> UbahPassword(string username, string password)
         {
-            ChangePasswordViewModel result = _repo.UbahPassword(email, password);
+            ChangePasswordViewModel result = _repo.UbahPassword(username, password);
             if (result.Success)
             {
-                return Ok(result.Messages);
+                return Ok(result);
             }
             else
             {

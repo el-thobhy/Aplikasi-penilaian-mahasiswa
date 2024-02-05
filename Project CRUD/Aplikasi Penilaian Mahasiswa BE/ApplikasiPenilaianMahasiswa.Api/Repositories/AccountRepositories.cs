@@ -54,7 +54,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             var list = _dbContext.AuthorizationGroups
                 .Where(o => o.RoleGroupId == roleGroupId)
                 .ToList();
-            foreach(var group in list)
+            foreach (var group in list)
             {
                 result.Add(group.Role);
             }
@@ -67,10 +67,10 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             try
             {
                 Account account = _dbContext.Accounts
-                    .Where(o=>o.Email == email)
+                    .Where(o => o.Email == email)
                     .FirstOrDefault();
 
-                if(account != null)
+                if (account != null)
                 {
                     Random generator = new Random();
                     string otp = generator.Next(0, 1000000).ToString("D6");
@@ -113,15 +113,16 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
         {
             OtpViewModel result = new OtpViewModel();
             Account account = _dbContext.Accounts
-                .Where(o=> o.Otp == otp)
+                .Where(o => o.Otp == otp)
                 .FirstOrDefault();
 
-            if (account!=null)
+            if (account != null)
             {
-                if(DateTime.Now < account.OtpExpire)
+                if (DateTime.Now < account.OtpExpire)
                 {
                     result.Success = true;
                     result.Expire = account.OtpExpire;
+                    result.UserName = account.UserName;
                     result.Message = "Verifikasi berhasil";
                 }
                 else
@@ -133,14 +134,14 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return result;
         }
 
-        public ChangePasswordViewModel UbahPassword(string email,string password)
+        public ChangePasswordViewModel UbahPassword(string username, string password)
         {
             ChangePasswordViewModel result = new ChangePasswordViewModel();
             Account account = _dbContext.Accounts
-                .Where(o => o.Email == email)
+                .Where(o => o.UserName == username)
                 .FirstOrDefault();
-            
-            if(account!=null)
+
+            if (account != null)
             {
                 account.Password = Encryption.HashSha256(password);
                 _dbContext.SaveChanges();
@@ -155,5 +156,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             }
             return result;
         }
+
+
     }
 }

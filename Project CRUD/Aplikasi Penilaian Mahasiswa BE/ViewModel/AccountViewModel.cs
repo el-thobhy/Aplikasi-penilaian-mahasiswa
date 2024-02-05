@@ -27,4 +27,15 @@ namespace ViewModel
         public string Otp { get; set; }
         public List<string> Roles { get; set; }
     }
+    public class RegisterViewModel: LoginViewModel
+    {
+        [Required, MaxLength(50)]
+        public string FirstName { get; set; }
+
+        [Required, MaxLength(50)]
+        public string LastName { get; set; }
+
+        [Required, DataType(DataType.EmailAddress), MaxLength(200)]
+        public string Email { get; set; }
+    }
 }

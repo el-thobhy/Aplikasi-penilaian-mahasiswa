@@ -32,6 +32,7 @@ interface IState {
   newPassword: string;
   ulangiPassword: string;
   berhasilUbah: boolean;
+  userName: string;
 }
 
 class Authentiaction extends React.Component<IProps, IState> {
@@ -53,6 +54,7 @@ class Authentiaction extends React.Component<IProps, IState> {
       newPassword: "",
       ulangiPassword: "",
       berhasilUbah: false,
+      userName: "",
     };
   }
 
@@ -241,6 +243,7 @@ class Authentiaction extends React.Component<IProps, IState> {
             masukkanOtp: false,
             otp: "",
             berhasilUbah: false,
+            userName: result.result.userName,
           });
           console.log(result.result.message);
         } else {
@@ -292,7 +295,7 @@ class Authentiaction extends React.Component<IProps, IState> {
       return;
     }
 
-    await AuthService.ubahPassword(this.state.email, this.state.newPassword)
+    await AuthService.ubahPassword(this.state.userName, this.state.newPassword)
       .then((result) => {
         if (result.success) {
           this.setState({
