@@ -27,8 +27,10 @@ namespace ViewModel
         public string Otp { get; set; }
         public List<string> Roles { get; set; }
     }
-    public class RegisterViewModel: LoginViewModel
+    public class    RegisterViewModel : LoginViewModel
     {
+        public int Id { get; set; }
+        
         [Required, MaxLength(50)]
         public string FirstName { get; set; }
 
@@ -37,5 +39,7 @@ namespace ViewModel
 
         [Required, DataType(DataType.EmailAddress), MaxLength(200)]
         public string Email { get; set; }
+
+        public int RoleGroupId { get; set; }
     }
 }

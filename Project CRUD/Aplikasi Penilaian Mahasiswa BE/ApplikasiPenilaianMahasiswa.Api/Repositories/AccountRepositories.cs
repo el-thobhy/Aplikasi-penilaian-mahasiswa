@@ -61,7 +61,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             return result;
         }
 
-        public OtpViewModel SendOtp(string email)
+        public OtpViewModel SendOtp(bool regis, string email)
         {
             OtpViewModel result = new OtpViewModel();
             try
@@ -70,7 +70,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     .Where(o => o.Email == email)
                     .FirstOrDefault();
 
-                if (account != null)
+                if (account != null && regis == false)
                 {
                     Random generator = new Random();
                     string otp = generator.Next(0, 1000000).ToString("D6");
@@ -100,11 +100,56 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     _dbContext.SaveChanges();
                     result.Message = "OTP Just Sent";
                 }
+                else if (regis == true && account == null)
+                {
+                    Random generator = new Random();
+                    string otp = generator.Next(0, 1000000).ToString("D6");
+                    string user = new string("user") + DateTime.Now.ToString().Split(" ")[0].Replace("/", "") + DateTime.Now.ToString().Split(" ")[1].Replace(":", "").Substring(0, 5);
+
+                    account = new Account
+                    {
+                        FirstName = "",
+                        LastName = "",
+                        Password = "",
+                        UserName = user,
+                        Email = "",
+                        RoleGroupId = 3,
+                        Created_by = 1,
+                        Created_on = DateTime.Now,
+                        Otp = otp,
+                        OtpExpire = (DateTime.Now).AddMinutes(10)
+                    };
+
+                    result.Expire = account.OtpExpire;
+
+                    var smtpClient = new SmtpClient("smtp.gmail.com")
+                    {
+                        Port = 587,
+                        Credentials = new NetworkCredential(_configuration["OTP:UserName"], _configuration["OTP:Password"]),
+                        EnableSsl = true
+                    };
+
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress("auriwan.yasper@sci.ui.ac.id"),
+                        Subject = "OTP",
+                        Body = $"<h1>Hello your OTP: {otp}</h1>",
+                        IsBodyHtml = true,
+                    };
+
+                    mailMessage.To.Add(email);
+                    smtpClient.Send(mailMessage);
+
+                    _dbContext.Accounts.Add(account);
+                    _dbContext.SaveChanges();
+                    result.Message = "OTP Just Sent";
+                    result.Id = account.Id;
+                }
             }
-            catch
+            catch (Exception e)
             {
                 result.Success = false;
-                result.Message = "Email not registered!";
+                result.Message = e.ToString();
             }
             return result;
         }
@@ -123,6 +168,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     result.Success = true;
                     result.Expire = account.OtpExpire;
                     result.UserName = account.UserName;
+                    result.Id = account.Id;
                     result.Message = "Verifikasi berhasil";
                 }
                 else
@@ -156,7 +202,46 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             }
             return result;
         }
+        public AccountViewModel Register(RegisterViewModel model)
+        {
+            AccountViewModel result = new AccountViewModel();
+            Account exist = _dbContext.Accounts
+                .Where(o => o.Id == model.Id)
+                .FirstOrDefault();
 
+            if (exist != null)
+            {
+
+                exist.UserName = model.UserName;
+                exist.FirstName = model.FirstName;
+                exist.LastName = model.LastName;
+                exist.Email = model.Email;
+                exist.Password = Encryption.HashSha256(model.Password);
+                exist.RoleGroupId = model.RoleGroupId;
+                exist.Created_by = 1;
+                exist.Created_on = DateTime.Now;
+
+
+                _dbContext.SaveChanges();
+
+                result = new AccountViewModel
+                {
+                    Id = exist.Id,
+                    UserName = exist.UserName,
+                    FirstName = exist.FirstName,
+                    LastName = exist.LastName,
+                    Otp = exist.Otp,
+                    Email = exist.Email,
+                    Is_delete = exist.Is_delete,
+                    Roles = Roles(exist.RoleGroupId)
+                };
+            }
+            else
+            {
+                result = new AccountViewModel();
+            }
+            return result;
+        }
 
     }
 }

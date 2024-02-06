@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ApplikasiPenilaianMahasiswa.Api.DataModel
 {
     [Table("m_accounts")]
-    public class Account: BaseProperties
+    public class Account : BaseProperties
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Key, MaxLength(50)]
+        [Required, MaxLength(50)]
         public string UserName { get; set; }
 
         [Required, MaxLength(200)]

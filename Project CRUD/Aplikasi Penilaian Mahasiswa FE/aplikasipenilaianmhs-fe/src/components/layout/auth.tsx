@@ -7,10 +7,7 @@ const Modal = ({ setShowModal, changeLoggedHandler, logged }: any) => {
     <div className="items-center fixed inset-0 z-50 outline-none focus:outline-none">
       <div className="w-full h-screen flex justify-center items-center">
         <div>
-          <div className="h-full p-3 bg-white rounded-2xl shadow-lg">
-            <button onClick={() => setShowModal(false)}>
-              <AiOutlineClose className="justify-center text-black text-3xl" />
-            </button>
+          <div className="p-3 bg-white rounded-2xl shadow-lg">
             <Authentiaction
               setShowModal={setShowModal}
               changeLoggedHandler={changeLoggedHandler}

@@ -3,4 +3,5 @@ export class ModelOTP {
   expire: string = "";
   message: string = "";
   userName: string = "";
+  id: number = 0;
 }

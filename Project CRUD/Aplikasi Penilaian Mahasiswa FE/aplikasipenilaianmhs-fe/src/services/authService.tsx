@@ -2,6 +2,7 @@ import axios from "axios";
 import { LoginModel } from "../models/modelLogin";
 import { config } from "../configurations/config";
 import { AccountModel } from "../models/modelAccount";
+import { ModelRegistrasi } from "../models/modelRegistration";
 
 export const AuthService = {
   login: (auth: LoginModel) => {
@@ -57,10 +58,12 @@ export const AuthService = {
       roles: roles || [],
     };
   },
-  forgot: (email: string) => {
+  kirimOtp: (regis: boolean, email: string) => {
     var result = axios
       .post(
-        config.apiUrl + "/Account/SendOtp?email=" + email.replace("@", "%40")
+        config.apiUrl +
+          `/Account/SendOtp?regis=${regis}&email=` +
+          email.replace("@", "%40")
       )
       .then((respons) => {
         const account: AccountModel = respons.data;
@@ -103,15 +106,32 @@ export const AuthService = {
       });
     return result;
   },
-  ubahPassword: (email: string, newPassword: string) => {
+  ubahPassword: (userName: string, newPassword: string) => {
     var result = axios
       .post(
         config.apiUrl +
-          `/Account/UbahPassword?username=${email.replace(
-            "@",
-            "%40"
-          )}&password=${newPassword}`
+          `/Account/UbahPassword?username=${userName}&password=${newPassword}`
       )
+      .then((respons) => {
+        return {
+          success: respons.status === 200,
+          status: respons.status,
+          result: respons.data,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          status: error.response.status,
+          result: error.response.data,
+          message: error.response.data,
+        };
+      });
+    return result;
+  },
+  registration: (inputRegis: ModelRegistrasi) => {
+    var result = axios
+      .post(config.apiUrl + `/Account/Registration`, inputRegis)
       .then((respons) => {
         return {
           success: respons.status === 200,

@@ -20,6 +20,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
         private AccountRepositories _repo;
         private IValidator<LoginViewModel> _validator;
         private IValidator<string> _validatorEmail;
+        private IValidator<RegisterViewModel> _validatorRegis;
         private IValidator<AccountViewModel> _validatorOtp;
 
         public AccountController(
@@ -27,14 +28,15 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
             IConfiguration configuration,
             IValidator<LoginViewModel> validator,
             IValidator<string> validatorEmail,
-            IValidator<AccountViewModel> validatorOtp)
+            IValidator<AccountViewModel> validatorOtp,
+            IValidator<RegisterViewModel> validatorRegis)
         {
             _repo = new AccountRepositories(dbContext, configuration);
             _configuration = configuration;
             _validator = validator;
             _validatorEmail = validatorEmail;
             _validatorOtp = validatorOtp;
-
+            _validatorRegis = validatorRegis;
         }
 
         [HttpPost("login")]
@@ -94,23 +96,49 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
         }
 
         [HttpPost("SendOtp")]
-        public async Task<IActionResult> Post(string email)
+        public async Task<IActionResult> Post(bool regis, string email)
         {
-            OtpViewModel result = _repo.SendOtp(email);
-            ValidationResult validate = await _validatorEmail.ValidateAsync(email);
-            if (!validate.IsValid)
+            OtpViewModel result = _repo.SendOtp(regis, email);
+            if (regis == false)
             {
-                return BadRequest(validate.Errors);
-            }
-            else
-            {
-                if (result.Success)
+                ValidationResult validate = await _validatorEmail.ValidateAsync(email);
+                if (!validate.IsValid)
                 {
-                    return Ok(result);
+                    return BadRequest(validate.Errors);
                 }
                 else
                 {
-                    return NotFound();
+                    if (result.Success)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+            else
+            {
+                RegisterViewModel model = new RegisterViewModel
+                {
+                    Email = email
+                };
+                ValidationResult validate = await _validatorRegis.ValidateAsync(model);
+                if (!validate.IsValid)
+                {
+                    return BadRequest(validate.Errors);
+                }
+                else
+                {
+                    if (result.Success)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return NotFound(result);
+                    }
                 }
             }
         }
@@ -152,5 +180,18 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
             }
         }
 
+        [HttpPost("Registration")]
+        public async Task<IActionResult> Registration(RegisterViewModel model)
+        {
+            ValidationResult validate = await _validatorRegis.ValidateAsync(model);
+            if (!validate.IsValid)
+            {
+                return BadRequest(validate.Errors);
+            }
+            else
+            {
+                return Ok(_repo.Register(model));
+            }
+        }
     }
 }

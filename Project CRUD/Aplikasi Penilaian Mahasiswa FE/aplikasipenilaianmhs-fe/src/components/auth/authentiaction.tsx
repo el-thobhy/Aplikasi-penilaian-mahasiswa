@@ -2,12 +2,17 @@ import React from "react";
 import images from "../../assets/LogoProject.png";
 import { withRouter } from "../layout/withRouter";
 import { ValidationResult } from "../../validations/validationResult";
-import { AiOutlineEye } from "react-icons/ai";
+import {
+  AiOutlineArrowLeft,
+  AiOutlineClose,
+  AiOutlineEye,
+} from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { AccountModel } from "../../models/modelAccount";
 import { LoginModel } from "../../models/modelLogin";
 import { AuthService } from "../../services/authService";
 import { ModelForgot } from "../../models/modelForgot";
+import { ModelRegistrasi } from "../../models/modelRegistration";
 
 interface IProps {
   logged: boolean;
@@ -33,6 +38,12 @@ interface IState {
   ulangiPassword: string;
   berhasilUbah: boolean;
   userName: string;
+  register: boolean;
+  isInputRegis: boolean;
+  back: boolean;
+  modelRegistrasi: ModelRegistrasi;
+  inputRegis: boolean;
+  berhasilDaftar: boolean;
 }
 
 class Authentiaction extends React.Component<IProps, IState> {
@@ -55,6 +66,12 @@ class Authentiaction extends React.Component<IProps, IState> {
       ulangiPassword: "",
       berhasilUbah: false,
       userName: "",
+      register: false,
+      back: false,
+      isInputRegis: false,
+      modelRegistrasi: new ModelRegistrasi(),
+      inputRegis: false,
+      berhasilDaftar: false,
     };
   }
 
@@ -118,6 +135,51 @@ class Authentiaction extends React.Component<IProps, IState> {
         ulangiPassword: event.target.value,
       });
     }
+    if (name === "UserName") {
+      this.setState({
+        modelRegistrasi: {
+          ...this.state.modelRegistrasi,
+          userName: event.target.value,
+        },
+      });
+    }
+    if (name === "FirstName") {
+      this.setState({
+        modelRegistrasi: {
+          ...this.state.modelRegistrasi,
+          firstName: event.target.value,
+        },
+      });
+    }
+    if (name === "LastName") {
+      this.setState({
+        modelRegistrasi: {
+          ...this.state.modelRegistrasi,
+          lastName: event.target.value,
+        },
+      });
+    }
+    if (name === "PwdAccount") {
+      this.setState({
+        modelRegistrasi: {
+          ...this.state.modelRegistrasi,
+          password: event.target.value,
+        },
+      });
+    }
+    if (name === "UlangiPwdAccount") {
+      this.setState({
+        ulangiPassword: event.target.value,
+      });
+    }
+    if (name === "Role") {
+      this.setState({
+        modelRegistrasi: {
+          ...this.state.modelRegistrasi,
+          roleGroupId: event.target.value,
+        },
+      });
+    }
   };
 
   componentDidMount(): void {
@@ -129,6 +191,9 @@ class Authentiaction extends React.Component<IProps, IState> {
   showModalForgot = (val: boolean) => {
     this.setState({
       showForgot: val,
+      back: true,
+      isInputRegis: false,
+      email: "",
     });
   };
 
@@ -175,7 +240,7 @@ class Authentiaction extends React.Component<IProps, IState> {
       });
   };
 
-  handleForgot = (event: any) => {
+  handleKirimOtp = (event: any, regis: boolean) => {
     event.preventDefault();
     this.setState({
       errorAlerts: {
@@ -191,7 +256,7 @@ class Authentiaction extends React.Component<IProps, IState> {
     }
     this.setState({ loading: true });
     const { email } = this.state;
-    AuthService.forgot(email)
+    AuthService.kirimOtp(regis, email)
       .then((result) => {
         if (result.success) {
           this.setState({
@@ -199,6 +264,8 @@ class Authentiaction extends React.Component<IProps, IState> {
             showForgot: false,
             loading: false,
             masukkanOtp: true,
+            register: false,
+            back: true,
             otp: "",
             berhasilUbah: false,
           });
@@ -232,12 +299,12 @@ class Authentiaction extends React.Component<IProps, IState> {
       return;
     }
     this.setState({ loading: true });
-    const { otp } = this.state;
+    const { otp, isInputRegis } = this.state;
     AuthService.verifikasiOtp(otp)
       .then((result) => {
         if (result.success) {
           this.setState({
-            showChangePwd: true,
+            showChangePwd: isInputRegis ? false : true,
             showForgot: false,
             loading: false,
             masukkanOtp: false,
@@ -246,6 +313,16 @@ class Authentiaction extends React.Component<IProps, IState> {
             userName: result.result.userName,
           });
           console.log(result.result.message);
+          if (isInputRegis) {
+            this.setState({
+              inputRegis: true,
+              modelRegistrasi: {
+                ...this.state.modelRegistrasi,
+                id: result.result.id,
+              },
+              ulangiPassword: "",
+            });
+          }
         } else {
           this.setState({
             errorAlerts: ValidationResult.Validate(result.result),
@@ -317,6 +394,116 @@ class Authentiaction extends React.Component<IProps, IState> {
       });
   };
 
+  registerClicked = () => {
+    this.setState({
+      isInputRegis: true,
+      register: true,
+      back: true,
+      email: "",
+    });
+  };
+
+  arrowLeftClicker = () => {
+    this.setState({
+      register: false,
+      showForgot: false,
+      masukkanOtp: false,
+      showChangePwd: false,
+      berhasilUbah: false,
+      inputRegis: false,
+      back: false,
+    });
+  };
+
+  handleRegister = async (event: any) => {
+    event.preventDefault();
+    this.setState({
+      errorAlerts: {
+        UserName: {
+          valid: this.state.modelRegistrasi.userName.length > 0,
+          message: "Username required",
+        },
+        FirstName: {
+          valid: this.state.modelRegistrasi.firstName.length > 0,
+          message: "FirstName required",
+        },
+        LastName: {
+          valid: this.state.modelRegistrasi.lastName.length > 0,
+          message: "LastName required",
+        },
+        PwdAccount: {
+          valid: this.state.modelRegistrasi.password.length > 0,
+          message: "Password required",
+        },
+        UlangiPwdAccount: {
+          valid: this.state.ulangiPassword.length > 0,
+          message: "Ulangi Password required",
+        },
+        Role: {
+          valid: this.state.modelRegistrasi.roleGroupId > 0,
+          message: "Role required",
+        },
+        MatchPassword: {
+          valid:
+            this.state.modelRegistrasi.password === this.state.ulangiPassword,
+          message: "Ulangi Password Harus sama dengan password baru",
+        },
+        CheckLengthPassword: {
+          valid: this.state.modelRegistrasi.password.length >= 8,
+          message: "Password Harus 8 karakter atau lebih",
+        },
+      },
+    });
+
+    if (
+      this.state.modelRegistrasi.password.length === 0 ||
+      this.state.modelRegistrasi.userName.length === 0 ||
+      this.state.modelRegistrasi.firstName.length === 0 ||
+      this.state.modelRegistrasi.lastName.length === 0 ||
+      this.state.modelRegistrasi.roleGroupId === 0 ||
+      this.state.modelRegistrasi.password !== this.state.ulangiPassword ||
+      this.state.modelRegistrasi.password.length < 8
+    ) {
+      return;
+    }
+
+    const { modelRegistrasi, email } = this.state;
+    this.setState({
+      modelRegistrasi: {
+        ...this.state.modelRegistrasi,
+        email: email,
+      },
+    });
+    await AuthService.registration(modelRegistrasi)
+      .then((result) => {
+        if (result.success) {
+          this.setState({
+            showChangePwd: false,
+            inputRegis: false,
+            showForgot: false,
+            loading: false,
+            masukkanOtp: false,
+            register: false,
+            back: false,
+            otp: "",
+            berhasilUbah: false,
+            berhasilDaftar: true,
+          });
+          console.log(result.result.message);
+          this.handleResendOtp();
+        } else {
+          this.setState({
+            errorAlerts: ValidationResult.Validate(result.result),
+            loading: false,
+          });
+          console.log(this.state.message);
+        }
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  };
+
   render() {
     const {
       auth,
@@ -332,12 +519,27 @@ class Authentiaction extends React.Component<IProps, IState> {
       newPassword,
       ulangiPassword,
       berhasilUbah,
+      register,
+      back,
+      modelRegistrasi,
+      inputRegis,
+      berhasilDaftar,
     } = this.state;
 
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return (
-      <div className=" justify-center items-center">
+      <div className="justify-center items-center">
+        {back ? (
+          <button onClick={this.arrowLeftClicker}>
+            <AiOutlineArrowLeft className="justify-center text-black text-3xl" />
+          </button>
+        ) : (
+          <button onClick={() => this.props.setShowModal(false)}>
+            <AiOutlineClose className="justify-center text-black text-3xl" />
+          </button>
+        )}
+
         {loading ? (
           <div className="flex items-center justify-center">
             <h2 className=" text-base w-full flex items-center justify-center font-light text-black">
@@ -352,96 +554,130 @@ class Authentiaction extends React.Component<IProps, IState> {
           </h2>
         ) : null}
 
-        {showForgot || showChangePwd || masukkanOtp ? null : (
-          <div className="max-w-3xl p-5 items-center">
-            <div className="flex items-center justify-center pb-3">
-              <h2 className="text-xl font-bold text-black">SIAK-</h2>
-              <h2 className="text-xl font-bold text-blue-600">MHS</h2>
-            </div>
-            <div className="ps-8 pe-8 pb-4">
-              <form className="flex flex-col gap-4">
-                <div>
-                  <input
-                    className="p-3 bg-gray-300 rounded-xl border w-full"
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={auth.username}
-                    onChange={this.changeHandler("UserName")}
-                    maxLength={100}
-                  />
-                  <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
-                    {!errorAlerts.UserName?.valid ? (
-                      <strong id="title-error" role="alert">
-                        {errorAlerts.UserName?.message}
-                      </strong>
-                    ) : null}
-                  </p>
+        {berhasilDaftar ? (
+          <h2 className=" text-base w-full flex mb-3 items-center justify-center font-light text-black">
+            Berhasil Daftar, Silakan Login kembali
+          </h2>
+        ) : null}
+
+        {showForgot ||
+        showChangePwd ||
+        masukkanOtp ||
+        register ||
+        inputRegis ? null : (
+          <div>
+            <div className="max-w-3xl p-5 items-center">
+              <div className="flex items-center justify-center pb-3">
+                <h2 className="text-xl font-bold text-black">SIAK-</h2>
+                <h2 className="text-xl font-bold text-blue-600">MHS</h2>
+              </div>
+              <div className="ps-8 pe-8 pb-4">
+                <form className="flex flex-col gap-4">
+                  <div>
+                    <input
+                      className="p-3 bg-gray-300 rounded-xl border w-full"
+                      type="text"
+                      name="username"
+                      placeholder="Username"
+                      value={auth.username}
+                      onChange={this.changeHandler("UserName")}
+                      maxLength={100}
+                    />
+                    <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
+                      {!errorAlerts.UserName?.valid ? (
+                        <strong id="title-error" role="alert">
+                          {errorAlerts.UserName?.message}
+                        </strong>
+                      ) : null}
+                    </p>
+                  </div>
+
+                  <div>
+                    <input
+                      className="p-3 rounded-xl bg-gray-300 border  w-full"
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      required
+                      value={auth.password}
+                      onChange={this.changeHandler("Password")}
+                      maxLength={255}
+                    />
+                    <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
+                      {!errorAlerts.Password?.valid ? (
+                        <strong id="title-error" role="alert">
+                          {errorAlerts.Password?.message}
+                        </strong>
+                      ) : null}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={this.handleSubmit}
+                    className="bg-[#002D74] w-full rounded-xl text-white py-2 hover:scale-105 duration-300"
+                  >
+                    Sign In
+                  </button>
+                </form>
+
+                <div className="mt-6 grid grid-cols-3 items-center text-gray-400">
+                  <hr className="border-gray-400" />
+                  <p className="text-center text-sm">OR</p>
+                  <hr className="border-gray-400" />
                 </div>
 
-                <div>
-                  <input
-                    className="p-3 rounded-xl bg-gray-300 border  w-full"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                    value={auth.password}
-                    onChange={this.changeHandler("Password")}
-                    maxLength={255}
-                  />
-                  <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
-                    {!errorAlerts.Password?.valid ? (
-                      <strong id="title-error" role="alert">
-                        {errorAlerts.Password?.message}
-                      </strong>
-                    ) : null}
-                  </p>
-                </div>
-
-                <button
-                  onClick={this.handleSubmit}
-                  className="bg-[#002D74] w-full rounded-xl text-white py-2 hover:scale-105 duration-300"
+                <div
+                  onClick={() => this.showModalForgot(true)}
+                  className="min-w-52 mt-5 text-xs cursor-pointer border-b border-[#002D74] py-4 text-[#002D74]"
                 >
-                  Sign In
-                </button>
-              </form>
+                  <a href="#">Forgot your password?</a>
+                </div>
 
-              <div className="mt-6 grid grid-cols-3 items-center text-gray-400">
-                <hr className="border-gray-400" />
-                <p className="text-center text-sm">OR</p>
-                <hr className="border-gray-400" />
-              </div>
-
-              <div
-                onClick={() => this.showModalForgot(true)}
-                className="min-w-52 mt-5 text-xs cursor-pointer border-b border-[#002D74] py-4 text-[#002D74]"
-              >
-                <a href="#">Forgot your password?</a>
-              </div>
-
-              <div className="min-w-52 mt-3 text-xs flex justify-between items-center text-[#002D74]">
-                <p className="me-5">Don't have an account?</p>
-                <button className="py-2 px-5 bg-[#41a546] text-white border rounded-xl hover:scale-110 duration-300">
-                  Register
-                </button>
+                <div className="min-w-52 mt-3 text-xs flex justify-between items-center text-[#002D74]">
+                  <p className="me-5">Don't have an account?</p>
+                  <button
+                    onClick={this.registerClicked}
+                    className="py-2 px-5 bg-[#41a546] text-white border rounded-xl hover:scale-110 duration-300"
+                  >
+                    Register
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        {showForgot ? (
+        {register || showForgot ? (
           <div>
             <div className="max-w-3xl p-5 items-center">
-              <div className="flex items-center justify-center pb-3">
-                <h2 className="text-xl font-bold text-black">Lupa-</h2>
-                <h2 className="text-xl font-bold text-blue-600">Password</h2>
-              </div>
-              <div className="flex items-center justify-center pb-3">
-                <h2 className="text-base font-normal mb-3 text-black">
-                  Masukkan E-mail yang terdaftar
-                </h2>
-              </div>
+              {register ? (
+                <div>
+                  <div className="flex items-center justify-center pb-3">
+                    <h2 className="text-xl font-bold text-black">Daftar-</h2>
+                    <h2 className="text-xl font-bold text-blue-600">Akun</h2>
+                  </div>
+                  <div className="flex items-center justify-center pb-3">
+                    <h2 className="text-base font-normal mb-3 text-black">
+                      Masukkan E-mail Anda
+                    </h2>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="flex items-center justify-center pb-3">
+                    <h2 className="text-xl font-bold text-black">Lupa-</h2>
+                    <h2 className="text-xl font-bold text-blue-600">
+                      Password
+                    </h2>
+                  </div>
+                  <div className="flex items-center justify-center pb-3">
+                    <h2 className="text-base font-normal mb-3 text-black">
+                      Masukkan E-mail yang terdaftar
+                    </h2>
+                  </div>
+                </div>
+              )}
+
               <div className="ps-8 pe-8 pb-4">
                 <form className="flex flex-col gap-4">
                   <div>
@@ -462,12 +698,25 @@ class Authentiaction extends React.Component<IProps, IState> {
                       ) : null}
                     </p>
                   </div>
-                  <button
-                    onClick={this.handleForgot}
-                    className="bg-[#002D74] w-full rounded-xl text-white py-2 hover:scale-105 duration-300"
-                  >
-                    Kirim OTP
-                  </button>
+                  {register ? (
+                    <button
+                      onClick={(event: React.SyntheticEvent) =>
+                        this.handleKirimOtp(event, true)
+                      }
+                      className="bg-[#002D74] w-full rounded-xl text-white py-2 hover:scale-105 duration-300"
+                    >
+                      Kirim OTP
+                    </button>
+                  ) : (
+                    <button
+                      onClick={(event: React.SyntheticEvent) =>
+                        this.handleKirimOtp(event, false)
+                      }
+                      className="bg-[#002D74] w-full rounded-xl text-white py-2 hover:scale-105 duration-300"
+                    >
+                      Kirim OTP
+                    </button>
+                  )}
                 </form>
               </div>
             </div>
@@ -587,22 +836,217 @@ class Authentiaction extends React.Component<IProps, IState> {
                   >
                     Verifikasi
                   </button>
-                  <div className="flex items-center justify-center">
-                    {kirimUlang ? (
-                      <h2
-                        onClick={this.handleForgot}
-                        className="cursor-pointer text-sm w-full flex mb-3 items-center justify-center font-light text-black"
-                      >
-                        Kirim Ulang :
-                      </h2>
-                    ) : null}
+                  {register ? (
+                    <div className="flex items-center justify-center">
+                      {kirimUlang ? (
+                        <h2
+                          onClick={(event: React.SyntheticEvent) =>
+                            this.handleKirimOtp(event, true)
+                          }
+                          className="cursor-pointer text-sm w-full flex mb-3 items-center justify-center font-light text-black"
+                        >
+                          Kirim Ulang :
+                        </h2>
+                      ) : null}
 
-                    <h2 className=" text-sm w-full flex mb-3 items-center justify-center font-light text-black">{`${
-                      minutes < 10 ? "0" : ""
-                    }${minutes}:${
-                      remainingSeconds < 10 ? "0" : ""
-                    }${remainingSeconds}`}</h2>
+                      <h2 className=" text-sm w-full flex mb-3 items-center justify-center font-light text-black">{`${
+                        minutes < 10 ? "0" : ""
+                      }${minutes}:${
+                        remainingSeconds < 10 ? "0" : ""
+                      }${remainingSeconds}`}</h2>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      {kirimUlang ? (
+                        <h2
+                          onClick={(event: React.SyntheticEvent) =>
+                            this.handleKirimOtp(event, false)
+                          }
+                          className="cursor-pointer text-sm w-full flex mb-3 items-center justify-center font-light text-black"
+                        >
+                          Kirim Ulang :
+                        </h2>
+                      ) : null}
+
+                      <h2 className=" text-sm w-full flex mb-3 items-center justify-center font-light text-black">{`${
+                        minutes < 10 ? "0" : ""
+                      }${minutes}:${
+                        remainingSeconds < 10 ? "0" : ""
+                      }${remainingSeconds}`}</h2>
+                    </div>
+                  )}
+                </form>
+              </div>
+            </div>
+          </div>
+        ) : null}
+        {inputRegis ? (
+          <div className="h-[450px]">
+            <div className="max-w-3xl p-5 items-center">
+              <div className="flex items-center justify-center pb-3">
+                <h2 className="text-xl font-bold text-black">Daftar-</h2>
+                <h2 className="text-xl font-bold text-blue-600">Akun</h2>
+              </div>
+              <div className="flex items-center justify-center">
+                <h2 className=" text-base w-full mb-3 flex items-center justify-center font-light text-black">
+                  Verifikasi Otp berhasil, silahkan Lengkapi Data Diri Anda
+                </h2>
+              </div>
+              <div className="ps-8pe-8 pb-4">
+                <form>
+                  <div className="overflow-y-auto h-[280px] p-3 flex flex-col gap-4">
+                    <div>
+                      <p className="text-xs pb-2">Username</p>
+                      <input
+                        className="p-3 bg-gray-300 rounded-xl border w-full"
+                        type="text"
+                        name="username"
+                        value={modelRegistrasi.userName}
+                        placeholder="Username"
+                        onChange={this.changeHandler("UserName")}
+                        maxLength={100}
+                      />
+                      <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
+                        {!errorAlerts.UserName?.valid ? (
+                          <strong id="title-error" role="alert">
+                            {errorAlerts.UserName?.message}
+                          </strong>
+                        ) : null}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs pb-2">First Name</p>
+                      <input
+                        className="p-3 bg-gray-300 rounded-xl border w-full"
+                        type="text"
+                        name="FirstName"
+                        value={modelRegistrasi.firstName}
+                        placeholder="First Name"
+                        onChange={this.changeHandler("FirstName")}
+                        maxLength={100}
+                      />
+                      <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
+                        {!errorAlerts.FirstName?.valid ? (
+                          <strong id="title-error" role="alert">
+                            {errorAlerts.FirstName?.message}
+                          </strong>
+                        ) : null}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs pb-2">Last Name</p>
+                      <input
+                        className="p-3 bg-gray-300 rounded-xl border w-full"
+                        type="text"
+                        name="LastName"
+                        value={modelRegistrasi.lastName}
+                        placeholder="Last Name"
+                        onChange={this.changeHandler("LastName")}
+                        maxLength={100}
+                      />
+                      <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
+                        {!errorAlerts.LastName?.valid ? (
+                          <strong id="title-error" role="alert">
+                            {errorAlerts.LastName?.message}
+                          </strong>
+                        ) : null}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs pb-2">Email</p>
+                      <input
+                        className="p-3 text-gray-500 bg-gray-300 rounded-xl border w-full"
+                        type="text"
+                        name="Email"
+                        value={email}
+                        disabled
+                        placeholder="Email"
+                        maxLength={100}
+                      />
+                      <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light"></p>
+                    </div>
+                    <div>
+                      <p className="text-xs pb-2">Password</p>
+                      <input
+                        className="p-3 bg-gray-300 rounded-xl border w-full"
+                        type="password"
+                        name="Password"
+                        value={modelRegistrasi.password}
+                        placeholder="Password"
+                        onChange={this.changeHandler("PwdAccount")}
+                        maxLength={100}
+                      />
+                      <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
+                        {modelRegistrasi.password.length > 0 ? (
+                          !errorAlerts.CheckLengthPassword?.valid ? (
+                            <strong id="title-error" role="alert">
+                              {errorAlerts.CheckLengthPassword?.message}
+                            </strong>
+                          ) : null
+                        ) : !errorAlerts.PwdAccount?.valid ? (
+                          <strong id="title-error" role="alert">
+                            {errorAlerts.PwdAccount?.message}
+                          </strong>
+                        ) : null}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs pb-2">Ulangi Password</p>
+                      <input
+                        className="p-3 bg-gray-300 rounded-xl border w-full"
+                        type="password"
+                        name="Ulangi"
+                        value={ulangiPassword}
+                        placeholder="Ulangi Password"
+                        onChange={this.changeHandler("UlangiPwdAccount")}
+                        maxLength={100}
+                      />
+                      <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
+                        {ulangiPassword.length > 0 ? (
+                          !errorAlerts.MatchPassword?.valid ? (
+                            <strong id="title-error" role="alert">
+                              {errorAlerts.MatchPassword?.message}
+                            </strong>
+                          ) : null
+                        ) : !errorAlerts.UlangiPwdAccount?.valid ? (
+                          <strong id="title-error" role="alert">
+                            {errorAlerts.UlangiPwdAccount?.message}
+                          </strong>
+                        ) : null}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs pb-2">Role</p>
+                      <select
+                        id="countries"
+                        onChange={this.changeHandler("Role")}
+                        value={modelRegistrasi.roleGroupId}
+                        className="p-3 bg-gray-300 rounded-xl border w-full"
+                      >
+                        <option selected value="0">
+                          --- Pilih Role ---
+                        </option>
+                        <option value="1">Admin</option>
+                        <option value="2">Dosen</option>
+                        <option value="3">Mahasiswa</option>
+                      </select>
+                      <p className="text-red-600 flex mx-auto text-center justify-center text-xs font-light">
+                        {!errorAlerts.Role?.valid ? (
+                          <strong id="title-error" role="alert">
+                            {errorAlerts.Role?.message}
+                          </strong>
+                        ) : null}
+                      </p>
+                    </div>
                   </div>
+                  <button
+                    onClick={(event: React.SyntheticEvent) =>
+                      this.handleRegister(event)
+                    }
+                    className="bg-[#002D74] p-4 w-full rounded-xl text-white py-2 hover:scale-105 duration-300"
+                  >
+                    Daftar
+                  </button>
                 </form>
               </div>
             </div>

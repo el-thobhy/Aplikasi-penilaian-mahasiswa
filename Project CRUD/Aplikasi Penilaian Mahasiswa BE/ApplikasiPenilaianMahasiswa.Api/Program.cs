@@ -23,6 +23,7 @@ builder.Services.AddScoped<IValidator<TypeDosenViewModel>, TypeDosenValidator>()
 builder.Services.AddScoped<IValidator<UjianViewModel>, UjianValidator>();
 builder.Services.AddScoped<IValidator<LoginViewModel>, LoginValidator>();
 builder.Services.AddScoped<IValidator<string>, EmailValidator>();
+builder.Services.AddScoped<IValidator<RegisterViewModel>, RegisterValidator>();
 builder.Services.AddScoped<IValidator<AccountViewModel>, OtpValidator>();
 
 builder.Services.AddControllers();
