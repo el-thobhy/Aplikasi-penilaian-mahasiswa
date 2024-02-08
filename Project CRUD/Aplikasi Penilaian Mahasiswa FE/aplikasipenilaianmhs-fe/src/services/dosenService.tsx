@@ -50,7 +50,9 @@ export const DosenService = {
   post: (Dosen: ModelDosen) => {
     const { jurusan, id, is_delete, ...newDosen } = Dosen;
     const result = axios
-      .post(config.apiUrl + "/Dosen", newDosen)
+      .post(config.apiUrl + "/Dosen", newDosen, {
+        headers: config.headers(),
+      })
       .then((respons) => {
         console.log(respons);
         return {

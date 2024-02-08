@@ -68,7 +68,9 @@ export const UjianService = {
   },
   post: (Ujian: ModelUjian) => {
     const result = axios
-      .post(config.apiUrl + "/Ujian", Ujian)
+      .post(config.apiUrl + "/Ujian", Ujian, {
+        headers: config.headers(),
+      })
       .then((respons) => {
         console.log(respons);
         return {

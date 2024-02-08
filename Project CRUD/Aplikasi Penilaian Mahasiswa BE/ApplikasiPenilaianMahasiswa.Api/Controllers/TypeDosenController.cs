@@ -1,4 +1,5 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
+using ApplikasiPenilaianMahasiswa.Api.Security;
 using ApplikasiPenilaianMahasiswa.Api.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
@@ -21,6 +22,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
         }
 
         [HttpPost]
+        [ReadableBodyStream(Roles = "Administrator,typedosen")]
         public async Task<IActionResult> Post(TypeDosenViewModel model)
         {
             try

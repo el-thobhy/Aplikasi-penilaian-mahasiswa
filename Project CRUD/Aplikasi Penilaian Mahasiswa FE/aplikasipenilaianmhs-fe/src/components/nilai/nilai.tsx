@@ -167,8 +167,7 @@ export default class Nilai extends React.Component<IProps, IState> {
       });
       if (
         this.state.score.id_Mahasiswa === 0 ||
-        this.state.score.id_Ujian === 0 ||
-        this.state.score.id_Ujian
+        this.state.score.id_Ujian === 0
       ) {
         return;
       }
