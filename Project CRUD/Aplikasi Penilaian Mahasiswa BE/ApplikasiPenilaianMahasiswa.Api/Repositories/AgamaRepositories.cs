@@ -1,9 +1,10 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
+using ApplikasiPenilaianMahasiswa.Api.Security;
 using ViewModel;
 
 namespace ApplikasiPenilaianMahasiswa.Api.Repositories
 {
-    public class AgamaRepositories: IRepositories<AgamaViewModel>
+    public class AgamaRepositories : IRepositories<AgamaViewModel>
     {
         private MahasiswaDbContext _dbContext;
         private ResponseResult _result = new ResponseResult();
@@ -24,7 +25,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 if (entity != null)
                 {
                     entity.Is_delete = status;
-                    entity.Deleted_by = 1;
+                    entity.Deleted_by = ClaimsContext.UserName();
                     entity.Deleted_on = DateTime.Now;
 
                     _dbContext.SaveChanges();
@@ -37,7 +38,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     };
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _result.Success = false;
                 _result.Message = e.Message;
@@ -58,7 +59,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     entity.Kode_Agama = newKode;
                     entity.Is_delete = model.Is_delete;
 
-                    entity.Created_by = 1;
+                    entity.Created_by = ClaimsContext.UserName();
                     entity.Created_on = DateTime.Now;
 
                     _dbContext.Agamas.Add(entity);
@@ -67,7 +68,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     model.Id = entity.Id;
                     model.Kode_Agama = entity.Kode_Agama;
                 }
-                
+
             }
             catch (Exception)
             {
@@ -91,7 +92,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                               Is_delete = o.Is_delete
                           }).ToList();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
@@ -107,12 +108,12 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                           where o.Id == id
                           select new AgamaViewModel
                           {
-                              Id= o.Id,
+                              Id = o.Id,
                               Deskripsi = o.Deskripsi,
-                              Kode_Agama= o.Kode_Agama,
+                              Kode_Agama = o.Kode_Agama,
                               Is_delete = o.Is_delete
                           }).FirstOrDefault();
-                if(result == null)
+                if (result == null)
                 {
                     return new AgamaViewModel();
                 }
@@ -136,7 +137,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
             {
                 var query = _dbContext.Agamas
                     .Where(o => o.Deskripsi.Contains(search) && o.Is_delete == false);
-                
+
                 int count = query.Count();
 
                 if (count > 0)
@@ -195,7 +196,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     entity.Deskripsi = model.Deskripsi;
                     entity.Kode_Agama = model.Kode_Agama;
                     entity.Is_delete = model.Is_delete;
-                    entity.Modified_by = 1;
+                    entity.Modified_by = ClaimsContext.UserName();
                     entity.Modified_on = DateTime.Now;
 
                     _dbContext.SaveChanges();

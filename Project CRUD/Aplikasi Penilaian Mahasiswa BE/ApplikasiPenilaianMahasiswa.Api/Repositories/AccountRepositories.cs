@@ -1,4 +1,5 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
+using ApplikasiPenilaianMahasiswa.Api.Security;
 using Framework.Auth;
 using System.Net;
 using System.Net.Mail;
@@ -114,7 +115,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                         UserName = user,
                         Email = "",
                         RoleGroupId = 3,
-                        Created_by = 1,
+                        Created_by = ClaimsContext.UserName(),
                         Created_on = DateTime.Now,
                         Otp = otp,
                         OtpExpire = (DateTime.Now).AddMinutes(10)
@@ -218,7 +219,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 exist.Email = model.Email;
                 exist.Password = Encryption.HashSha256(model.Password);
                 exist.RoleGroupId = model.RoleGroupId;
-                exist.Created_by = 1;
+                exist.Created_by = ClaimsContext.UserName();
                 exist.Created_on = DateTime.Now;
 
 

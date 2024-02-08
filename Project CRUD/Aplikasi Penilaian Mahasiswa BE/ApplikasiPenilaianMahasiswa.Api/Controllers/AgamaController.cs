@@ -1,5 +1,6 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
 using ApplikasiPenilaianMahasiswa.Api.Repositories;
+using ApplikasiPenilaianMahasiswa.Api.Security;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
         }
 
         [HttpPost]
+        [ReadableBodyStream(Roles = "Administrator,agama")]
         public async Task<IActionResult> Post(AgamaViewModel model)
         {
             try
@@ -65,7 +67,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
         }
 
         [HttpGet("Search")]
-        public async Task<ResponseResult> Get(int pageNum, int rows, string? search = "", string? orderBy = "", Sorting sort= Sorting.Ascending)
+        public async Task<ResponseResult> Get(int pageNum, int rows, string? search = "", string? orderBy = "", Sorting sort = Sorting.Ascending)
         {
             return _repo.Pagination(pageNum, rows, search, orderBy, sort);
         }

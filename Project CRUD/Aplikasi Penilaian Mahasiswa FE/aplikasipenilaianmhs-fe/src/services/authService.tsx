@@ -10,6 +10,7 @@ export const AuthService = {
       .post(config.apiUrl + "/Account/login", auth)
       .then((respons) => {
         const account: AccountModel = respons.data;
+        localStorage.setItem("id", account.id.toString());
         localStorage.setItem("userName", account.userName);
         localStorage.setItem("firstName", account.firstName);
         localStorage.setItem("lastName", account.lastName);

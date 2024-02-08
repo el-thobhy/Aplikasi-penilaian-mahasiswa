@@ -120,6 +120,10 @@ app.UseHttpsRedirection();
 
 app.UseStatusCodePages();
 
+app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.MapControllers();
 
 app.UseCors();
