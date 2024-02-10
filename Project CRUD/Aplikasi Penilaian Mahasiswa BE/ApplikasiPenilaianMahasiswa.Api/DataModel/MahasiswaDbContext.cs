@@ -19,6 +19,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
         public DbSet<Account> Accounts { get; set; }
         public DbSet<RoleGroup> RoleGroups { get; set; }
         public DbSet<AuthorizationGroup> AuthorizationGroups { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -502,7 +503,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                 new AuthorizationGroup { Id = 4, Role = "dosen", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
                 new AuthorizationGroup { Id = 5, Role = "nilai", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
                 new AuthorizationGroup { Id = 6, Role = "typedosen", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
-                new AuthorizationGroup { Id = 7, Role = "ujian", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now }
+                new AuthorizationGroup { Id = 7, Role = "ujian", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
+                new AuthorizationGroup { Id = 8, Role = "home", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now }
                 );
         }
     }

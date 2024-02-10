@@ -4,6 +4,7 @@ using ApplikasiPenilaianMahasiswa.Api.DataModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 {
     [DbContext(typeof(MahasiswaDbContext))]
-    partial class MahasiswaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240210072419_AddAnnounceTable")]
+    partial class AddAnnounceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,7 +112,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                             Id = 1,
                             Attempt = 0,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3331),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8450),
                             Email = "auriwanyasper@gmail.com",
                             FirstName = "Super",
                             Is_delete = false,
@@ -123,7 +126,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                             Id = 2,
                             Attempt = 0,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3334),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8453),
                             Email = "auriwanyasper@gmail.com",
                             FirstName = "dosen",
                             Is_delete = false,
@@ -186,7 +189,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 1,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3101),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8122),
                             Deskripsi = "Islam",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0001"
@@ -195,7 +198,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 2,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3104),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8126),
                             Deskripsi = "Kristen",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0002"
@@ -204,7 +207,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 3,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3106),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8128),
                             Deskripsi = "Katolik",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0003"
@@ -213,7 +216,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 4,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3108),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8130),
                             Deskripsi = "Hindu",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0004"
@@ -222,7 +225,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 5,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3110),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8132),
                             Deskripsi = "Budha",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0005"
@@ -328,7 +331,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 1,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3355),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8470),
                             Is_delete = false,
                             Role = "jurusan",
                             RoleGroupId = 1
@@ -337,7 +340,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 2,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3357),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8473),
                             Is_delete = false,
                             Role = "mahasiswa",
                             RoleGroupId = 1
@@ -346,7 +349,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 3,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3359),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8475),
                             Is_delete = false,
                             Role = "agama",
                             RoleGroupId = 1
@@ -355,7 +358,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 4,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3450),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8477),
                             Is_delete = false,
                             Role = "dosen",
                             RoleGroupId = 1
@@ -364,7 +367,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 5,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3453),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8479),
                             Is_delete = false,
                             Role = "nilai",
                             RoleGroupId = 1
@@ -373,7 +376,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 6,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3455),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8480),
                             Is_delete = false,
                             Role = "typedosen",
                             RoleGroupId = 1
@@ -382,18 +385,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 7,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3457),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8482),
                             Is_delete = false,
                             Role = "ujian",
-                            RoleGroupId = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3458),
-                            Is_delete = false,
-                            Role = "home",
                             RoleGroupId = 1
                         });
                 });
@@ -460,7 +454,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 1,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3235),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8355),
                             Id_Jurusan = 1,
                             Id_Type_Dosen = 2,
                             Is_delete = false,
@@ -471,7 +465,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 2,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3238),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8357),
                             Id_Jurusan = 2,
                             Id_Type_Dosen = 1,
                             Is_delete = false,
@@ -482,7 +476,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 3,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3240),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8360),
                             Id_Jurusan = 3,
                             Id_Type_Dosen = 2,
                             Is_delete = false,
@@ -493,7 +487,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 4,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3242),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8362),
                             Id_Jurusan = 4,
                             Id_Type_Dosen = 2,
                             Is_delete = false,
@@ -504,7 +498,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 5,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3244),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8364),
                             Id_Jurusan = 5,
                             Id_Type_Dosen = 1,
                             Is_delete = false,
@@ -570,7 +564,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 1,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2753),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(7816),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0001",
                             Nama_Jurusan = "Teknik Informatika",
@@ -580,7 +574,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 2,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2777),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(7843),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0002",
                             Nama_Jurusan = "Management Informatika",
@@ -590,7 +584,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 3,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2781),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(7846),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0003",
                             Nama_Jurusan = "Sistem Informasi",
@@ -600,7 +594,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 4,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2783),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(7848),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0004",
                             Nama_Jurusan = "Sistem Komputer",
@@ -610,7 +604,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 5,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2785),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(7851),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0005",
                             Nama_Jurusan = "Komputer Akuntansi",
@@ -686,7 +680,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                             Id = 1,
                             Alamat = "Jl. Mawar No 3 RT 05 Cicalengka, Bandung",
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3136),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8161),
                             Id_Agama = 1,
                             Id_Jurusan = 1,
                             Is_delete = false,
@@ -698,7 +692,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                             Id = 2,
                             Alamat = "Jl. Kebagusan No. 33 RT04 RW06 Bandung",
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3139),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8164),
                             Id_Agama = 2,
                             Id_Jurusan = 2,
                             Is_delete = false,
@@ -710,7 +704,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                             Id = 3,
                             Alamat = "Jl. Sumatera No. 12 RT02 RW01, Ciamis",
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3141),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8167),
                             Id_Agama = 1,
                             Id_Jurusan = 3,
                             Is_delete = false,
@@ -722,7 +716,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                             Id = 4,
                             Alamat = "Jl. Jawa No 01 RT01 RW01, Jakarta Pusat",
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3143),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8169),
                             Id_Agama = 1,
                             Id_Jurusan = 1,
                             Is_delete = false,
@@ -734,7 +728,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                             Id = 5,
                             Alamat = "Jl. Niagara No. 54 RT01 RW09, Surabaya",
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3145),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8172),
                             Id_Agama = 3,
                             Id_Jurusan = 2,
                             Is_delete = false,
@@ -798,7 +792,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 1,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3267),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8387),
                             Id_Mahasiswa = 4,
                             Id_Ujian = 1,
                             Is_delete = false,
@@ -808,7 +802,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 2,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3270),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8390),
                             Id_Mahasiswa = 1,
                             Id_Ujian = 1,
                             Is_delete = false,
@@ -818,7 +812,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 3,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3272),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8392),
                             Id_Mahasiswa = 2,
                             Id_Ujian = 3,
                             Is_delete = false,
@@ -828,7 +822,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 4,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3275),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8394),
                             Id_Mahasiswa = 4,
                             Id_Ujian = 2,
                             Is_delete = false,
@@ -838,7 +832,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 5,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3277),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8396),
                             Id_Mahasiswa = 5,
                             Id_Ujian = 5,
                             Is_delete = false,
@@ -896,7 +890,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 1,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3304),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8423),
                             GroupName = "Admin",
                             Is_delete = false
                         },
@@ -904,7 +898,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 2,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3307),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8425),
                             GroupName = "Dosen",
                             Is_delete = false
                         },
@@ -912,7 +906,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 3,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3309),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8427),
                             GroupName = "Mahasiswa",
                             Is_delete = false
                         });
@@ -970,7 +964,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 1,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3207),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8323),
                             Deskripsi = "Tetap",
                             Is_delete = false,
                             Kode_Type_Dosen = "TYP-2401-0001"
@@ -979,7 +973,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 2,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3210),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8326),
                             Deskripsi = "Honorer",
                             Is_delete = false,
                             Kode_Type_Dosen = "TYP-2401-0002"
@@ -988,7 +982,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 3,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3212),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8328),
                             Deskripsi = "Expertise",
                             Is_delete = false,
                             Kode_Type_Dosen = "TYP-2401-0003"
@@ -1052,7 +1046,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 1,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3174),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8201),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0001",
                             Nama_Ujian = "Algoritma",
@@ -1062,7 +1056,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 2,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3177),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8204),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0002",
                             Nama_Ujian = "Aljabar",
@@ -1072,7 +1066,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 3,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3179),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8206),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0003",
                             Nama_Ujian = "Statistika",
@@ -1082,7 +1076,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 4,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3181),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8208),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0004",
                             Nama_Ujian = "Etika Profesi",
@@ -1092,7 +1086,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 5,
                             Created_by = "admin",
-                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3183),
+                            Created_on = new DateTime(2024, 2, 10, 14, 24, 18, 848, DateTimeKind.Local).AddTicks(8210),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0005",
                             Nama_Ujian = "Bahasa Inggris",
