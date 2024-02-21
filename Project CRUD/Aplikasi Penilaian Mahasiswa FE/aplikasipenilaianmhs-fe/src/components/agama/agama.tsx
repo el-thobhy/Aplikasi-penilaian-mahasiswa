@@ -235,22 +235,22 @@ export default class Agama extends React.Component<IProps, IState> {
     };
     return (
       <div className="h-full mb-3 me-3">
-        <div className="text-left text-3xl pt-5 text-white">Agama</div>
-        <div className="flex" aria-label="Button">
-          <button
-            className="my-8 justify-start h-8 px-4 text-green-100 transition-colors duration-150 bg-green-700 rounded focus:shadow-outline hover:bg-green-800"
-            onClick={() => this.createCommand()}
-          >
-            Create New
-          </button>
-        </div>
+        <div className="text-left text-3xl p-5 font-bold text-black">Agama</div>
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="border-b dark:bg-gray-900 dark:border-gray-700">
-              <th scope="col" className="px-6 py-3 w-14 h-14 rounded-tl-3xl">
+              <div className="flex ms-6" aria-label="Button">
+                <button
+                  className="my-8 justify-start h-8 px-4 text-green-100 transition-colors duration-150 bg-green-700 rounded focus:shadow-outline hover:bg-green-800"
+                  onClick={() => this.createCommand()}
+                >
+                  Create New
+                </button>
+              </div>
+              <th scope="col" className="px-6 w-14 h-12">
                 Search:
               </th>
-              <th scope="col" className="px-6 py-3 w-14 h-14">
+              <th scope="col" className="px-6 w-14 h-12">
                 <input
                   type="text"
                   id="search"
@@ -260,7 +260,7 @@ export default class Agama extends React.Component<IProps, IState> {
                   onChange={this.changeSearch("search")}
                 />
               </th>
-              <th scope="col" className="px-6 py-3 w-14 h-14">
+              <th scope="col" className="px-6 w-14 h-12">
                 <button
                   className="my-8 justify-start h-8 px-4 text-green-100 transition-colors duration-150 bg-green-700 rounded focus:shadow-outline hover:bg-green-800"
                   onClick={() => this.loadAgama()}
@@ -268,7 +268,7 @@ export default class Agama extends React.Component<IProps, IState> {
                   Filter
                 </button>
               </th>
-              <th scope="col" className="px-6 py-3 w-14 h-14 rounded-tr-3xl">
+              <th scope="col" className="px-6 w-14 h-12">
                 <select
                   id="countries"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -280,15 +280,16 @@ export default class Agama extends React.Component<IProps, IState> {
               </th>
             </tr>
             <tr className="border-b dark:bg-gray-900 dark:border-gray-700">
-              <th scope="col" className="px-6 py-3 w-14 h-14">
+              <th scope="col" className="px-6 w-14 h-12">
                 Kode Agama
               </th>
-              <th scope="col" className="px-6 py-3 w-14 h-14">
+              <th scope="col" className="px-6 w-14 h-12">
                 Deskripsi
               </th>
-              <th scope="col" className="px-6 py-3 w-14 h-14">
+              <th scope="col" className="px-6 w-14 h-12">
                 Action
               </th>
+              <th></th>
               <th></th>
             </tr>
           </thead>
@@ -322,13 +323,14 @@ export default class Agama extends React.Component<IProps, IState> {
                     </div>
                   </td>
                   <td></td>
+                  <td></td>
                 </tr>
               );
             })}
           </tbody>
           <tfoot className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="border-b dark:bg-gray-900 dark:border-gray-700">
-              <th scope="col" className="px-6 py-3 w-14 h-14 rounded-bl-3xl">
+              <th scope="col" className="px-6 py-3 w-14 h-14">
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Rows per page:{" "}
                 </label>
@@ -347,7 +349,7 @@ export default class Agama extends React.Component<IProps, IState> {
               <th scope="col" className="px-6 py-3 w-14 h-14">
                 Page:
               </th>
-              <th scope="col" className="px-6 py-3 w-14 h-14 rounded-br-3xl">
+              <th scope="col" className="px-6 py-3 w-14 h-14">
                 <select
                   id="countries"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -356,6 +358,7 @@ export default class Agama extends React.Component<IProps, IState> {
                   {loopPages()}
                 </select>
               </th>
+              <th></th>
             </tr>
           </tfoot>
         </table>
