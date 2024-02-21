@@ -63,9 +63,9 @@ class SideBar extends React.Component<IProps, IState> {
     const { changeLoggedHandler, logged, user } = this.props;
     return (
       <>
-        <div className="w-full flex">
-          <div className="flex flex-col bg-gray-800 w-60 shadow-xl">
-            <div className="h-full">
+        <div className="w-full max-h flex">
+          <div className="flex max-h flex-col bg-gray-800 w-60 shadow-xl">
+            <div className="h-screen">
               <a
                 href="/#"
                 className="flex items-start justify-center border-b border-gray-600 lg:px-6 py-1.5"
@@ -75,189 +75,192 @@ class SideBar extends React.Component<IProps, IState> {
                   <h2 className="text-xl font-bold text-blue-600">MHS</h2>
                 </div>
               </a>
-              <div>
-                <div className="flex ps-4 pe-4 border-b border-gray-600">
+              <div className="bg-gray-800">
+                <div className="flex ps-4 pe-4 border-bborder-gray-600">
                   {logged ? (
-                    <ul className="mb-6 space-y-4 text-sm">
-                      <li
-                        className={`rounded-full m-1 ${this.activeMenu("/")}`}
-                      >
-                        <a
-                          href="#"
-                          className="flex items-center p-2 space-x-3 rounded-md"
+                    <div className="bg-gray-800  ">
+                      <ul className="space-y-4 text-sm">
+                        <li
+                          className={`rounded-full m-1 ${this.activeMenu("/")}`}
                         >
-                          <FaHome className="text-white" size={20} />
-                          <span className="text-gray-100">
-                            <Link to="/">Home</Link>
-                          </span>
-                        </a>
-                      </li>
-                      {user.roles.indexOf("jurusan") > -1 ? (
-                        <>
-                          <li
-                            className={`rounded-full  m-1 ${this.activeMenu(
-                              "/jurusan"
-                            )}`}
+                          <a
+                            href="#"
+                            className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <a
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
+                            <FaHome className="text-white" size={20} />
+                            <span className="text-gray-100">
+                              <Link to="/">Home</Link>
+                            </span>
+                          </a>
+                        </li>
+                        {user.roles.indexOf("jurusan") > -1 ? (
+                          <>
+                            <li
+                              className={`rounded-full  m-1 ${this.activeMenu(
+                                "/jurusan"
+                              )}`}
                             >
-                              <FaBook className="text-white" size={20} />
-                              <span className="text-gray-100">
-                                <Link to="/jurusan">Jurusan</Link>
-                              </span>
-                            </a>
-                          </li>
-                        </>
-                      ) : null}
-                      {user.roles.indexOf("mahasiswa") > -1 ? (
-                        <>
-                          <li
-                            className={`rounded-full m-1 ${this.activeMenu(
-                              "/mahasiswa"
-                            )}`}
-                          >
-                            <a
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
+                              <a
+                                href="#"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <FaBook className="text-white" size={20} />
+                                <span className="text-gray-100">
+                                  <Link to="/jurusan">Jurusan</Link>
+                                </span>
+                              </a>
+                            </li>
+                          </>
+                        ) : null}
+                        {user.roles.indexOf("mahasiswa") > -1 ? (
+                          <>
+                            <li
+                              className={`rounded-full m-1 ${this.activeMenu(
+                                "/mahasiswa"
+                              )}`}
                             >
-                              <FaGraduationCap
-                                className="text-white"
-                                size={20}
-                              />
-                              <span className="text-gray-100">
-                                <Link to="/mahasiswa">Mahasiswa</Link>
-                              </span>{" "}
-                            </a>
-                          </li>
-                        </>
-                      ) : null}
+                              <a
+                                href="#"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <FaGraduationCap
+                                  className="text-white"
+                                  size={20}
+                                />
+                                <span className="text-gray-100">
+                                  <Link to="/mahasiswa">Mahasiswa</Link>
+                                </span>{" "}
+                              </a>
+                            </li>
+                          </>
+                        ) : null}
 
-                      {user.roles.indexOf("agama") > -1 ? (
-                        <>
-                          <li
-                            className={`rounded-full m-1 ${this.activeMenu(
-                              "/agama"
-                            )}`}
-                          >
-                            <a
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
+                        {user.roles.indexOf("agama") > -1 ? (
+                          <>
+                            <li
+                              className={`rounded-full m-1 ${this.activeMenu(
+                                "/agama"
+                              )}`}
                             >
-                              <BsFillMoonStarsFill
-                                className="text-white"
-                                size={20}
-                              />
-                              <span className="text-gray-100">
-                                <Link to="/agama">Agama</Link>
-                              </span>
-                            </a>
-                          </li>
-                        </>
-                      ) : null}
+                              <a
+                                href="#"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <BsFillMoonStarsFill
+                                  className="text-white"
+                                  size={20}
+                                />
+                                <span className="text-gray-100">
+                                  <Link to="/agama">Agama</Link>
+                                </span>
+                              </a>
+                            </li>
+                          </>
+                        ) : null}
 
-                      {user.roles.indexOf("dosen") > -1 ? (
-                        <>
-                          <li
-                            className={`rounded-full m-1 ${this.activeMenu(
-                              "/dosen"
-                            )}`}
-                          >
-                            <a
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
+                        {user.roles.indexOf("dosen") > -1 ? (
+                          <>
+                            <li
+                              className={`rounded-full m-1 ${this.activeMenu(
+                                "/dosen"
+                              )}`}
                             >
-                              <FaUserGraduate
-                                className="text-white"
-                                size={20}
-                              />
-                              <span className="text-gray-100">
-                                <Link to="/dosen">Dosen</Link>
-                              </span>
-                            </a>
-                          </li>
-                        </>
-                      ) : null}
-                      {user.roles.indexOf("nilai") > -1 ? (
-                        <>
-                          <li
-                            className={`rounded-full m-1 ${this.activeMenu(
-                              "/nilai"
-                            )}`}
-                          >
-                            <a
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
+                              <a
+                                href="#"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <FaUserGraduate
+                                  className="text-white"
+                                  size={20}
+                                />
+                                <span className="text-gray-100">
+                                  <Link to="/dosen">Dosen</Link>
+                                </span>
+                              </a>
+                            </li>
+                          </>
+                        ) : null}
+                        {user.roles.indexOf("nilai") > -1 ? (
+                          <>
+                            <li
+                              className={`rounded-full m-1 ${this.activeMenu(
+                                "/nilai"
+                              )}`}
                             >
-                              <MdCreditScore className="text-white" size={20} />
-                              <span className="text-gray-100">
-                                <Link to="/nilai">Nilai</Link>
-                              </span>
-                            </a>
-                          </li>
-                        </>
-                      ) : null}
-                      {user.roles.indexOf("typedosen") > -1 ? (
-                        <>
-                          <li
-                            className={`rounded-full m-1 ${this.activeMenu(
-                              "/typedosen"
-                            )}`}
-                          >
-                            <a
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
+                              <a
+                                href="#"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <MdCreditScore
+                                  className="text-white"
+                                  size={20}
+                                />
+                                <span className="text-gray-100">
+                                  <Link to="/nilai">Nilai</Link>
+                                </span>
+                              </a>
+                            </li>
+                          </>
+                        ) : null}
+                        {user.roles.indexOf("typedosen") > -1 ? (
+                          <>
+                            <li
+                              className={`rounded-full m-1 ${this.activeMenu(
+                                "/typedosen"
+                              )}`}
                             >
-                              <MdCategory className="text-white" size={20} />
-                              <span className="text-gray-100">
-                                <Link to="/typedosen">Tipe Dosen</Link>
-                              </span>
-                            </a>
-                          </li>
-                        </>
-                      ) : null}
-                      {user.roles.indexOf("ujian") > -1 ? (
-                        <>
-                          <li
-                            className={`rounded-full m-1 ${this.activeMenu(
-                              "/ujian"
-                            )}`}
-                          >
-                            <a
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
+                              <a
+                                href="#"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <MdCategory className="text-white" size={20} />
+                                <span className="text-gray-100">
+                                  <Link to="/typedosen">Tipe Dosen</Link>
+                                </span>
+                              </a>
+                            </li>
+                          </>
+                        ) : null}
+                        {user.roles.indexOf("ujian") > -1 ? (
+                          <>
+                            <li
+                              className={`rounded-full m-1 ${this.activeMenu(
+                                "/ujian"
+                              )}`}
                             >
-                              <GrTest className="text-white" size={20} />
-                              <span className="text-gray-100">
-                                <Link to="/ujian">Ujian</Link>
-                              </span>
-                            </a>
-                          </li>
-                        </>
-                      ) : null}
-                    </ul>
-                  ) : null}
+                              <a
+                                href="#"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <GrTest className="text-white" size={20} />
+                                <span className="text-gray-100">
+                                  <Link to="/ujian">Ujian</Link>
+                                </span>
+                              </a>
+                            </li>
+                          </>
+                        ) : null}
+                      </ul>
+                      <div className="m-5 w-full ">
+                        <button
+                          onClick={this.logoutBtn}
+                          className="bg-red-800 rounded-3xl ps-10 pe-10 pt-2 pb-2 text-white font-bold"
+                        >
+                          Logout
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-4 w-full">
+                      <button
+                        onClick={() => this.setShowModal(true)}
+                        className="bg-blue-800 rounded-3xl w-full  ps-10 pe-10 pt-2 pb-2 text-white font-bold"
+                      >
+                        Login
+                      </button>
+                    </div>
+                  )}
                 </div>
-                {logged ? (
-                  <div className="p-4">
-                    <button
-                      onClick={this.logoutBtn}
-                      className="bg-red-800 rounded-3xl p-2 w-full text-white font-bold"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                ) : (
-                  <div className="p-4">
-                    <button
-                      onClick={() => this.setShowModal(true)}
-                      className="bg-blue-800 rounded-3xl w-full p-2 text-white font-bold"
-                    >
-                      Login
-                    </button>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -268,9 +271,9 @@ class SideBar extends React.Component<IProps, IState> {
               logged={logged}
             />
           ) : null}
-          <div className="w-full">
+          <div className="w-full h-full">
             <Header account={user} logged={logged} />
-            <div className="w-full ms-3 grid h-screen grid-cols-1 gap-3 h-screen text-center">
+            <div className="w-full h-full ms-3 grid grid-cols-1 gap-3 text-center">
               <Routes>
                 <Route path="/" Component={Home} />
                 <Route element={<ProtectedRoute role="jurusan" />}>

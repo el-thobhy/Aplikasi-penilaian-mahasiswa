@@ -15,7 +15,7 @@ export default class Header extends React.Component<IProps, IState> {
     const { account, logged } = this.props;
     return (
       <header>
-        <nav className="bg-white border-gray-200 lg:px-6 py-2  border-b border-solid border-gray-600 pb-3">
+        <nav className=" lg:px-6 py-2  border-b border-solid  bg-gray-100 pb-3">
           <div className="flex flex-wrap justify-between items-center">
             <div className="flex w-full items-center justify-end flex-shrink-0">
               {logged ? (
