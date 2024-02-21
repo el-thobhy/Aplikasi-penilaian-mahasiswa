@@ -22,7 +22,11 @@ export default class Header extends React.Component<IProps, IState> {
                 <h2 className="text-black p-3 items-center justify-center ps-3 pb-2">
                   {account.firstName}
                 </h2>
-              ) : null}
+              ) : (
+                <h2 className="text-black p-3 items-center justify-center ps-3 pb-2">
+                  Please Login First
+                </h2>
+              )}
             </div>
           </div>
         </nav>

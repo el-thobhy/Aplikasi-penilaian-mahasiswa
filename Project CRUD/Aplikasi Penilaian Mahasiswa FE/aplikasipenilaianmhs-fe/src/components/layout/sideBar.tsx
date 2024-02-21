@@ -63,7 +63,7 @@ class SideBar extends React.Component<IProps, IState> {
     const { changeLoggedHandler, logged, user } = this.props;
     return (
       <>
-        <div className="w-full max-h flex">
+        <div className="w-full bg-gray-200 max-h flex">
           <div className="flex max-h flex-col bg-gray-800 w-60 shadow-xl">
             <div className="h-screen">
               <a

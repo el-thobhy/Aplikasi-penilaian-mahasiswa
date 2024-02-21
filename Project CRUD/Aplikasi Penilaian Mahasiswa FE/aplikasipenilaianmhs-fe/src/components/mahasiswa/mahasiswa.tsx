@@ -387,11 +387,9 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
         {showModal ? (
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
             <div className="relative w-auto my-6 mx-auto max-w-3xl ">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none dark:bg-gray-900">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl text-gray-900 dark:text-white">
-                    {command.valueOf()}
-                  </h3>
+                  <h3 className="text-3xl text-black">{command.valueOf()}</h3>
                   <button
                     className="bg-transparent border-0 text-black float-right"
                     onClick={() => this.setShowModal(false)}
@@ -401,7 +399,7 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
                     </span>
                   </button>
                 </div>
-                <div className="relative p-6 flex-auto">
+                <div className="relative p-6 h-[340px] w-[340px] overflow-auto flex-auto">
                   <Form
                     mahasiswa={student}
                     errorAlerts={errorAlerts}
@@ -436,9 +434,9 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
         {showModalDelete ? (
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
             <div className="relative w-auto my-6 mx-auto max-w-3xl ">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none dark:bg-gray-900">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl text-gray-900 dark:text-white">
+                  <h3 className="text-3xl text-gray-900 text-black font-bold">
                     Hapus
                   </h3>
                   <button
@@ -450,7 +448,7 @@ export default class Mahasiswa extends React.Component<IProps, IState> {
                     </span>
                   </button>
                 </div>
-                <span className="text-white m-7">
+                <span className="text-black m-7">
                   Anda Ingin menghapus {student.nama_Mahasiswa}
                 </span>
                 <div
