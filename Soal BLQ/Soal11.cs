@@ -28,9 +28,9 @@ namespace Soal_BLQ
             {
                 if (input.Length % 2 == 0)
                 {
-                    for(this; j < input.Length+1; j++)
+                    for (int j = 0; j < input.Length + 1; j++)
                     {
-                        if (j == (input.Length+1) / 2)
+                        if (j == (input.Length + 1) / 2)
                         {
                             Console.Write(input[input.Length - 1 - i]);
                         }
