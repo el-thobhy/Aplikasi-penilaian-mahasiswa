@@ -50,6 +50,7 @@ export default class Form extends React.Component<IProps, IState> {
             </label>
             <select
               id="countries"
+              value={jurusan.status_Jurusan}
               className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={changeHandler("status_Jurusan")}
             >
