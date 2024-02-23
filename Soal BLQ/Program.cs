@@ -13,7 +13,6 @@ namespace Program
         public Program()
         {
             string answer = "t";
-            Console.WriteLine("1. Soal 01");
             Console.WriteLine("2. Soal 02");
             Console.WriteLine("3. Soal 03");
             Console.WriteLine("4. Soal 04");
@@ -28,9 +27,7 @@ namespace Program
             Console.WriteLine("13. Soal 13");
             Console.WriteLine("14. Soal 14");
             Console.WriteLine("15. Soal 15");
-            Console.WriteLine("16. Soal 16");
             Console.WriteLine("17. Soal 17");
-            Console.WriteLine("18. Soal 18");
             Console.WriteLine("19. Soal 19");
 
 
@@ -41,9 +38,6 @@ namespace Program
                 int soal = int.Parse(Console.ReadLine());
                 switch (soal)
                 {
-                    case 1:
-                        new Soal01();
-                        break;
                     case 2:
                         new Soal02();
                         break;
@@ -86,14 +80,8 @@ namespace Program
                     case 15:
                         new Soal15();
                         break;
-                    case 16:
-                        new Soal16();
-                        break;
                     case 17:
                         new Soal17();
-                        break;
-                    case 18:
-                        new Soal18();
                         break;
                     case 19:
                         new Soal19();
