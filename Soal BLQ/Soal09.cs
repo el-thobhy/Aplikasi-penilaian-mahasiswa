@@ -16,7 +16,7 @@ namespace Soal_BLQ
                 N = 5	 5 10 15 20 25
              */
 
-            Console.WriteLine("=== Soal 09.  ===");
+            Console.WriteLine("=== Soal 09. \nN = 3  3 6 9 \nN = 4	 4 8 12 16 \nN = 5	 5 10 15 20 25 === ");
             Console.Write("Masukkan nilai n (contoh: 3): ");
 
             int n = int.Parse(Console.ReadLine());

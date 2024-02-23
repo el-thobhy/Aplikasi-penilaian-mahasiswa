@@ -11,7 +11,7 @@ namespace Soal_BLQ
     {
         public Soal11()
         {
-            Console.WriteLine("=== Soal 11 ===");
+            Console.WriteLine("=== Soal 11 ===\ninput: afrika\noutput:\n***a***\n***k***\n***i***\n***r***\n***f***\n***A***");
             //01 02 03 04 05 06 07
             //11 12 13 14 15 16 17
             //21 22 23 24 24 26 27

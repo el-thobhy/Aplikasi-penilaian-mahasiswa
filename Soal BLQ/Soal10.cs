@@ -12,6 +12,7 @@ namespace Soal_BLQ
         public Soal10()
         {
             Console.WriteLine("=== Soal 10 ===");
+            Console.WriteLine("Input\t\t\t\tOutput\nSusilo Bambang Yudhoyono\tS***o B***g Y***o\nRani Tiara\t\t\tR***i T***a");
             Console.Write("Masukkan Nama : ");
             string input = Console.ReadLine();
             string output;

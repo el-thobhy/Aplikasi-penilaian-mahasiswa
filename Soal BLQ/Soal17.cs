@@ -45,13 +45,13 @@ namespace Soal_BLQ
             foreach (char langkah in input)
             {
                 ketinggian += (langkah == 'N') ? 1 : -1;
-
+                Console.Write(ketinggian+" ");
                 if (ketinggian == 0 && langkah == 'N')
                     lembah++;
-                else if (langkah == 'T')
+                if (langkah == 'T' && ketinggian == 0)
                     gunung++;
             }
-
+            Console.WriteLine();
             Console.WriteLine($"Jumlah Gunung: {gunung}");
             Console.WriteLine($"Jumlah Lembah: {lembah}");
         }

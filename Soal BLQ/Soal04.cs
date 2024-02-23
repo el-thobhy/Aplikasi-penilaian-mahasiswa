@@ -13,6 +13,7 @@ namespace Soal_BLQ
             Console.WriteLine("=== Soal 04. menampilkan n-bilangan prima pertama ===");
             Console.Write("Masukkan nilai n: ");
             //prima = 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, n
+            // 1 2 3 4 5 6 7 8 9
 
             int n = int.Parse(Console.ReadLine()); //5
             int number = 1;

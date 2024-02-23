@@ -21,7 +21,7 @@ namespace Soal_BLQ
             DateTime input = DateTime.Parse(time, id);
             Console.WriteLine(input.ToString("HH:mm:ss", id));*/
 
-            Console.WriteLine("=== Soal 15. mengubah waktu menjadi format 24 jam");
+            Console.WriteLine("=== Soal 15. mengubah waktu menjadi format 24 jam\nUbah format waktu '03:40:44 PM' menjadi format 24 jam (15:40:44)");
             Console.Write("Masukkan waktu (contoh: 07:05:45PM): ");
             string inputJam = Console.ReadLine();
             string[] arrJam = inputJam.Substring(0, 8).Split(':');

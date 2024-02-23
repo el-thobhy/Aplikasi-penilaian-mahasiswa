@@ -10,7 +10,7 @@ namespace Soal_BLQ
     {
         public Soal12()
         {
-            Console.WriteLine("=== Soal 12. Sorting deret angka ===");
+            Console.WriteLine("=== Soal 12. Sorting deret angka ===\nInput: 1 2 1 3 4 7 1 1 5 6 1 8\nOutput: 1 1 1 1 1 2 3 4 5 6 7 8");
             Console.Write("Masukkan deret angka (contoh: 1 2 1 3 4 7 1 1 5 6 1 8): ");
 
             int[] deret = Array.ConvertAll(Console.ReadLine().Split(" "), int.Parse);

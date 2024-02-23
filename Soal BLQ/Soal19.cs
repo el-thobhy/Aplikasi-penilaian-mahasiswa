@@ -10,8 +10,8 @@ namespace Soal_BLQ
     {
         public Soal19()
         {
-            Console.WriteLine("==== Soal 19. Pangrams ====");
-            Console.Write("masukkan string (contoh: We promptly judged antique ivory buckles for the next prize): ");
+            Console.WriteLine("==== Soal 19. Pangrams ====\nTentukan apakah kalimat ini adalah Pangram* atau bukan\n“Sphinx of black quartz, judge my vow”\n“Brawny gods just flocked up to quiz and vex him”\n“Check back tomorrow; I will see if the book has arrived.”\n*Pangram adalah kata atau kalimat yang mengandung setiap abjad alphabet, \ncontohnya “A quick brown fox jumps over the lazy dog”");
+            Console.Write("\nmasukkan string (contoh: We promptly judged antique ivory buckles for the next prize): ");
             string input = Console.ReadLine().ToLower();
             string lib = " abcdefghijklmnopqrstuvwxyz";
             char[] charIn = input.ToArray();

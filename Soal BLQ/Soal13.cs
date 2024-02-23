@@ -10,7 +10,7 @@ namespace Soal_BLQ
     {
         public Soal13()
         {
-            Console.WriteLine("=== Soal 13 ===");
+            Console.WriteLine("=== Soal 13 ===\nBerapa derajat sudut terkecil yang dibentuk 2 jarum jam?\nJam 3:00  90\nJam 5:30  15\nJam 2.20  50\n*detik tidak dipertimbangkan");
             Console.Write("Masukkan waktu (format: HH:mm): ");
             string input = Console.ReadLine();
 

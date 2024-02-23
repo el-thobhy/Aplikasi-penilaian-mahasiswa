@@ -10,7 +10,7 @@ namespace Soal_BLQ
     {
         public Soal14()
         {
-            Console.WriteLine("=== Soal 14: Rotasi deret");
+            Console.WriteLine("=== Soal 14: Rotasi deret ===\nDeret: 3 9 0 7 1 2 4\nN = 3	 7 1 2 4 3 9 0\nN = 1	 9 0 7 1 2 4 1");
             Console.Write("Masukkan deret (contoh: 5 6 7 0 1): ");
             List<string> list = Console.ReadLine().Split(' ').ToList();
             List<int> nums = list.ConvertAll(int.Parse);
