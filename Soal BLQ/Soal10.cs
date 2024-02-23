@@ -23,13 +23,16 @@ namespace Soal_BLQ
             {
                 if (kata[i].Length > 1)
                 {
-                    char[] chars = kata[i].ToCharArray();
-                    for (int j = 1; j < chars.Length - 1; j++)
+                    char[] chars = new char[5];
+                    chars[0] = kata[i][0];
+                    chars[chars.Length - 1] = kata[i][kata[i].Length - 1];
+                    for (int j = 1; j < 4; j++)
                     {
                         chars[j] = '*';
                     }
                     kata[i] = new string(chars);
                 }
+
             }
 
             output = string.Join(" ", kata);

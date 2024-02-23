@@ -28,7 +28,7 @@ namespace Soal_BLQ
             {
                 if (input.Length % 2 == 0)
                 {
-                    for(int j = 0; j < input.Length+1; j++)
+                    for(this; j < input.Length+1; j++)
                     {
                         if (j == (input.Length+1) / 2)
                         {

@@ -18,9 +18,9 @@ namespace Soal_BLQ
             double jam = double.Parse(splitInput[0]);
             double menit = double.Parse(splitInput[1]);
             double posisiMenit = (menit / 60) * 12;
-            double sudut = 360/12;
+            double sudut = 360 / 12; //sudut yang dibentuk antar angka jam
 
-            jam += (menit / 60);
+            jam += (menit / 60); //pergeseran jarum dari angka
             jam = (jam >= 12) ? jam - 12 : jam;
 
             double output = Math.Abs(jam - posisiMenit) * sudut;
