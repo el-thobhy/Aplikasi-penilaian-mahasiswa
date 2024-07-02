@@ -17,6 +17,7 @@ namespace ViewModel
         [Required, MaxLength(100)]
         public string Status_Jurusan { get; set; }
 
+        public int Created_by { get; set; }
         public bool Is_delete { get; set; }
     }
 }

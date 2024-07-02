@@ -69,7 +69,17 @@ export const AgamaService = {
 
   post: (Agama: ModelAgama) => {
     const result = axios
-      .post(config.apiUrl + "/Agama", Agama)
+      .post(
+        config.apiUrl + "/Agama",
+        {
+          deskripsi: Agama.deskripsi.trim(),
+          kode_Agama: Agama.kode_Agama,
+          is_delete: Agama.is_delete,
+        },
+        {
+          headers: config.headers(),
+        }
+      )
       .then((respons) => {
         console.log(respons);
         return {

@@ -1,4 +1,5 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
+using ApplikasiPenilaianMahasiswa.Api.Security;
 using ViewModel;
 
 namespace ApplikasiPenilaianMahasiswa.Api.Repositories
@@ -24,7 +25,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                 if (entity != null)
                 {
                     entity.Is_delete = status;
-                    entity.Deleted_by = 1;
+                    entity.Deleted_by = ClaimsContext.UserName();
                     entity.Deleted_on = DateTime.Now;
 
                     _dbContext.SaveChanges();
@@ -62,7 +63,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     entity.Kode_Dosen = newKode;
                     entity.Is_delete = model.Is_delete;
 
-                    entity.Created_by = 1;
+                    entity.Created_by = ClaimsContext.UserName();
                     entity.Created_on = DateTime.Now;
 
                     _dbContext.Dosens.Add(entity);
@@ -246,7 +247,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Repositories
                     entity.Kode_Dosen = model.Kode_Dosen;
                     entity.Is_delete = model.Is_delete;
 
-                    entity.Modified_by = 1;
+                    entity.Modified_by = ClaimsContext.UserName();
                     entity.Modified_on = DateTime.Now;
 
                     _dbContext.SaveChanges();

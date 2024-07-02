@@ -69,7 +69,9 @@ export const MahasiswaService = {
   post: (Mahasiswa: ModelMahasiswa) => {
     const { jurusan, agama, ...newMahasiswa } = Mahasiswa;
     const result = axios
-      .post(config.apiUrl + "/Mahasiswa", newMahasiswa)
+      .post(config.apiUrl + "/Mahasiswa", newMahasiswa, {
+        headers: config.headers(),
+      })
       .then((respons) => {
         console.log(respons);
         return {

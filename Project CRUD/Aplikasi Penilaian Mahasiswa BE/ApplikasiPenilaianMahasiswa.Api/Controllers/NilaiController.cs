@@ -1,4 +1,5 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
+using ApplikasiPenilaianMahasiswa.Api.Security;
 using ApplikasiPenilaianMahasiswa.Api.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
         }
 
         [HttpPost]
+        [ReadableBodyStream(Roles = "Administrator,nilai")]
         public async Task<NilaiViewModel> Post(NilaiViewModel model)
         {
             return _repo.Create(model);

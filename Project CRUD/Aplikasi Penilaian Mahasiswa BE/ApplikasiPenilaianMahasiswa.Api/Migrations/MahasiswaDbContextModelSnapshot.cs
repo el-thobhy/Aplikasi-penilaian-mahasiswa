@@ -22,6 +22,118 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ApplikasiPenilaianMahasiswa.Api.DataModel.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Attempt")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Created_by")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("Created_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Deleted_by")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("Deleted_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValue("auriwanyasper@gmail.com");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("Is_delete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Modified_by")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("Modified_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Otp")
+                        .HasColumnType("char(6)");
+
+                    b.Property<DateTime?>("OtpExpire")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("RoleGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleGroupId");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
+                    b.ToTable("m_accounts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Attempt = 0,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3331),
+                            Email = "auriwanyasper@gmail.com",
+                            FirstName = "Super",
+                            Is_delete = false,
+                            LastName = "Admin",
+                            Password = "ac9689e2272427085e35b9d3e3e8bed88cb3434828b43b86fc0596cad4c6e270",
+                            RoleGroupId = 1,
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Attempt = 0,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3334),
+                            Email = "auriwanyasper@gmail.com",
+                            FirstName = "dosen",
+                            Is_delete = false,
+                            LastName = "tes",
+                            Password = "c431bffe6c2cf3b69ad2e9cbbe9806835dbced7c97b9d3f946387ee92eb17018",
+                            RoleGroupId = 2,
+                            UserName = "dosen"
+                        });
+                });
+
             modelBuilder.Entity("ApplikasiPenilaianMahasiswa.Api.DataModel.Agama", b =>
                 {
                     b.Property<int>("Id")
@@ -30,16 +142,17 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("Created_by")
+                    b.Property<string>("Created_by")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("Created_on")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Deleted_by")
+                    b.Property<string>("Deleted_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Deleted_on")
                         .HasColumnType("datetime2");
@@ -57,9 +170,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long?>("Modified_by")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Modified_on")
                         .HasColumnType("datetime2");
@@ -72,8 +185,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 1,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4370),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3101),
                             Deskripsi = "Islam",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0001"
@@ -81,8 +194,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 2,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4372),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3104),
                             Deskripsi = "Kristen",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0002"
@@ -90,8 +203,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 3,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4373),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3106),
                             Deskripsi = "Katolik",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0003"
@@ -99,8 +212,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 4,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4375),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3108),
                             Deskripsi = "Hindu",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0004"
@@ -108,11 +221,180 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 5,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4376),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3110),
                             Deskripsi = "Budha",
                             Is_delete = false,
                             Kode_Agama = "AGM-2401-0005"
+                        });
+                });
+
+            modelBuilder.Entity("ApplikasiPenilaianMahasiswa.Api.DataModel.Announcement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Created_by")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("Created_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Deleted_by")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("Deleted_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Is_delete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Modified_by")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("Modified_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("m_announcement");
+                });
+
+            modelBuilder.Entity("ApplikasiPenilaianMahasiswa.Api.DataModel.AuthorizationGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Created_by")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("Created_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Deleted_by")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("Deleted_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Is_delete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Modified_by")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("Modified_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("RoleGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleGroupId");
+
+                    b.ToTable("m_authorization_groups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3355),
+                            Is_delete = false,
+                            Role = "jurusan",
+                            RoleGroupId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3357),
+                            Is_delete = false,
+                            Role = "mahasiswa",
+                            RoleGroupId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3359),
+                            Is_delete = false,
+                            Role = "agama",
+                            RoleGroupId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3450),
+                            Is_delete = false,
+                            Role = "dosen",
+                            RoleGroupId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3453),
+                            Is_delete = false,
+                            Role = "nilai",
+                            RoleGroupId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3455),
+                            Is_delete = false,
+                            Role = "typedosen",
+                            RoleGroupId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3457),
+                            Is_delete = false,
+                            Role = "ujian",
+                            RoleGroupId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3458),
+                            Is_delete = false,
+                            Role = "home",
+                            RoleGroupId = 1
                         });
                 });
 
@@ -124,16 +406,17 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("Created_by")
+                    b.Property<string>("Created_by")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("Created_on")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Deleted_by")
+                    b.Property<string>("Deleted_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Deleted_on")
                         .HasColumnType("datetime2");
@@ -152,9 +435,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long?>("Modified_by")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Modified_on")
                         .HasColumnType("datetime2");
@@ -176,8 +459,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 1,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4483),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3235),
                             Id_Jurusan = 1,
                             Id_Type_Dosen = 2,
                             Is_delete = false,
@@ -187,8 +470,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 2,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4485),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3238),
                             Id_Jurusan = 2,
                             Id_Type_Dosen = 1,
                             Is_delete = false,
@@ -198,8 +481,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 3,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4486),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3240),
                             Id_Jurusan = 3,
                             Id_Type_Dosen = 2,
                             Is_delete = false,
@@ -209,8 +492,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 4,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4488),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3242),
                             Id_Jurusan = 4,
                             Id_Type_Dosen = 2,
                             Is_delete = false,
@@ -220,8 +503,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 5,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4618),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3244),
                             Id_Jurusan = 5,
                             Id_Type_Dosen = 1,
                             Is_delete = false,
@@ -238,16 +521,17 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("Created_by")
+                    b.Property<string>("Created_by")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("Created_on")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Deleted_by")
+                    b.Property<string>("Deleted_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Deleted_on")
                         .HasColumnType("datetime2");
@@ -260,9 +544,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long?>("Modified_by")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Modified_on")
                         .HasColumnType("datetime2");
@@ -285,8 +569,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 1,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4197),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2753),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0001",
                             Nama_Jurusan = "Teknik Informatika",
@@ -295,8 +579,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 2,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4213),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2777),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0002",
                             Nama_Jurusan = "Management Informatika",
@@ -305,8 +589,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 3,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4214),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2781),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0003",
                             Nama_Jurusan = "Sistem Informasi",
@@ -315,8 +599,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 4,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4216),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2783),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0004",
                             Nama_Jurusan = "Sistem Komputer",
@@ -325,8 +609,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 5,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4217),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(2785),
                             Is_delete = false,
                             Kode_Jurusan = "JUR-2401-0005",
                             Nama_Jurusan = "Komputer Akuntansi",
@@ -347,16 +631,17 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<long>("Created_by")
+                    b.Property<string>("Created_by")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("Created_on")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Deleted_by")
+                    b.Property<string>("Deleted_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Deleted_on")
                         .HasColumnType("datetime2");
@@ -375,9 +660,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long?>("Modified_by")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Modified_on")
                         .HasColumnType("datetime2");
@@ -400,8 +685,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 1,
                             Alamat = "Jl. Mawar No 3 RT 05 Cicalengka, Bandung",
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4399),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3136),
                             Id_Agama = 1,
                             Id_Jurusan = 1,
                             Is_delete = false,
@@ -412,8 +697,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 2,
                             Alamat = "Jl. Kebagusan No. 33 RT04 RW06 Bandung",
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4402),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3139),
                             Id_Agama = 2,
                             Id_Jurusan = 2,
                             Is_delete = false,
@@ -424,8 +709,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 3,
                             Alamat = "Jl. Sumatera No. 12 RT02 RW01, Ciamis",
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4403),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3141),
                             Id_Agama = 1,
                             Id_Jurusan = 3,
                             Is_delete = false,
@@ -436,8 +721,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 4,
                             Alamat = "Jl. Jawa No 01 RT01 RW01, Jakarta Pusat",
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4405),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3143),
                             Id_Agama = 1,
                             Id_Jurusan = 1,
                             Is_delete = false,
@@ -448,8 +733,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         {
                             Id = 5,
                             Alamat = "Jl. Niagara No. 54 RT01 RW09, Surabaya",
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4406),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3145),
                             Id_Agama = 3,
                             Id_Jurusan = 2,
                             Is_delete = false,
@@ -466,16 +751,17 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("Created_by")
+                    b.Property<string>("Created_by")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("Created_on")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Deleted_by")
+                    b.Property<string>("Deleted_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Deleted_on")
                         .HasColumnType("datetime2");
@@ -489,9 +775,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                     b.Property<bool>("Is_delete")
                         .HasColumnType("bit");
 
-                    b.Property<long?>("Modified_by")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Modified_on")
                         .HasColumnType("datetime2");
@@ -511,8 +797,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 1,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4647),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3267),
                             Id_Mahasiswa = 4,
                             Id_Ujian = 1,
                             Is_delete = false,
@@ -521,8 +807,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 2,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4650),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3270),
                             Id_Mahasiswa = 1,
                             Id_Ujian = 1,
                             Is_delete = false,
@@ -531,8 +817,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 3,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4652),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3272),
                             Id_Mahasiswa = 2,
                             Id_Ujian = 3,
                             Is_delete = false,
@@ -541,8 +827,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 4,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4653),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3275),
                             Id_Mahasiswa = 4,
                             Id_Ujian = 2,
                             Is_delete = false,
@@ -551,12 +837,84 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 5,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4655),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3277),
                             Id_Mahasiswa = 5,
                             Id_Ujian = 5,
                             Is_delete = false,
                             NilaiMahasiswa = 70m
+                        });
+                });
+
+            modelBuilder.Entity("ApplikasiPenilaianMahasiswa.Api.DataModel.RoleGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Created_by")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("Created_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Deleted_by")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("Deleted_on")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("Is_delete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Modified_by")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("Modified_on")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupName")
+                        .IsUnique();
+
+                    b.ToTable("m_role_group");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3304),
+                            GroupName = "Admin",
+                            Is_delete = false
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3307),
+                            GroupName = "Dosen",
+                            Is_delete = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3309),
+                            GroupName = "Mahasiswa",
+                            Is_delete = false
                         });
                 });
 
@@ -568,16 +926,17 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("Created_by")
+                    b.Property<string>("Created_by")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("Created_on")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Deleted_by")
+                    b.Property<string>("Deleted_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Deleted_on")
                         .HasColumnType("datetime2");
@@ -595,9 +954,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long?>("Modified_by")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Modified_on")
                         .HasColumnType("datetime2");
@@ -610,8 +969,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 1,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4460),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3207),
                             Deskripsi = "Tetap",
                             Is_delete = false,
                             Kode_Type_Dosen = "TYP-2401-0001"
@@ -619,8 +978,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 2,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4461),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3210),
                             Deskripsi = "Honorer",
                             Is_delete = false,
                             Kode_Type_Dosen = "TYP-2401-0002"
@@ -628,8 +987,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 3,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4462),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3212),
                             Deskripsi = "Expertise",
                             Is_delete = false,
                             Kode_Type_Dosen = "TYP-2401-0003"
@@ -644,16 +1003,17 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("Created_by")
+                    b.Property<string>("Created_by")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("Created_on")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Deleted_by")
+                    b.Property<string>("Deleted_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Deleted_on")
                         .HasColumnType("datetime2");
@@ -666,9 +1026,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long?>("Modified_by")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(50)
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("Modified_on")
                         .HasColumnType("datetime2");
@@ -691,8 +1051,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 1,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4433),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3174),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0001",
                             Nama_Ujian = "Algoritma",
@@ -701,8 +1061,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 2,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4434),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3177),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0002",
                             Nama_Ujian = "Aljabar",
@@ -711,8 +1071,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 3,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4435),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3179),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0003",
                             Nama_Ujian = "Statistika",
@@ -721,8 +1081,8 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 4,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4437),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3181),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0004",
                             Nama_Ujian = "Etika Profesi",
@@ -731,13 +1091,35 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                         new
                         {
                             Id = 5,
-                            Created_by = 1L,
-                            Created_on = new DateTime(2024, 1, 25, 20, 36, 52, 419, DateTimeKind.Local).AddTicks(4438),
+                            Created_by = "admin",
+                            Created_on = new DateTime(2024, 2, 10, 14, 44, 42, 735, DateTimeKind.Local).AddTicks(3183),
                             Is_delete = false,
                             Kode_Ujian = "UJN-2401-0005",
                             Nama_Ujian = "Bahasa Inggris",
                             Status_Ujian = "Aktif"
                         });
+                });
+
+            modelBuilder.Entity("ApplikasiPenilaianMahasiswa.Api.DataModel.Account", b =>
+                {
+                    b.HasOne("ApplikasiPenilaianMahasiswa.Api.DataModel.RoleGroup", "RoleGroup")
+                        .WithMany()
+                        .HasForeignKey("RoleGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoleGroup");
+                });
+
+            modelBuilder.Entity("ApplikasiPenilaianMahasiswa.Api.DataModel.AuthorizationGroup", b =>
+                {
+                    b.HasOne("ApplikasiPenilaianMahasiswa.Api.DataModel.RoleGroup", "RoleGroup")
+                        .WithMany("AuthorizationGroups")
+                        .HasForeignKey("RoleGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoleGroup");
                 });
 
             modelBuilder.Entity("ApplikasiPenilaianMahasiswa.Api.DataModel.Dosen", b =>
@@ -795,6 +1177,11 @@ namespace ApplikasiPenilaianMahasiswa.Api.Migrations
                     b.Navigation("Mahasiswa");
 
                     b.Navigation("Ujian");
+                });
+
+            modelBuilder.Entity("ApplikasiPenilaianMahasiswa.Api.DataModel.RoleGroup", b =>
+                {
+                    b.Navigation("AuthorizationGroups");
                 });
 #pragma warning restore 612, 618
         }
