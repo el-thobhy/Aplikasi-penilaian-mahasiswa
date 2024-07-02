@@ -1,5 +1,6 @@
 ﻿using ApplikasiPenilaianMahasiswa.Api.DataModel;
 using ApplikasiPenilaianMahasiswa.Api.Repositories;
+using ApplikasiPenilaianMahasiswa.Api.Security;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.Controllers
         }
 
         [HttpPost]
+        [ReadableBodyStream(Roles = "Administrator,ujian")]
         public async Task<IActionResult> Post(UjianViewModel model)
         {
             try

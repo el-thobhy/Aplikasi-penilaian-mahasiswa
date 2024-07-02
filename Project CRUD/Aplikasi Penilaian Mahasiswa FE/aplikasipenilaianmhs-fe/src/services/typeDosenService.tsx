@@ -69,7 +69,9 @@ export const TypeDosenService = {
   },
   post: (TypeDosen: ModelTypeDosen) => {
     const result = axios
-      .post(config.apiUrl + "/TypeDosen", TypeDosen)
+      .post(config.apiUrl + "/TypeDosen", TypeDosen, {
+        headers: config.headers(),
+      })
       .then((respons) => {
         console.log(respons);
         return {

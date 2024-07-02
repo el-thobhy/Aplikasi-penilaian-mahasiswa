@@ -2,11 +2,11 @@
 
 namespace ApplikasiPenilaianMahasiswa.Api.DataModel
 {
-    public class MahasiswaDbContext: DbContext
+    public class MahasiswaDbContext : DbContext
     {
         public MahasiswaDbContext(DbContextOptions<MahasiswaDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Jurusan> Jurusans { get; set; }
@@ -16,7 +16,10 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
         public DbSet<TypeDosen> TypeDosens { get; set; }
         public DbSet<Dosen> Dosens { get; set; }
         public DbSet<Nilai> Nilais { get; set; }
-
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<RoleGroup> RoleGroups { get; set; }
+        public DbSet<AuthorizationGroup> AuthorizationGroups { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,9 +61,9 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                 .IsRequired(true);
 
 
-           
+
             modelBuilder.Entity<Ujian>()
-                .Property(o=>o.Kode_Ujian)
+                .Property(o => o.Kode_Ujian)
                 .IsRequired(true);
             modelBuilder.Entity<Ujian>()
                 .Property(o => o.Nama_Ujian)
@@ -102,6 +105,21 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                 .Property(o => o.NilaiMahasiswa)
                 .HasColumnType("decimal(8,2)");
 
+
+
+            modelBuilder.Entity<Account>()
+                .HasIndex(o => o.UserName)
+                .IsUnique();
+            modelBuilder.Entity<Account>()
+                .Property(o => o.Email)
+                .HasDefaultValue("auriwanyasper@gmail.com");
+            modelBuilder.Entity<Account>()
+                .Property(o => o.Otp)
+                .HasColumnType("char(6)");
+            modelBuilder.Entity<RoleGroup>()
+              .HasIndex(o => o.GroupName)
+              .IsUnique();
+
         }
 
     }
@@ -117,7 +135,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Kode_Jurusan = "JUR-2401-0001",
                     Nama_Jurusan = "Teknik Informatika",
                     Status_Jurusan = "Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now,
                 },
                 new Jurusan
@@ -126,7 +144,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Kode_Jurusan = "JUR-2401-0002",
                     Nama_Jurusan = "Management Informatika",
                     Status_Jurusan = "Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now,
                 },
                 new Jurusan
@@ -135,7 +153,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Kode_Jurusan = "JUR-2401-0003",
                     Nama_Jurusan = "Sistem Informasi",
                     Status_Jurusan = "Non Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now,
                 },
                 new Jurusan
@@ -144,7 +162,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Kode_Jurusan = "JUR-2401-0004",
                     Nama_Jurusan = "Sistem Komputer",
                     Status_Jurusan = "Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now,
                 },
                 new Jurusan
@@ -153,7 +171,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Kode_Jurusan = "JUR-2401-0005",
                     Nama_Jurusan = "Komputer Akuntansi",
                     Status_Jurusan = "Non Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now,
                 }
                 );
@@ -164,7 +182,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id = 1,
                     Kode_Agama = "AGM-2401-0001",
                     Deskripsi = "Islam",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Agama
@@ -172,7 +190,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id = 2,
                     Kode_Agama = "AGM-2401-0002",
                     Deskripsi = "Kristen",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Agama
@@ -180,7 +198,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id = 3,
                     Kode_Agama = "AGM-2401-0003",
                     Deskripsi = "Katolik",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Agama
@@ -188,7 +206,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id = 4,
                     Kode_Agama = "AGM-2401-0004",
                     Deskripsi = "Hindu",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Agama
@@ -196,7 +214,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id = 5,
                     Kode_Agama = "AGM-2401-0005",
                     Deskripsi = "Budha",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 }
                 );
@@ -211,7 +229,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Alamat = "Jl. Mawar No 3 RT 05 Cicalengka, Bandung",
                     Id_Agama = 1,
                     Id_Jurusan = 1,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Mahasiswa
@@ -222,7 +240,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Alamat = "Jl. Kebagusan No. 33 RT04 RW06 Bandung",
                     Id_Agama = 2,
                     Id_Jurusan = 2,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Mahasiswa
@@ -233,7 +251,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Alamat = "Jl. Sumatera No. 12 RT02 RW01, Ciamis",
                     Id_Agama = 1,
                     Id_Jurusan = 3,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Mahasiswa
@@ -244,7 +262,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Alamat = "Jl. Jawa No 01 RT01 RW01, Jakarta Pusat",
                     Id_Agama = 1,
                     Id_Jurusan = 1,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Mahasiswa
@@ -255,7 +273,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Alamat = "Jl. Niagara No. 54 RT01 RW09, Surabaya",
                     Id_Agama = 3,
                     Id_Jurusan = 2,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 }
                 );
@@ -263,11 +281,11 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                 .HasData(
                 new Ujian
                 {
-                    Id= 1,
+                    Id = 1,
                     Kode_Ujian = "UJN-2401-0001",
                     Nama_Ujian = "Algoritma",
                     Status_Ujian = "Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Ujian
@@ -276,7 +294,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Kode_Ujian = "UJN-2401-0002",
                     Nama_Ujian = "Aljabar",
                     Status_Ujian = "Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Ujian
@@ -285,7 +303,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Kode_Ujian = "UJN-2401-0003",
                     Nama_Ujian = "Statistika",
                     Status_Ujian = "Non Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Ujian
@@ -294,7 +312,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Kode_Ujian = "UJN-2401-0004",
                     Nama_Ujian = "Etika Profesi",
                     Status_Ujian = "Non Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Ujian
@@ -303,7 +321,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Kode_Ujian = "UJN-2401-0005",
                     Nama_Ujian = "Bahasa Inggris",
                     Status_Ujian = "Aktif",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 }
                 );
@@ -315,7 +333,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id = 1,
                     Kode_Type_Dosen = "TYP-2401-0001",
                     Deskripsi = "Tetap",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new TypeDosen
@@ -323,7 +341,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id = 2,
                     Kode_Type_Dosen = "TYP-2401-0002",
                     Deskripsi = "Honorer",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new TypeDosen
@@ -331,7 +349,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id = 3,
                     Kode_Type_Dosen = "TYP-2401-0003",
                     Deskripsi = "Expertise",
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 }
                 );
@@ -345,7 +363,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Nama_Dosen = "Prof. Dr. Retno Wahyuningsih",
                     Id_Jurusan = 1,
                     Id_Type_Dosen = 2,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Dosen
@@ -355,7 +373,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Nama_Dosen = "Prof. Roy M. Sutikno",
                     Id_Jurusan = 2,
                     Id_Type_Dosen = 1,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Dosen
@@ -365,7 +383,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Nama_Dosen = "Prof. Hendri A. Verburgh",
                     Id_Jurusan = 3,
                     Id_Type_Dosen = 2,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Dosen
@@ -375,7 +393,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Nama_Dosen = "Prof. Risma Suparwata",
                     Id_Jurusan = 4,
                     Id_Type_Dosen = 2,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Dosen
@@ -385,7 +403,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Nama_Dosen = "Prof. Amir Sjarifuddin Madjid, MM, MA",
                     Id_Jurusan = 5,
                     Id_Type_Dosen = 1,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 }
                 );
@@ -398,7 +416,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id_Mahasiswa = 4,
                     Id_Ujian = 1,
                     NilaiMahasiswa = 90,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Nilai
@@ -407,7 +425,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id_Mahasiswa = 1,
                     Id_Ujian = 1,
                     NilaiMahasiswa = 80,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Nilai
@@ -416,7 +434,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id_Mahasiswa = 2,
                     Id_Ujian = 3,
                     NilaiMahasiswa = 85,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Nilai
@@ -425,7 +443,7 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id_Mahasiswa = 4,
                     Id_Ujian = 2,
                     NilaiMahasiswa = 95,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 },
                 new Nilai
@@ -434,9 +452,59 @@ namespace ApplikasiPenilaianMahasiswa.Api.DataModel
                     Id_Mahasiswa = 5,
                     Id_Ujian = 5,
                     NilaiMahasiswa = 70,
-                    Created_by = 1,
+                    Created_by = "admin",
                     Created_on = DateTime.Now
                 }
+                );
+
+            modelBuilder.Entity<RoleGroup>()
+                .HasData(
+                new RoleGroup { Id = 1, GroupName = "Admin", Created_by = "admin", Created_on = DateTime.Now },
+                new RoleGroup { Id = 2, GroupName = "Dosen", Created_by = "admin", Created_on = DateTime.Now },
+                new RoleGroup { Id = 3, GroupName = "Mahasiswa", Created_by = "admin", Created_on = DateTime.Now }
+                );
+            modelBuilder.Entity<Account>()
+                .HasData(
+                new Account
+                {
+                    Id = 1,
+                    UserName = "admin",
+                    //admin1234
+                    Password = "ac9689e2272427085e35b9d3e3e8bed88cb3434828b43b86fc0596cad4c6e270",
+                    FirstName = "Super",
+                    LastName = "Admin",
+                    Email = "auriwanyasper@gmail.com",
+                    Is_delete = false,
+                    RoleGroupId = 1,
+                    Created_by = "admin",
+                    Created_on = DateTime.Now
+                },
+                new Account
+                {
+                    Id = 2,
+                    UserName = "dosen",
+                    //dosen1234
+                    Password = "c431bffe6c2cf3b69ad2e9cbbe9806835dbced7c97b9d3f946387ee92eb17018",
+                    FirstName = "dosen",
+                    LastName = "tes",
+                    Email = "auriwanyasper@gmail.com",
+                    Is_delete = false,
+                    RoleGroupId = 2,
+                    Created_by = "admin",
+                    Created_on = DateTime.Now
+                }
+                );
+
+            modelBuilder.Entity<AuthorizationGroup>()
+                .HasData(
+                new AuthorizationGroup { Id = 1, Role = "jurusan", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
+                new AuthorizationGroup { Id = 2, Role = "mahasiswa", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
+                new AuthorizationGroup { Id = 3, Role = "agama", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
+                new AuthorizationGroup { Id = 4, Role = "dosen", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
+                new AuthorizationGroup { Id = 5, Role = "nilai", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
+                new AuthorizationGroup { Id = 6, Role = "typedosen", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
+                new AuthorizationGroup { Id = 7, Role = "ujian", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now },
+                new AuthorizationGroup { Id = 8, Role = "home", RoleGroupId = 1, Created_by = "admin", Created_on = DateTime.Now }
                 );
         }
     }

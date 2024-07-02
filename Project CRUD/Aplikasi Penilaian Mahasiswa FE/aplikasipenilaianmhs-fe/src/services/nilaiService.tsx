@@ -50,7 +50,9 @@ export const NilaiService = {
   post: (Nilai: ModelNilai) => {
     const { id, is_delete, ...newNilai } = Nilai;
     const result = axios
-      .post(config.apiUrl + "/Nilai", newNilai)
+      .post(config.apiUrl + "/Nilai", newNilai, {
+        headers: config.headers(),
+      })
       .then((respons) => {
         console.log(respons);
         return {
